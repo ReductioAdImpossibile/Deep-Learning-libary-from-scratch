@@ -1,0 +1,3 @@
+/home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles/test1.dir
+/home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles/edit_cache.dir
+/home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles/rebuild_cache.dir
