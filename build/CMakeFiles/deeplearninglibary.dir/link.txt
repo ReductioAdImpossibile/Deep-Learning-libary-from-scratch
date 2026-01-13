@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o -o deeplearninglibary  -fopenmp 

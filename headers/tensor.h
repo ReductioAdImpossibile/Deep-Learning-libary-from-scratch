@@ -15,11 +15,8 @@ class tensor
 private:
         
     std::vector<unsigned int> strides;
-    std::vector<float> data;
-    alignas(ALIGN) std::vector<int> shape;
-
-    bool random = false;
-
+    alignas(ALIGN) std::vector<float> data;
+    std::vector<uint64_t> shape;
 
     static void hadamard(const tensor &a, const tensor &b, tensor &result);
     static void add(const tensor &a, const tensor &b, tensor &result);
@@ -30,11 +27,11 @@ public:
 
     
     
-    tensor(const std::vector<int> &shape);
+    tensor(const std::vector<uint64_t> &shape);
     
-    tensor(const std::vector<int> &shape, float val);
+    tensor(const std::vector<uint64_t> &shape, float val);
 
-    tensor(const std::vector<int> &shape, float begin, float end);
+    tensor(const std::vector<uint64_t> &shape, float begin, float end);
 
 
     float* raw();
@@ -47,12 +44,16 @@ public:
     float L1();
     float L2();
 
+    
     void print();
-    std::vector<int> get_shape();
+    void set(float val);
+    void set_zero();
+
+    std::vector<uint64_t> get_shape();
 
     tensor sum(size_t axis);
     tensor slice(size_t axis);
-    tensor reshape(const std::vector<int> &shape);
+    tensor reshape(const std::vector<uint64_t> &shape);
 
     static tensor batch_mat_mul(const tensor &a, const tensor &b);
 };

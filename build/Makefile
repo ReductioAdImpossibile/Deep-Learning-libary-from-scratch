@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test1
+# Target rules for targets named deeplearninglibary
 
 # Build rule for target.
-test1: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test1
-.PHONY : test1
+deeplearninglibary: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 deeplearninglibary
+.PHONY : deeplearninglibary
 
 # fast build rule for target.
-test1/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/build
-.PHONY : test1/fast
+deeplearninglibary/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/build
+.PHONY : deeplearninglibary/fast
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -142,7 +142,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -150,7 +150,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 src/tensor.o: src/tensor.cpp.o
@@ -158,7 +158,7 @@ src/tensor.o: src/tensor.cpp.o
 
 # target to build an object file
 src/tensor.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/tensor.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o
 .PHONY : src/tensor.cpp.o
 
 src/tensor.i: src/tensor.cpp.i
@@ -166,7 +166,7 @@ src/tensor.i: src/tensor.cpp.i
 
 # target to preprocess a source file
 src/tensor.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/tensor.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.i
 .PHONY : src/tensor.cpp.i
 
 src/tensor.s: src/tensor.cpp.s
@@ -174,7 +174,7 @@ src/tensor.s: src/tensor.cpp.s
 
 # target to generate assembly for a file
 src/tensor.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/src/tensor.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.s
 .PHONY : src/tensor.cpp.s
 
 # Help Target
@@ -185,7 +185,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test1"
+	@echo "... deeplearninglibary"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
