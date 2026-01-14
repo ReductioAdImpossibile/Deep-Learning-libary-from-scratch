@@ -80,6 +80,7 @@ tensor::tensor(const std::vector<uint64_t> &_shape, float begin, float end) : te
 }
 
 
+
 float tensor::sum()
 {
     float* raw = this->raw();
@@ -122,6 +123,7 @@ tensor tensor::sum(size_t axis)
     tensor res(res_shape);
     std::vector<float>& res_vals = res.values(); 
     
+    #pragma omp parallel
     for(size_t i{0}; i < res_vals.size(); i++ )
     {
 
@@ -136,12 +138,13 @@ tensor tensor::sum(size_t axis)
             base += idx * this->strides[op];
         }
 
-        float sum = 0;
+        float sum = 0; 
         for(size_t k{0}; k < this->shape[axis]; k++)
         {
             size_t idx = base + this->strides[axis] * k;
             sum += this->data[idx];
         }
+
         res[i] = sum;
     }
 
@@ -183,17 +186,37 @@ float tensor::prod()
 
 float tensor::max()
 {
-    return 0.0f;
+    float max_val = -std::numeric_limits<float>::infinity();
+    size_t n = this->data.size();
+
+    #pragma omp parallel for reduction(max : max_val)
+    for(size_t i = 0; i < n; i++)
+    {
+        if(this->data[i] > max_val)
+            max_val = this->data[i];
+    }
+
+    return max_val;
 }
 
 float tensor::min()
 {
-    return 0.0f;
+    float min_val = -std::numeric_limits<float>::infinity();
+    size_t n = this->data.size();
+
+    #pragma omp parallel for reduction(min : min_val)
+    for(size_t i = 0; i < n; i++)
+    {
+        if(this->data[i] < min_val)
+            min_val = this->data[i];
+    }
+
+    return min_val;    
 }
 
 float tensor::avg()
 {
-    return 0.0f;
+    return this->sum() / this->data.size();
 }
 
 float tensor::L1()
