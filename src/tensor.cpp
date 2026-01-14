@@ -7,38 +7,12 @@
 #include <random>
 #include <experimental/simd>
 #include <omp.h>
+#include <stdexcept>
+#include <string>
 
+std::string shape_to_string(const std::vector<size_t> &shape);
 
-
-
-void tensor::hadamard(const tensor &a, const tensor &b, tensor &result)
-{
-
-}
-
-void tensor::add(const tensor &a, const tensor &b, tensor &result)
-{
-
-}
-
-void tensor::sub(const tensor &a, const tensor &b, tensor &result)
-{
-
-}
-
-void tensor::scale(const tensor &a, const float value, tensor &result)
-{
-
-}
-
-float& tensor::operator[](uint64_t index)
-{
-    return this->data[index];
-}
-
-
-
-tensor::tensor(const std::vector<uint64_t> &_shape) : shape(_shape)
+tensor::tensor(const std::vector<size_t> &_shape) : shape(_shape)
 {
     this->strides.resize(shape.size());
     size_t prod = 1;
@@ -56,7 +30,7 @@ tensor::tensor(const std::vector<uint64_t> &_shape) : shape(_shape)
     omp_set_num_threads(10); 
 }
 
-tensor::tensor(const std::vector<uint64_t> &_shape, float val) : tensor(_shape)
+tensor::tensor(const std::vector<size_t> &_shape, float val) : tensor(_shape)
 {
     #pragma omp parallel for
     for(int i{0}; i < this->data.size(); i++)
@@ -65,7 +39,7 @@ tensor::tensor(const std::vector<uint64_t> &_shape, float val) : tensor(_shape)
     }
 }
 
-tensor::tensor(const std::vector<uint64_t> &_shape, float begin, float end) : tensor(_shape)
+tensor::tensor(const std::vector<size_t> &_shape, float begin, float end) : tensor(_shape)
 {
     
     static std::mt19937 gen(std::random_device{}());
@@ -77,6 +51,25 @@ tensor::tensor(const std::vector<uint64_t> &_shape, float begin, float end) : te
     {
         this->data[i] = dist(gen);
     }
+}
+
+
+
+const float& tensor::operator[](size_t index) const
+{
+    return this->data[index];
+}
+
+float& tensor::operator[](size_t index)
+{
+    return this->data[index];
+}
+
+tensor tensor::operator%(const tensor &a) const
+{
+    tensor result(this->shape);
+    tensor::hadamard(*this, a, result);
+    return result;
 }
 
 
@@ -110,20 +103,20 @@ float tensor::sum()
     return res;
 }
 
-std::vector<uint64_t> tensor::get_shape()
+std::vector<size_t> tensor::get_shape() const
 {
     return this->shape;
 }
 
 tensor tensor::sum(size_t axis)
 {
-    std::vector<uint64_t> res_shape = shape;
+    std::vector<size_t> res_shape = shape;
     res_shape.erase(res_shape.begin() + axis);
     
     tensor res(res_shape);
     std::vector<float>& res_vals = res.values(); 
     
-    #pragma omp parallel
+    #pragma omp parallel for
     for(size_t i{0}; i < res_vals.size(); i++ )
     {
 
@@ -150,6 +143,20 @@ tensor tensor::sum(size_t axis)
 
     return res;
 }
+
+
+float* tensor::raw()
+{
+    return this->data.data() ;
+}
+
+const float* tensor::raw() const
+{
+    return this->data.data() ;
+}
+
+
+
 
 float tensor::prod()
 {
@@ -236,12 +243,87 @@ void tensor::print()
     std::cout << std::endl; 
 }
 
-float* tensor::raw()
+
+size_t tensor::get_size() const
 {
-    return this->data.data() ;
+    return this->data.size();
 }
+
 
 std::vector<float>& tensor::values()
 {
     return this->data;
+}
+
+
+
+
+
+
+
+
+void tensor::hadamard(const tensor &a, const tensor &b, tensor &result)
+{
+
+    
+    if( !(a.get_shape() == b.get_shape() && b.get_shape() == result.get_shape()) )
+    {
+        std::string msg = "Tensor shapes do not match for the hadamard procduct. They need to be the same. \n ";
+        msg += shape_to_string(a.get_shape()) + " vs " + shape_to_string(b.get_shape())  + " vs " + shape_to_string(result.get_shape());
+        throw std::runtime_error(msg);
+    }
+
+   
+    int i{0};
+    const int w = fsimd::size();
+    const float* a_raw = a.raw();
+    const float* b_raw = b.raw();   
+    float* result_raw = result.raw();
+
+
+    fsimd a_, b_, result_;
+
+    #pragma omp parallel for
+    for(; i + w < a.get_size(); i += w)
+    {
+        a_.copy_from(a_raw + i, std::experimental::element_aligned);
+        b_.copy_from(b_raw + i, std::experimental::element_aligned);
+        
+        result_ = a_ * b_;
+        result_.copy_to(result_raw + i, std::experimental::element_aligned);
+    }
+
+    for(;i < a.get_size(); i++)
+        result[i] = a[i] * b[i];
+
+    
+}
+
+void tensor::add(const tensor &a, const tensor &b, tensor &result)
+{
+
+}
+
+void tensor::sub(const tensor &a, const tensor &b, tensor &result)
+{
+
+}
+
+void tensor::scale(const tensor &a, const float value, tensor &result)
+{
+
+}
+
+
+
+
+
+std::string shape_to_string(const std::vector<size_t> &shape)
+{
+    std::string res = "[ ";
+    for(auto val : shape)
+        res += std::to_string(val) + " ";
+    
+    res += "]";
+    return res;
 }

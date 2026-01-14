@@ -14,26 +14,27 @@ class tensor
 {
 private:
         
-    std::vector<uint64_t> strides;
+    std::vector<size_t> strides;
     alignas(ALIGN) std::vector<float> data;
-    std::vector<uint64_t> shape;
+    std::vector<size_t> shape;
 
-    static void hadamard(const tensor &a, const tensor &b, tensor &result);
-    static void add(const tensor &a, const tensor &b, tensor &result);
-    static void sub(const tensor &a, const tensor &b, tensor &result);
-    static void scale(const tensor &a, const float value, tensor &result);
+
     
 public:
 
-    tensor(const std::vector<uint64_t> &shape);
-    tensor(const std::vector<uint64_t> &shape, float val);
-    tensor(const std::vector<uint64_t> &shape, float begin, float end);
+    tensor(const std::vector<size_t> &shape);
+    tensor(const std::vector<size_t> &shape, float val);
+    tensor(const std::vector<size_t> &shape, float begin, float end);
 
-    float& operator[](uint64_t index);
+    const float& operator[](size_t index) const;
+    float& operator[](size_t index);
+    tensor operator%(const tensor &a) const;
+
 
     float* raw();
-    std::vector<float>& values();    
-
+    const float* raw() const; 
+    
+    float index(const std::vector<int> &indices); 
 
     float sum();
     float prod();
@@ -48,14 +49,22 @@ public:
     void set(float val);
     void set_zero();
 
-    float index(const std::vector<int> &indices);
+    size_t get_size() const;
+   
 
-    std::vector<uint64_t> get_shape();
+    std::vector<size_t> get_shape() const;
+    std::vector<float>& values();   
 
     tensor sum(size_t axis);
     tensor slice(size_t axis);
-    tensor reshape(const std::vector<uint64_t> &shape);
+    tensor reshape(const std::vector<size_t> &shape);
 
-    static tensor batch_mat_mul(const tensor &a, const tensor &b);
+    static tensor batch_mat_mul(tensor &a, tensor &b);
+    static bool equal_shape(const tensor &a, const tensor &b);
+
+    static void hadamard(const tensor &a,const tensor &b, tensor &result);
+    static void add(const tensor &a, const tensor &b, tensor &result);
+    static void sub(const tensor &a, const tensor &b, tensor &result);
+    static void scale(const tensor &a, const float value, tensor &result);
 };
 
