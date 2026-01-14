@@ -5,8 +5,9 @@
 int main()
 {
     float f = std::numeric_limits<float>::lowest();
-    tensor tens({100000,1} , 1);
+    tensor tens({2,3,4} , 1);
     
-    std::cout << tens.sum() << std::endl;
+    tensor x  = tens.sum(2);
+    x.print();
     
 }

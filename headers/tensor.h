@@ -14,7 +14,7 @@ class tensor
 {
 private:
         
-    std::vector<unsigned int> strides;
+    std::vector<uint64_t> strides;
     alignas(ALIGN) std::vector<float> data;
     std::vector<uint64_t> shape;
 
@@ -22,20 +22,19 @@ private:
     static void add(const tensor &a, const tensor &b, tensor &result);
     static void sub(const tensor &a, const tensor &b, tensor &result);
     static void scale(const tensor &a, const float value, tensor &result);
-
+    
 public:
 
-    
-    
     tensor(const std::vector<uint64_t> &shape);
-    
     tensor(const std::vector<uint64_t> &shape, float val);
-
     tensor(const std::vector<uint64_t> &shape, float begin, float end);
 
+    float& operator[](uint64_t index);
 
     float* raw();
-    float index(const std::vector<int> &indices);
+    std::vector<float>& values();    
+
+
     float sum();
     float prod();
     float max();
@@ -49,6 +48,8 @@ public:
     void set(float val);
     void set_zero();
 
+    float index(const std::vector<int> &indices);
+
     std::vector<uint64_t> get_shape();
 
     tensor sum(size_t axis);
@@ -57,3 +58,4 @@ public:
 
     static tensor batch_mat_mul(const tensor &a, const tensor &b);
 };
+

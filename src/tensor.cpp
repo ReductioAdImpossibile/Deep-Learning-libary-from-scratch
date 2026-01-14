@@ -9,6 +9,8 @@
 #include <omp.h>
 
 
+
+
 void tensor::hadamard(const tensor &a, const tensor &b, tensor &result)
 {
 
@@ -29,6 +31,12 @@ void tensor::scale(const tensor &a, const float value, tensor &result)
 
 }
 
+float& tensor::operator[](uint64_t index)
+{
+    return this->data[index];
+}
+
+
 
 tensor::tensor(const std::vector<uint64_t> &_shape) : shape(_shape)
 {
@@ -36,9 +44,10 @@ tensor::tensor(const std::vector<uint64_t> &_shape) : shape(_shape)
     size_t prod = 1;
     for(int i = strides.size()-1; i >= 0; i--)
     {
-        this->strides.at(i) = prod;
-        prod *= this->shape.at(i);
+        this->strides[i] = prod;
+        prod *= this->shape[i];
     }
+
 
     data.resize(
         std::accumulate(shape.begin(), shape.end(), 1,  std::multiplies<int>())
@@ -52,7 +61,7 @@ tensor::tensor(const std::vector<uint64_t> &_shape, float val) : tensor(_shape)
     #pragma omp parallel for
     for(int i{0}; i < this->data.size(); i++)
     {
-        this->data.at(i) = val;
+        this->data[i] = val;
     }
 }
 
@@ -66,40 +75,36 @@ tensor::tensor(const std::vector<uint64_t> &_shape, float begin, float end) : te
     #pragma omp parallel for
     for(int i{0}; i < this->data.size(); i++)
     {
-        this->data.at(i) = dist(gen);
+        this->data[i] = dist(gen);
     }
 }
 
 
 float tensor::sum()
 {
-
     float* raw = this->raw();
-    fsimd sum1_(0.0f), sum2_(0.0f);
+    fsimd acc1_(0.0f), acc2_(0.0f);
     fsimd val1_, val2_;
 
     int i{0};
     const int w = fsimd::size();
 
-
-    
-    //#pragma omp parallel for reduction(+:sum1_, sum2_)    
-    for(; 2 * i < this->data.size(); i += 2 * w ) 
+    #pragma omp parallel for reduction(+:acc1_, acc2_)    
+    for(;  i + 2 * w <= this->data.size(); i += 2 * w ) 
     {
         val1_.copy_from(raw + i, std::experimental::element_aligned);
         val2_.copy_from(raw + i + w, std::experimental::element_aligned);
 
-        sum1_ += val1_;
-        sum2_ += val2_;
+        acc1_ += val1_;
+        acc2_ += val2_;
     }
     
-
     float res = 0;
     for(int j{0}; j < w; j++)
-        res += sum1_[j] + sum2_[j];
+        res += acc1_[j] + acc2_[j];
 
     for(; i < this->data.size(); i++)
-        res += this->data.at(i);
+        res += this->data[i];
 
     return res;
 }
@@ -111,12 +116,69 @@ std::vector<uint64_t> tensor::get_shape()
 
 tensor tensor::sum(size_t axis)
 {
-    return tensor({});
+    std::vector<uint64_t> res_shape = shape;
+    res_shape.erase(res_shape.begin() + axis);
+    
+    tensor res(res_shape);
+    std::vector<float>& res_vals = res.values(); 
+    
+    for(size_t i{0}; i < res_vals.size(); i++ )
+    {
+
+        size_t tmp = i;
+        size_t base = 0;
+        for(size_t j{0}; j < res_shape.size(); j++)
+        {
+            size_t idx = tmp % this->shape[j];
+            tmp /= this->shape[j];
+
+            size_t op = (j < axis) ? j : j + 1; 
+            base += idx * this->strides[op];
+        }
+
+        float sum = 0;
+        for(size_t k{0}; k < this->shape[axis]; k++)
+        {
+            size_t idx = base + this->strides[axis] * k;
+            sum += this->data[idx];
+        }
+        res[i] = sum;
+    }
+
+    return res;
 }
 
 float tensor::prod()
 {
-    return 0.0f;
+    float* raw = this->raw();
+    fsimd acc1_(1.0f), acc2_(1.0f);
+    fsimd val1_, val2_;
+
+
+    int i{0};
+    const int w = fsimd::size();
+
+    #pragma omp parallel for reduction(*:acc1_, acc2_)    
+    for(;  i + 2 * w <= this->data.size(); i += 2 * w ) 
+    {
+        val1_.copy_from(raw + i, std::experimental::element_aligned);
+        val2_.copy_from(raw + i + w, std::experimental::element_aligned);
+
+        acc1_ *= val1_;
+        acc2_ *= val2_;
+    }
+    
+    float res = 1;
+    for(int j{0}; j < w; j++)
+    {   
+        res *= (acc1_[j] * acc2_[j]);
+    }
+
+    for(; i < this->data.size(); i++)
+        res *= this->data[i];
+
+    return res;
+
 }
 
 float tensor::max()
@@ -156,8 +218,7 @@ float* tensor::raw()
     return this->data.data() ;
 }
 
-
-
-
-
-
+std::vector<float>& tensor::values()
+{
+    return this->data;
+}
