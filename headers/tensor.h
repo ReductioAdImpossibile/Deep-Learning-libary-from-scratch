@@ -8,6 +8,8 @@
 
 namespace stdx = std::experimental;
 using fsimd = stdx::native_simd<float>;
+using fmask = fsimd::mask_type;
+
 constexpr std::size_t ALIGN = alignof(fsimd);
 
 class tensor
@@ -28,8 +30,11 @@ public:
 
     const float& operator[](size_t index) const;
     float& operator[](size_t index);
+    
     tensor operator%(const tensor &a) const;
-
+    tensor operator+(const tensor &a) const;
+    tensor operator-(const tensor &a) const;
+    tensor operator*(const float &a) const;
 
     float* raw();
     const float* raw() const; 
@@ -66,5 +71,7 @@ public:
     static void add(const tensor &a, const tensor &b, tensor &result);
     static void sub(const tensor &a, const tensor &b, tensor &result);
     static void scale(const tensor &a, const float value, tensor &result);
+    static void enable_avx();
 };
 
+tensor operator*(float val, const tensor& a);

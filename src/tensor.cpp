@@ -72,10 +72,31 @@ tensor tensor::operator%(const tensor &a) const
     return result;
 }
 
+tensor tensor::operator+(const tensor &a) const
+{
+    tensor result(this->shape);
+    tensor::add(*this, a, result);
+    return result;
+}
+
+tensor tensor::operator-(const tensor &a) const
+{
+    tensor result(this->shape);
+    tensor::sub(*this, a, result);
+    return result;
+}
+
+tensor tensor::operator*(const float &a) const
+{
+    tensor result(this->shape);
+    tensor::scale(*this, a, result);
+    return result;
+}
 
 
 float tensor::sum()
 {
+    //wrong!
     float* raw = this->raw();
     fsimd acc1_(0.0f), acc2_(0.0f);
     fsimd val1_, val2_;
@@ -110,6 +131,7 @@ std::vector<size_t> tensor::get_shape() const
 
 tensor tensor::sum(size_t axis)
 {
+    // wrong!
     std::vector<size_t> res_shape = shape;
     res_shape.erase(res_shape.begin() + axis);
     
@@ -155,11 +177,10 @@ const float* tensor::raw() const
     return this->data.data() ;
 }
 
-
-
-
 float tensor::prod()
 {
+
+    // wrong!
     float* raw = this->raw();
     fsimd acc1_(1.0f), acc2_(1.0f);
     fsimd val1_, val2_;
@@ -228,12 +249,12 @@ float tensor::avg()
 
 float tensor::L1()
 {
-    return 0.0f;
+    
 }
 
 float tensor::L2()
 {
-    return 0.0f;
+
 }
 
 void tensor::print()
@@ -259,17 +280,17 @@ std::vector<float>& tensor::values()
 
 
 
-
-
-
+// ------------------------- FAST OPERATIONS (static) --------------------------------
+   
 void tensor::hadamard(const tensor &a, const tensor &b, tensor &result)
 {
 
-    
+    //wrong!
     if( !(a.get_shape() == b.get_shape() && b.get_shape() == result.get_shape()) )
     {
-        std::string msg = "Tensor shapes do not match for the hadamard procduct. They need to be the same. \n ";
-        msg += shape_to_string(a.get_shape()) + " vs " + shape_to_string(b.get_shape())  + " vs " + shape_to_string(result.get_shape());
+        std::string msg = "Tensor shapes do not match for substraction. They need to be the same. Shapes:  \n ";
+        msg += shape_to_string(a.get_shape()) + " (first parameter) \n" + shape_to_string(b.get_shape())  + " (second parameter) \n";
+        msg += shape_to_string(result.get_shape()) + " (result) \n";
         throw std::runtime_error(msg);
     }
 
@@ -301,7 +322,6 @@ void tensor::hadamard(const tensor &a, const tensor &b, tensor &result)
 
 void tensor::add(const tensor &a, const tensor &b, tensor &result)
 {
-
 }
 
 void tensor::sub(const tensor &a, const tensor &b, tensor &result)
@@ -316,7 +336,15 @@ void tensor::scale(const tensor &a, const float value, tensor &result)
 
 
 
+// -------------------------- FREE OPERATORS --------------------------------------
+tensor operator*(float val, const tensor& a)
+{
+    return a * val;
+}
 
+
+
+// ------------------------ HELPING FUNCTIONS -------------------------------------
 
 std::string shape_to_string(const std::vector<size_t> &shape)
 {
