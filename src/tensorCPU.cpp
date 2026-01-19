@@ -98,35 +98,36 @@ float tensor<CPU>::sum()
 {
     float* raw = this->raw();
     const size_t n = this->data.size();
-    const size_t m = omp_get_max_threads();
     const size_t w = fsimd::size();
 
-    float global_sum{0.0f};
-    #pragma omp parallel                   
+    float global_sum = 0.0f;
+
+    #pragma omp parallel reduction(+:global_sum)
     {
         fsimd simd_sum(0.0f);
-        float local_sum{0.0f};
+        double local_sum = 0.0;
 
-        int num = omp_get_thread_num();
-        size_t start =  num * (n / m); 
-        size_t end = num == m-1 ? n : (num + 1) * (n/m);
+        int tid = omp_get_thread_num();
+        int nthreads = omp_get_max_threads();
+        size_t start = tid * (n / nthreads);
+        size_t end   = tid == nthreads-1 ? n : (tid+1)*(n/nthreads);
 
-        for (size_t i{start}; i + w <= end; i += w)
+        for (size_t i = start; i + w <= end; i += w)
         {
             fsimd v;
             v.copy_from(raw + i, std::experimental::element_aligned);
             simd_sum += v;
         }
 
-        for (size_t  j{0}; j < w; j++)
+        for(size_t j = 0; j < w; j++)
             local_sum += simd_sum[j];
 
-        #pragma omp atomic
-        global_sum += local_sum;
-    }
+        size_t rest = start + ((end - start) / w) * w;
+        for(size_t j = rest; j < end; j++)
+            local_sum += raw[j];
 
-    for (size_t i = (n / w) * w; i < n; i++)        // i = n - (n mod w)
-        global_sum += raw[i];
+        global_sum += static_cast<float>(local_sum);
+    }
 
     return global_sum;
 }
@@ -186,7 +187,40 @@ const float* tensor<CPU>::raw() const
 
 float tensor<CPU>::prod()
 {
+    float* raw = this->raw();
+    const size_t n = this->data.size();
+    const size_t w = fsimd::size();
 
+    float global_prod = 1.0f;
+
+    #pragma omp parallel reduction(*:global_prod)
+    {
+        fsimd simd_prod(1.0f);
+        double local_prod = 1.0;
+
+        int tid = omp_get_thread_num();
+        int nthreads = omp_get_max_threads();
+        size_t start = tid * (n / nthreads);
+        size_t end   = tid == nthreads-1 ? n : (tid+1)*(n/nthreads);
+
+        for (size_t i = start; i + w <= end; i += w)
+        {
+            fsimd v;
+            v.copy_from(raw + i, std::experimental::element_aligned);
+            simd_prod *= v;
+        }
+
+        for(size_t j = 0; j < w; j++)
+            local_prod *= simd_prod[j];
+
+        size_t rest = start + ((end - start) / w) * w;
+        for(size_t j = rest; j < end; j++)
+            local_prod *= raw[j];
+
+        global_prod *= static_cast<float>(local_prod);
+    }
+
+    return global_prod;
 }
 
 float tensor<CPU>::max()
@@ -278,7 +312,7 @@ void tensor<CPU>::hadamard(const tensor<CPU> &a, const tensor<CPU> &b, tensor<CP
     const size_t w = fsimd::size();
 
     #pragma omp parallel for
-    for(int i = 0; i <  n - w; i += w)
+    for(int i = 0; i < n - w ; i += w)
     {
         fsimd a_, b_, result_;
         a_.copy_from(a_raw + i, std::experimental::element_aligned);
