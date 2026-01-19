@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/deeplearninglibary.dir/src/main.cpp.o"
   "CMakeFiles/deeplearninglibary.dir/src/main.cpp.o.d"
-  "CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o"
-  "CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o.d"
+  "CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o"
+  "CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o.d"
   "deeplearninglibary"
   "deeplearninglibary.pdb"
 )

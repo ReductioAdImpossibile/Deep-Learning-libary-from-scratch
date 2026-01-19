@@ -1,5 +1,5 @@
-CMakeFiles/deeplearninglibary.dir/src/main.cpp.o: \
- /home/lucbr/Documents/DeepLearningLibary/src/main.cpp \
+CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: \
+ /home/lucbr/Documents/DeepLearningLibary/src/tensorCPU.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/13/iostream \
  /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
@@ -149,17 +149,15 @@ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/locale_facets.tcc \
  /usr/include/c++/13/bits/basic_ios.tcc \
  /usr/include/c++/13/bits/ostream.tcc /usr/include/c++/13/istream \
- /usr/include/c++/13/bits/istream.tcc \
- /home/lucbr/Documents/DeepLearningLibary/src/../headers/tensor.h \
- /home/lucbr/Documents/DeepLearningLibary/src/../headers/backend.h \
- /home/lucbr/Documents/DeepLearningLibary/src/../headers/tensorCPU.h \
- /usr/include/c++/13/vector /usr/include/c++/13/bits/stl_uninitialized.h \
+ /usr/include/c++/13/bits/istream.tcc /usr/include/c++/13/vector \
+ /usr/include/c++/13/bits/stl_uninitialized.h \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
  /usr/include/c++/13/bits/vector.tcc /usr/include/c++/13/numeric \
  /usr/include/c++/13/bits/stl_numeric.h \
  /usr/include/c++/13/pstl/glue_numeric_defs.h \
  /usr/include/c++/13/pstl/execution_defs.h \
+ /home/lucbr/Documents/DeepLearningLibary/src/../headers/tensorCPU.h \
  /usr/include/c++/13/experimental/simd \
  /usr/include/c++/13/experimental/bits/simd_detail.h \
  /usr/include/c++/13/cstdint \
@@ -323,4 +321,10 @@ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/locale_facets_nonio.tcc \
  /usr/include/c++/13/bits/locale_conv.h \
  /usr/include/c++/13/bits/quoted_string.h /usr/include/c++/13/sstream \
- /usr/include/c++/13/bits/sstream.tcc
+ /usr/include/c++/13/bits/sstream.tcc \
+ /home/lucbr/Documents/DeepLearningLibary/src/../headers/backend.h \
+ /home/lucbr/Documents/DeepLearningLibary/src/../headers/tensor.h \
+ /usr/include/c++/13/random /usr/include/c++/13/bits/random.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h \
+ /usr/include/c++/13/bits/random.tcc \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/omp.h

@@ -3,7 +3,9 @@
 
 CMakeFiles/deeplearninglibary.dir/src/main.cpp.o
  /home/lucbr/Documents/DeepLearningLibary/src/main.cpp
+ /home/lucbr/Documents/DeepLearningLibary/headers/backend.h
  /home/lucbr/Documents/DeepLearningLibary/headers/tensor.h
+ /home/lucbr/Documents/DeepLearningLibary/headers/tensorCPU.h
  /usr/include/alloca.h
  /usr/include/asm-generic/errno-base.h
  /usr/include/asm-generic/errno.h
@@ -376,9 +378,11 @@ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o
  /usr/lib/gcc/x86_64-linux-gnu/13/include/xsavesintrin.h
  /usr/lib/gcc/x86_64-linux-gnu/13/include/xtestintrin.h
 
-CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o
- /home/lucbr/Documents/DeepLearningLibary/src/tensor.cpp
+CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o
+ /home/lucbr/Documents/DeepLearningLibary/src/tensorCPU.cpp
+ /home/lucbr/Documents/DeepLearningLibary/headers/backend.h
  /home/lucbr/Documents/DeepLearningLibary/headers/tensor.h
+ /home/lucbr/Documents/DeepLearningLibary/headers/tensorCPU.h
  /usr/include/alloca.h
  /usr/include/asm-generic/errno-base.h
  /usr/include/asm-generic/errno.h

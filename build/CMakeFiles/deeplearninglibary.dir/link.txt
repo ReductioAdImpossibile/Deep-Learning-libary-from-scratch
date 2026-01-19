@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o -o deeplearninglibary  -fopenmp 
+/usr/bin/c++ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o -o deeplearninglibary  /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a 

@@ -83,31 +83,33 @@ CMakeFiles/deeplearninglibary.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/deeplearninglibary.dir/src/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lucbr/Documents/DeepLearningLibary/src/main.cpp -o CMakeFiles/deeplearninglibary.dir/src/main.cpp.s
 
-CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o: CMakeFiles/deeplearninglibary.dir/flags.make
-CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o: /home/lucbr/Documents/DeepLearningLibary/src/tensor.cpp
-CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o: CMakeFiles/deeplearninglibary.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o -MF CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o.d -o CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o -c /home/lucbr/Documents/DeepLearningLibary/src/tensor.cpp
+CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: CMakeFiles/deeplearninglibary.dir/flags.make
+CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/DeepLearningLibary/src/tensorCPU.cpp
+CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: CMakeFiles/deeplearninglibary.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o -MF CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o.d -o CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o -c /home/lucbr/Documents/DeepLearningLibary/src/tensorCPU.cpp
 
-CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lucbr/Documents/DeepLearningLibary/src/tensor.cpp > CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.i
+CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lucbr/Documents/DeepLearningLibary/src/tensorCPU.cpp > CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.i
 
-CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lucbr/Documents/DeepLearningLibary/src/tensor.cpp -o CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.s
+CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lucbr/Documents/DeepLearningLibary/src/tensorCPU.cpp -o CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.s
 
 # Object files for target deeplearninglibary
 deeplearninglibary_OBJECTS = \
 "CMakeFiles/deeplearninglibary.dir/src/main.cpp.o" \
-"CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o"
+"CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o"
 
 # External object files for target deeplearninglibary
 deeplearninglibary_EXTERNAL_OBJECTS =
 
 deeplearninglibary: CMakeFiles/deeplearninglibary.dir/src/main.cpp.o
-deeplearninglibary: CMakeFiles/deeplearninglibary.dir/src/tensor.cpp.o
+deeplearninglibary: CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o
 deeplearninglibary: CMakeFiles/deeplearninglibary.dir/build.make
+deeplearninglibary: /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so
+deeplearninglibary: /usr/lib/x86_64-linux-gnu/libpthread.a
 deeplearninglibary: CMakeFiles/deeplearninglibary.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable deeplearninglibary"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/deeplearninglibary.dir/link.txt --verbose=$(VERBOSE)

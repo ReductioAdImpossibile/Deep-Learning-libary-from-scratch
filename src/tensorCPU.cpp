@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <numeric>
-#include "../headers/tensor.h"
+#include "../headers/tensorCPU.h"
 
 #include <random>
 #include <experimental/simd>
@@ -12,7 +12,7 @@
 
 std::string shape_to_string(const std::vector<size_t> &shape);
 
-tensor::tensor(const std::vector<size_t> &_shape) : shape(_shape)
+tensor<CPU>::tensor(const std::vector<size_t> &_shape) : shape(_shape)
 {
     this->strides.resize(shape.size());
     size_t prod = 1;
@@ -30,16 +30,16 @@ tensor::tensor(const std::vector<size_t> &_shape) : shape(_shape)
     omp_set_num_threads(10); 
 }
 
-tensor::tensor(const std::vector<size_t> &_shape, float val) : tensor(_shape)
+tensor<CPU>::tensor(const std::vector<size_t> &_shape, float val) : tensor<CPU>(_shape)
 {
     #pragma omp parallel for
-    for(int i{0}; i < this->data.size(); i++)
+    for(int i = 0; i < this->data.size(); i++)
     {
         this->data[i] = val;
     }
 }
 
-tensor::tensor(const std::vector<size_t> &_shape, float begin, float end) : tensor(_shape)
+tensor<CPU>::tensor(const std::vector<size_t> &_shape, float begin, float end) : tensor<CPU>(_shape)
 {
     
     static std::mt19937 gen(std::random_device{}());
@@ -47,7 +47,7 @@ tensor::tensor(const std::vector<size_t> &_shape, float begin, float end) : tens
     
     
     #pragma omp parallel for
-    for(int i{0}; i < this->data.size(); i++)
+    for(int i = 0; i < this->data.size(); i++)
     {
         this->data[i] = dist(gen);
     }
@@ -55,38 +55,38 @@ tensor::tensor(const std::vector<size_t> &_shape, float begin, float end) : tens
 
 
 
-const float& tensor::operator[](size_t index) const
+const float& tensor<CPU>::operator[](size_t index) const
 {
     return this->data[index];
 }
 
-float& tensor::operator[](size_t index)
+float& tensor<CPU>::operator[](size_t index)
 {
     return this->data[index];
 }
 
-tensor tensor::operator%(const tensor &a) const
+tensor<CPU> tensor<CPU>::operator%(const tensor<CPU> &a) const
 {
     tensor result(this->shape);
     tensor::hadamard(*this, a, result);
     return result;
 }
 
-tensor tensor::operator+(const tensor &a) const
+tensor<CPU> tensor<CPU>::operator+(const tensor<CPU> &a) const
 {
     tensor result(this->shape);
     tensor::add(*this, a, result);
     return result;
 }
 
-tensor tensor::operator-(const tensor &a) const
+tensor<CPU> tensor<CPU>::operator-(const tensor<CPU> &a) const
 {
     tensor result(this->shape);
     tensor::sub(*this, a, result);
     return result;
 }
 
-tensor tensor::operator*(const float &a) const
+tensor<CPU> tensor<CPU>::operator*(const float &a) const
 {
     tensor result(this->shape);
     tensor::scale(*this, a, result);
@@ -94,42 +94,49 @@ tensor tensor::operator*(const float &a) const
 }
 
 
-float tensor::sum()
+float tensor<CPU>::sum()
 {
-    //wrong!
     float* raw = this->raw();
-    fsimd acc1_(0.0f), acc2_(0.0f);
-    fsimd val1_, val2_;
+    const size_t n = this->data.size();
+    const size_t m = omp_get_max_threads();
+    const size_t w = fsimd::size();
 
-    int i{0};
-    const int w = fsimd::size();
-
-    #pragma omp parallel for reduction(+:acc1_, acc2_)    
-    for(;  i + 2 * w <= this->data.size(); i += 2 * w ) 
+    float global_sum{0.0f};
+    #pragma omp parallel                   
     {
-        val1_.copy_from(raw + i, std::experimental::element_aligned);
-        val2_.copy_from(raw + i + w, std::experimental::element_aligned);
+        fsimd simd_sum(0.0f);
+        float local_sum{0.0f};
 
-        acc1_ += val1_;
-        acc2_ += val2_;
+        int num = omp_get_thread_num();
+        size_t start =  num * (n / m); 
+        size_t end = num == m-1 ? n : (num + 1) * (n/m);
+
+        for (size_t i{start}; i + w <= end; i += w)
+        {
+            fsimd v;
+            v.copy_from(raw + i, std::experimental::element_aligned);
+            simd_sum += v;
+        }
+
+        for (size_t  j{0}; j < w; j++)
+            local_sum += simd_sum[j];
+
+        #pragma omp atomic
+        global_sum += local_sum;
     }
-    
-    float res = 0;
-    for(int j{0}; j < w; j++)
-        res += acc1_[j] + acc2_[j];
 
-    for(; i < this->data.size(); i++)
-        res += this->data[i];
+    for (size_t i = (n / w) * w; i < n; i++)        // i = n - (n mod w)
+        global_sum += raw[i];
 
-    return res;
+    return global_sum;
 }
 
-std::vector<size_t> tensor::get_shape() const
+std::vector<size_t> tensor<CPU>::get_shape() const
 {
     return this->shape;
 }
 
-tensor tensor::sum(size_t axis)
+tensor<CPU> tensor<CPU>::sum(size_t axis)
 {
     // wrong!
     std::vector<size_t> res_shape = shape;
@@ -139,7 +146,7 @@ tensor tensor::sum(size_t axis)
     std::vector<float>& res_vals = res.values(); 
     
     #pragma omp parallel for
-    for(size_t i{0}; i < res_vals.size(); i++ )
+    for(size_t i = 0; i < res_vals.size(); i++ )
     {
 
         size_t tmp = i;
@@ -167,52 +174,22 @@ tensor tensor::sum(size_t axis)
 }
 
 
-float* tensor::raw()
+float* tensor<CPU>::raw()
 {
     return this->data.data() ;
 }
 
-const float* tensor::raw() const
+const float* tensor<CPU>::raw() const
 {
     return this->data.data() ;
 }
 
-float tensor::prod()
+float tensor<CPU>::prod()
 {
-
-    // wrong!
-    float* raw = this->raw();
-    fsimd acc1_(1.0f), acc2_(1.0f);
-    fsimd val1_, val2_;
-
-
-    int i{0};
-    const int w = fsimd::size();
-
-    #pragma omp parallel for reduction(*:acc1_, acc2_)    
-    for(;  i + 2 * w <= this->data.size(); i += 2 * w ) 
-    {
-        val1_.copy_from(raw + i, std::experimental::element_aligned);
-        val2_.copy_from(raw + i + w, std::experimental::element_aligned);
-
-        acc1_ *= val1_;
-        acc2_ *= val2_;
-    }
-    
-    float res = 1;
-    for(int j{0}; j < w; j++)
-    {   
-        res *= (acc1_[j] * acc2_[j]);
-    }
-
-    for(; i < this->data.size(); i++)
-        res *= this->data[i];
-
-    return res;
 
 }
 
-float tensor::max()
+float tensor<CPU>::max()
 {
     float max_val = -std::numeric_limits<float>::infinity();
     size_t n = this->data.size();
@@ -227,7 +204,7 @@ float tensor::max()
     return max_val;
 }
 
-float tensor::min()
+float tensor<CPU>::min()
 {
     float min_val = -std::numeric_limits<float>::infinity();
     size_t n = this->data.size();
@@ -242,22 +219,22 @@ float tensor::min()
     return min_val;    
 }
 
-float tensor::avg()
+float tensor<CPU>::avg()
 {
     return this->sum() / this->data.size();
 }
 
-float tensor::L1()
+float tensor<CPU>::L1()
 {
     
 }
 
-float tensor::L2()
+float tensor<CPU>::L2()
 {
 
 }
 
-void tensor::print()
+void tensor<CPU>::print()
 {
     for(auto val : data)
         std::cout << val << " ";
@@ -265,13 +242,13 @@ void tensor::print()
 }
 
 
-size_t tensor::get_size() const
+size_t tensor<CPU>::get_size() const
 {
     return this->data.size();
 }
 
 
-std::vector<float>& tensor::values()
+std::vector<float>& tensor<CPU>::values()
 {
     return this->data;
 }
@@ -282,10 +259,8 @@ std::vector<float>& tensor::values()
 
 // ------------------------- FAST OPERATIONS (static) --------------------------------
    
-void tensor::hadamard(const tensor &a, const tensor &b, tensor &result)
+void tensor<CPU>::hadamard(const tensor<CPU> &a, const tensor<CPU> &b, tensor<CPU> &result)
 {
-
-    //wrong!
     if( !(a.get_shape() == b.get_shape() && b.get_shape() == result.get_shape()) )
     {
         std::string msg = "Tensor shapes do not match for substraction. They need to be the same. Shapes:  \n ";
@@ -295,18 +270,17 @@ void tensor::hadamard(const tensor &a, const tensor &b, tensor &result)
     }
 
    
-    int i{0};
-    const int w = fsimd::size();
     const float* a_raw = a.raw();
     const float* b_raw = b.raw();   
     float* result_raw = result.raw();
 
-
-    fsimd a_, b_, result_;
+    const size_t n = a.get_size();
+    const size_t w = fsimd::size();
 
     #pragma omp parallel for
-    for(; i + w < a.get_size(); i += w)
+    for(int i = 0; i <  n - w; i += w)
     {
+        fsimd a_, b_, result_;
         a_.copy_from(a_raw + i, std::experimental::element_aligned);
         b_.copy_from(b_raw + i, std::experimental::element_aligned);
         
@@ -314,22 +288,24 @@ void tensor::hadamard(const tensor &a, const tensor &b, tensor &result)
         result_.copy_to(result_raw + i, std::experimental::element_aligned);
     }
 
-    for(;i < a.get_size(); i++)
-        result[i] = a[i] * b[i];
 
+    for(int j = (n/w) * w ;j < n; j++)
+        result_raw[j] = a_raw[j] * b_raw[j];
+    
+    
     
 }
 
-void tensor::add(const tensor &a, const tensor &b, tensor &result)
+void tensor<CPU>::add(const tensor<CPU> &a, const tensor<CPU> &b, tensor<CPU> &result)
 {
 }
 
-void tensor::sub(const tensor &a, const tensor &b, tensor &result)
+void tensor<CPU>::sub(const tensor<CPU> &a, const tensor<CPU> &b, tensor<CPU> &result)
 {
 
 }
 
-void tensor::scale(const tensor &a, const float value, tensor &result)
+void tensor<CPU>::scale(const tensor<CPU> &a, const float value, tensor<CPU> &result)
 {
 
 }
@@ -337,7 +313,7 @@ void tensor::scale(const tensor &a, const float value, tensor &result)
 
 
 // -------------------------- FREE OPERATORS --------------------------------------
-tensor operator*(float val, const tensor& a)
+tensor<CPU> operator*(float val, const tensor<CPU> &a)
 {
     return a * val;
 }

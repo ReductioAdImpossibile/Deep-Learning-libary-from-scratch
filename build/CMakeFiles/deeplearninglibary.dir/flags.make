@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/lucbr/Documents/DeepLearningLibary/include
 
-CXX_FLAGS = -std=c++17
+CXX_FLAGS = -std=c++17 -fopenmp
 
