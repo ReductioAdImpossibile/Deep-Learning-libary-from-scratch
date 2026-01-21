@@ -343,7 +343,7 @@ void tensor<CPU>::hadamard(const tensor<CPU> &a, const tensor<CPU> &b, tensor<CP
 {
     if( !(a.get_shape() == b.get_shape() && b.get_shape() == result.get_shape()) )
     {
-        std::string msg = "Tensor shapes do not match for substraction. They need to be the same. Shapes:  \n ";
+        std::string msg = "Tensor shapes do not match for the hadamard product. They need to be the same. Shapes:  \n ";
         msg += shape_to_string(a.get_shape()) + " (first parameter) \n" + shape_to_string(b.get_shape())  + " (second parameter) \n";
         msg += shape_to_string(result.get_shape()) + " (result) \n";
         throw std::runtime_error(msg);
@@ -368,26 +368,106 @@ void tensor<CPU>::hadamard(const tensor<CPU> &a, const tensor<CPU> &b, tensor<CP
         result_.copy_to(result_raw + i, std::experimental::element_aligned);
     }
 
-
     for(int j = (n/w) * w ;j < n; j++)
         result_raw[j] = a_raw[j] * b_raw[j];
-    
-    
     
 }
 
 void tensor<CPU>::add(const tensor<CPU> &a, const tensor<CPU> &b, tensor<CPU> &result)
 {
+    if( !(a.get_shape() == b.get_shape() && b.get_shape() == result.get_shape()) )
+    {
+        std::string msg = "Tensor shapes do not match for addition. They need to be the same. Shapes:  \n ";
+        msg += shape_to_string(a.get_shape()) + " (first parameter) \n" + shape_to_string(b.get_shape())  + " (second parameter) \n";
+        msg += shape_to_string(result.get_shape()) + " (result) \n";
+        throw std::runtime_error(msg);
+    }
+
+   
+    const float* a_raw = a.raw();
+    const float* b_raw = b.raw();   
+    float* result_raw = result.raw();
+
+    const size_t n = a.get_size();
+    const size_t w = fsimd::size();
+
+    #pragma omp parallel for
+    for(int i = 0; i < n - w ; i += w)
+    {
+        fsimd a_, b_, result_;
+        a_.copy_from(a_raw + i, std::experimental::element_aligned);
+        b_.copy_from(b_raw + i, std::experimental::element_aligned);
+        
+        result_ = a_ + b_;
+        result_.copy_to(result_raw + i, std::experimental::element_aligned);
+    }
+
+    for(int j = (n/w) * w ;j < n; j++)
+        result_raw[j] = a_raw[j] + b_raw[j];
 }
 
 void tensor<CPU>::sub(const tensor<CPU> &a, const tensor<CPU> &b, tensor<CPU> &result)
 {
+    if( !(a.get_shape() == b.get_shape() && b.get_shape() == result.get_shape()) )
+    {
+        std::string msg = "Tensor shapes do not match for substraction. They need to be the same. Shapes:  \n ";
+        msg += shape_to_string(a.get_shape()) + " (first parameter) \n" + shape_to_string(b.get_shape())  + " (second parameter) \n";
+        msg += shape_to_string(result.get_shape()) + " (result) \n";
+        throw std::runtime_error(msg);
+    }
 
+   
+    const float* a_raw = a.raw();
+    const float* b_raw = b.raw();   
+    float* result_raw = result.raw();
+
+    const size_t n = a.get_size();
+    const size_t w = fsimd::size();
+
+    #pragma omp parallel for
+    for(int i = 0; i < n - w ; i += w)
+    {
+        fsimd a_, b_, result_;
+        a_.copy_from(a_raw + i, std::experimental::element_aligned);
+        b_.copy_from(b_raw + i, std::experimental::element_aligned);
+        
+        result_ = a_ - b_;
+        result_.copy_to(result_raw + i, std::experimental::element_aligned);
+    }
+
+    for(int j = (n/w) * w ;j < n; j++)
+        result_raw[j] = a_raw[j] - b_raw[j];
 }
 
 void tensor<CPU>::scale(const tensor<CPU> &a, const float value, tensor<CPU> &result)
 {
+    if( !(a.get_shape() == result.get_shape()) )
+    {
+        std::string msg = "Tensor shapes do not match for substraction. They need to be the same. Shapes:  \n ";
+        msg += shape_to_string(a.get_shape()) + " (first parameter) \n";
+        msg += shape_to_string(result.get_shape()) + " (result) \n";
+        throw std::runtime_error(msg);
+    }
 
+   
+    const float* a_raw = a.raw();
+    float* result_raw = result.raw();
+
+    const size_t n = a.get_size();
+    const size_t w = fsimd::size();
+
+    #pragma omp parallel for
+    for(int i = 0; i < n - w ; i += w)
+    {
+        fsimd a_, result_;
+        a_.copy_from(a_raw + i, std::experimental::element_aligned);
+        
+        result_ = a_ * value;
+        result_.copy_to(result_raw + i, std::experimental::element_aligned);
+    }
+
+    for(int j = (n/w) * w ;j < n; j++)
+        result_raw[j] = a_raw[j] * value;
 }
 
 
