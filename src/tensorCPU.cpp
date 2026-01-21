@@ -27,16 +27,27 @@ tensor<CPU>::tensor(const std::vector<size_t> &_shape) : shape(_shape)
         std::accumulate(shape.begin(), shape.end(), 1,  std::multiplies<int>())
     );
 
-    omp_set_num_threads(10); 
+    omp_set_num_threads(40); 
 }
 
 tensor<CPU>::tensor(const std::vector<size_t> &_shape, float val) : tensor<CPU>(_shape)
 {
+
+    const size_t n = this->data.size();
+    const size_t w = fsimd::size();
+    float* raw = this->raw();
+
     #pragma omp parallel for
-    for(int i = 0; i < this->data.size(); i++)
+    for(int i = 0; i < n - w; i += w)
     {
-        this->data[i] = val;
+        fsimd v(val);
+        v.copy_to(raw + i, std::experimental::element_aligned);
     }
+
+    for(int i = (n/w) * w; i < n; i++)
+        raw[i] = val;
+
+
 }
 
 tensor<CPU>::tensor(const std::vector<size_t> &_shape, float begin, float end) : tensor<CPU>(_shape)
@@ -44,7 +55,6 @@ tensor<CPU>::tensor(const std::vector<size_t> &_shape, float begin, float end) :
     
     static std::mt19937 gen(std::random_device{}());
     std::uniform_real_distribution<float> dist(begin, end);
-    
     
     #pragma omp parallel for
     for(int i = 0; i < this->data.size(); i++)
@@ -225,32 +235,68 @@ float tensor<CPU>::prod()
 
 float tensor<CPU>::max()
 {
-    float max_val = -std::numeric_limits<float>::infinity();
-    size_t n = this->data.size();
+    const float min_float = -std::numeric_limits<float>::infinity();
+    const size_t n = this->data.size();
+    const size_t w = fsimd::size();
+    float* raw = this->raw();
 
-    #pragma omp parallel for reduction(max : max_val)
-    for(size_t i = 0; i < n; i++)
+    fsimd max_simd(min_float);
+    fsimd v;
+    size_t i{0};
+    float max = min_float;
+
+    for(; i < n - w; i += w)
     {
-        if(this->data[i] > max_val)
-            max_val = this->data[i];
+        v.copy_from(raw + i, std::experimental::element_aligned);
+        where(v > max_simd, max_simd) = v; 
+    }
+    
+    for(int j{0}; j < w; j++)
+    {
+        if(max_simd[j] > max)
+            max = max_simd[j];
     }
 
-    return max_val;
+    for(; i < n; i++)
+    {
+        if(raw[i] > max)
+            max = raw[i];
+    }
+
+    return max;
 }
 
 float tensor<CPU>::min()
 {
-    float min_val = -std::numeric_limits<float>::infinity();
-    size_t n = this->data.size();
+    const float max_float = std::numeric_limits<float>::infinity();
+    const size_t n = this->data.size();
+    const size_t w = fsimd::size();
+    float* raw = this->raw();
 
-    #pragma omp parallel for reduction(min : min_val)
-    for(size_t i = 0; i < n; i++)
+    fsimd min_simd(max_float);
+    fsimd v;
+    size_t i{0};
+    float min = max_float;
+
+    for(; i < n - w; i += w)
     {
-        if(this->data[i] < min_val)
-            min_val = this->data[i];
+        v.copy_from(raw + i, std::experimental::element_aligned);
+        where(v < min_simd, min_simd) = v; 
+    }
+    
+    for(int j{0}; j < w; j++)
+    {
+        if(min_simd[j] < min)
+            min = min_simd[j];
     }
 
-    return min_val;    
+    for(; i < n; i++)
+    {
+        if(raw[i] < min)
+            min = raw[i];
+    }
+
+    return min; 
 }
 
 float tensor<CPU>::avg()
