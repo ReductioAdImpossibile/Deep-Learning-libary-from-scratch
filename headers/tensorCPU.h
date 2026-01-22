@@ -22,8 +22,6 @@ private:
     alignas(ALIGN) std::vector<float> data;
     std::vector<size_t> shape;
 
-
-    
 public:
 
     tensor(const std::vector<size_t> &shape);
@@ -66,14 +64,13 @@ public:
     tensor<CPU> slice(size_t axis);
     tensor<CPU> reshape(const std::vector<size_t> &shape);
 
-    static tensor<CPU> batch_mat_mul(tensor<CPU> &a, tensor<CPU> &b);
+    //static tensor<CPU> batch_mat_mul(tensor<CPU> &a, tensor<CPU> &b);
     static bool equal_shape(const tensor<CPU> &a, const tensor<CPU> &b);
 
     static void hadamard(const tensor<CPU> &a,const tensor<CPU> &b, tensor<CPU> &result);
     static void add(const tensor<CPU> &a, const tensor<CPU> &b, tensor<CPU> &result);
     static void sub(const tensor<CPU> &a, const tensor<CPU> &b, tensor<CPU> &result);
     static void scale(const tensor<CPU> &a, const float value, tensor<CPU> &result);
-    static void enable_avx();
 };
 
 tensor<CPU> operator*(float val, const tensor<CPU>& a);

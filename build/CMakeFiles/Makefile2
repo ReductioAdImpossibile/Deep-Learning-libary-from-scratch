@@ -81,12 +81,12 @@ clean: CMakeFiles/deeplearninglibary.dir/clean
 CMakeFiles/deeplearninglibary.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles --progress-num=1,2,3 "Built target deeplearninglibary"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles --progress-num=1,2,3,4 "Built target deeplearninglibary"
 .PHONY : CMakeFiles/deeplearninglibary.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/deeplearninglibary.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/deeplearninglibary.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles 0
 .PHONY : CMakeFiles/deeplearninglibary.dir/rule

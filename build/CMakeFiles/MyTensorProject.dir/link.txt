@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/MyTensorProject.dir/src/main.cpp.o CMakeFiles/MyTensorProject.dir/src/tensor.cpp.o -o MyTensorProject 

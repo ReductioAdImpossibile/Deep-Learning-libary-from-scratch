@@ -7,10 +7,21 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Include-Verzeichnis 
 include_directories(include) # Executable 
-add_executable( deeplearninglibary src/main.cpp src/tensorCPU.cpp ) 
+add_executable( deeplearninglibary 
+    src/main.cpp 
+    src/tensorCPU.cpp 
+    src/benchmark.cpp
+    ) 
 
 # Compile Options (OpenMP + Warnungen) 
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
     target_link_libraries(deeplearninglibary PRIVATE OpenMP::OpenMP_CXX)
+endif()
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    target_compile_options(deeplearninglibary PRIVATE
+        -O3
+        -march=native
+    )
 endif()
