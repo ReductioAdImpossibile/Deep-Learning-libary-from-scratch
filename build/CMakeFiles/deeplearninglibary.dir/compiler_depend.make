@@ -217,22 +217,13 @@ CMakeFiles/deeplearninglibary.dir/src/benchmark.cpp.o: /home/lucbr/Documents/Dee
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
   /usr/include/x86_64-linux-gnu/bits/sched.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
-  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
-  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -270,8 +261,6 @@ CMakeFiles/deeplearninglibary.dir/src/benchmark.cpp.o: /home/lucbr/Documents/Dee
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2.h \
   /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/atomic_word.h \
@@ -613,22 +602,13 @@ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o: /home/lucbr/Documents/DeepLear
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
   /usr/include/x86_64-linux-gnu/bits/sched.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
-  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
-  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -666,8 +646,6 @@ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o: /home/lucbr/Documents/DeepLear
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2.h \
   /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/atomic_word.h \
@@ -758,6 +736,7 @@ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o: /home/lucbr/Documents/DeepLear
   /usr/lib/gcc/x86_64-linux-gnu/13/include/movdirintrin.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/mwaitintrin.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/mwaitxintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/omp.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/pconfigintrin.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/pkuintrin.h \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/pmmintrin.h \
@@ -1004,22 +983,13 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
   /usr/include/x86_64-linux-gnu/bits/sched.h \
-  /usr/include/x86_64-linux-gnu/bits/select-decl.h \
   /usr/include/x86_64-linux-gnu/bits/select.h \
-  /usr/include/x86_64-linux-gnu/bits/select2.h \
   /usr/include/x86_64-linux-gnu/bits/setjmp.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/stdio2.h \
   /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
   /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
-  /usr/include/x86_64-linux-gnu/bits/stdlib.h \
-  /usr/include/x86_64-linux-gnu/bits/string_fortified.h \
-  /usr/include/x86_64-linux-gnu/bits/strings_fortified.h \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
@@ -1057,8 +1027,6 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
   /usr/include/x86_64-linux-gnu/bits/waitflags.h \
   /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
   /usr/include/x86_64-linux-gnu/bits/wchar.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2-decl.h \
-  /usr/include/x86_64-linux-gnu/bits/wchar2.h \
   /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/atomic_word.h \
@@ -1186,9 +1154,9 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
   /usr/lib/gcc/x86_64-linux-gnu/13/include/xtestintrin.h
 
 
-/usr/lib/gcc/x86_64-linux-gnu/13/include/omp.h:
-
 /home/lucbr/Documents/DeepLearningLibary/src/tensorCPU.cpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/omp.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/xtestintrin.h:
 
@@ -1298,6 +1266,8 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/avx5124fmapsintrin.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx2intrin.h:
+
 /usr/lib/gcc/x86_64-linux-gnu/13/include/amxtileintrin.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/amxint8intrin.h:
@@ -1358,19 +1328,9 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
-/usr/include/x86_64-linux-gnu/bits/typesizes.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
-
 /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fp16intrin.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
-
-/usr/include/c++/13/ext/atomicity.h:
 
 /usr/include/c++/13/cctype:
 
@@ -1400,8 +1360,6 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 
 /usr/include/string.h:
 
-/usr/include/x86_64-linux-gnu/bits/stdio.h:
-
 /usr/include/c++/13/bits/stl_algo.h:
 
 /usr/include/c++/13/experimental/bits/simd_builtin.h:
@@ -1409,8 +1367,6 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 /usr/include/c++/13/bits/locale_facets_nonio.tcc:
 
 /usr/include/c++/13/debug/assertions.h:
-
-/usr/include/x86_64-linux-gnu/bits/select-decl.h:
 
 /usr/include/c++/13/ctime:
 
@@ -1427,8 +1383,6 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 /usr/include/c++/13/cerrno:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-least.h:
-
-/usr/include/x86_64-linux-gnu/bits/strings_fortified.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
@@ -1450,6 +1404,10 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 
 /usr/include/c++/13/bits/unordered_map.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/clwbintrin.h:
+
+/usr/include/c++/13/bits/quoted_string.h:
+
 /usr/lib/gcc/x86_64-linux-gnu/13/include/wbnoinvdintrin.h:
 
 /usr/include/c++/13/bits/new_allocator.h:
@@ -1461,12 +1419,6 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
 
 /usr/include/asm-generic/errno.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
-
-/usr/include/c++/13/ext/numeric_traits.h:
-
-/usr/include/c++/13/bits/stl_iterator.h:
 
 /usr/include/c++/13/bits/functexcept.h:
 
@@ -1526,8 +1478,6 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 
 /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
 
-/usr/include/x86_64-linux-gnu/bits/wchar2-decl.h:
-
 /usr/include/c++/13/bits/erase_if.h:
 
 /usr/include/c++/13/bits/cxxabi_forced.h:
@@ -1557,6 +1507,8 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 /usr/include/c++/13/bits/refwrap.h:
 
 /usr/include/c++/13/experimental/bits/simd_detail.h:
+
+/usr/include/c++/13/bits/ptr_traits.h:
 
 /usr/include/c++/13/bits/locale_conv.h:
 
@@ -1594,17 +1546,21 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 
 /usr/include/c++/13/bits/stl_tempbuf.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
+
 /usr/lib/gcc/x86_64-linux-gnu/13/include/avxintrin.h:
 
 /usr/include/c++/13/bits/random.h:
 
 /usr/include/c++/13/bits/codecvt.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fintrin.h:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/cetintrin.h:
 
-/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vlintrin.h:
 
-/home/lucbr/Documents/DeepLearningLibary/src/benchmark.cpp:
+/usr/include/c++/13/cmath:
 
 /usr/include/c++/13/backward/binders.h:
 
@@ -1628,6 +1584,8 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 
 /usr/include/c++/13/bits/stl_numeric.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
+
 /home/lucbr/Documents/DeepLearningLibary/headers/benchmark.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/fma4intrin.h:
@@ -1639,8 +1597,6 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
 
 /usr/include/c++/13/bits/algorithmfwd.h:
-
-/usr/include/x86_64-linux-gnu/bits/wchar2.h:
 
 /usr/include/x86_64-linux-gnu/bits/fp-logb.h:
 
@@ -1675,6 +1631,12 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 /usr/include/c++/13/bits/exception.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fintrin.h:
+
+/home/lucbr/Documents/DeepLearningLibary/src/benchmark.cpp:
+
+/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
 /usr/include/c++/13/bits/cxxabi_init_exception.h:
 
@@ -1780,10 +1742,6 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 
 /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
-
-/usr/include/c++/13/limits:
-
 /usr/include/c++/13/pstl/glue_numeric_defs.h:
 
 /usr/include/c++/13/bits/random.tcc:
@@ -1874,7 +1832,11 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 
 /usr/include/x86_64-linux-gnu/asm/errno.h:
 
-/usr/include/x86_64-linux-gnu/bits/stdlib.h:
+/usr/include/c++/13/ext/numeric_traits.h:
+
+/usr/include/c++/13/bits/stl_iterator.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
 
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
 
@@ -1887,6 +1849,10 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 /usr/include/c++/13/bits/requires_hosted.h:
 
 /usr/include/x86_64-linux-gnu/bits/floatn-common.h:
+
+/usr/include/c++/13/limits:
+
+/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
 
@@ -1910,14 +1876,6 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 
 /usr/include/x86_64-linux-gnu/bits/sched.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/13/include/cetintrin.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vlintrin.h:
-
-/usr/include/c++/13/cmath:
-
-/usr/include/x86_64-linux-gnu/bits/select2.h:
-
 /usr/include/time.h:
 
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
@@ -1930,27 +1888,7 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 
 /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
 
-/usr/include/c++/13/bits/ptr_traits.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdio2-decl.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/13/include/clwbintrin.h:
-
-/usr/include/c++/13/bits/quoted_string.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdio2.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/FILE.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/13/include/avx2intrin.h:
-
-/usr/include/x86_64-linux-gnu/bits/string_fortified.h:
 
 /home/lucbr/Documents/DeepLearningLibary/headers/backend.h:
 
@@ -1981,3 +1919,11 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: /home/lucbr/Documents/Dee
 /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
+
+/usr/include/c++/13/ext/atomicity.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/typesizes.h:

@@ -14,7 +14,7 @@ double get_time(time_point start, time_point end)
 
 double relative_error(double res_tensor, double res_seq)
 {
-    return std::abs(res_tensor - res_seq) / res_seq;
+    return std::sqrt((res_tensor - res_seq) * (res_tensor - res_seq) / (res_seq * res_seq));
 }
 
 double relative_error(Tensor& res_tensor, std::vector<float>& res_seq)
@@ -90,24 +90,24 @@ void benchmark_scale(const std::vector<float>& v, std::vector<float>& out, doubl
 
 void benchmark_tensor_run()
 {
-    const size_t N = 100'000'000;
+    const size_t N = 200000000;
     const size_t iters = 10;
 
-    Tensor tensor1({N,1}, -100, 100);
-    Tensor tensor2({N,1}, -100, 100);
+    Tensor tensor1({N,1}, -10, 10);
+    Tensor tensor2({N,1}, -10, 10);
     Tensor result({N,1});
 
-    std::vector<float> tensor1_v = tensor1.values();
-    std::vector<float> tensor2_v = tensor2.values();
+    std::vector<float> tensor1_v = tensor1.vector();
+    std::vector<float> tensor2_v = tensor2.vector();
     std::vector<float> result_v(N);
 
     time_point start, end;
     float res_seq, res_tensor;
 
-    std::vector<double> times_seq(8);
-    std::vector<double> times_tensor(8);
-    std::vector<double> relative_erros(8);
-    std::vector<std::string> labels = {"tensor sum         ", "L1 of tensor       ", "L2 of tensor       ", "product of tensor  ", "hadamard product   ", "tensor addition    ", "tensor substraction", "tensor scaling     "  };
+    std::vector<double> times_seq(7);
+    std::vector<double> times_tensor(7);
+    std::vector<double> relative_erros(7);
+    std::vector<std::string> labels = {"tensor sum         ", "L1 of tensor       ", "L2 of tensor       ", "hadamard product   ", "tensor addition    ", "tensor substraction", "tensor scaling     "  };
 
 
     // -------------------- SUM --------------------
@@ -117,6 +117,7 @@ void benchmark_tensor_run()
     res_seq = benchmark_sum(tensor1_v);
     end = Clock::now();
     times_seq[0] = get_time(start, end);
+
 
     start = Clock::now();
     res_tensor = tensor1.sum();
@@ -157,36 +158,20 @@ void benchmark_tensor_run()
 
     relative_erros[2] = relative_error(res_tensor, res_seq);
 
-    // ------------------- product --------------------
-    std::cout << "Running product ... " << std::endl;
-    start = Clock::now();
-    res_seq = benchmark_product(tensor1_v);
-    end = Clock::now();
-    times_seq[3] = get_time(start, end);
-
-    start = Clock::now();
-    res_tensor = tensor1.prod();
-    end = Clock::now();
-    times_tensor[3] = get_time(start, end);
-
-    relative_erros[3] = relative_error(res_tensor, res_seq);
-
-    
-    
     
     // --------------------- hadamard product --------------------
     std::cout << "Running hadamard product ... " << std::endl;
     start = Clock::now();
     benchmark_hadamard(tensor1_v, tensor2_v, result_v);
     end = Clock::now();
-    times_seq[4] = get_time(start, end);
+    times_seq[3] = get_time(start, end);
 
     start = Clock::now();
     Tensor::hadamard(tensor1, tensor2, result);
     end = Clock::now();
-    times_tensor[4] = get_time(start, end);
+    times_tensor[3] = get_time(start, end);
 
-    relative_erros[4] = relative_error(result, result_v);
+    relative_erros[3] = relative_error(result, result_v);
 
 
     
@@ -195,14 +180,14 @@ void benchmark_tensor_run()
     start = Clock::now();
     benchmark_add(tensor1_v, tensor2_v, result_v);
     end = Clock::now();
-    times_seq[5] = get_time(start, end);
+    times_seq[4] = get_time(start, end);
 
     start = Clock::now();
     Tensor::add(tensor1, tensor2, result);
     end = Clock::now();
-    times_tensor[5] = get_time(start, end);
+    times_tensor[4] = get_time(start, end);
 
-    relative_erros[5] = relative_error(result, result_v);
+    relative_erros[4] = relative_error(result, result_v);
 
 
 
@@ -212,14 +197,14 @@ void benchmark_tensor_run()
     start = Clock::now();
     benchmark_sub(tensor1_v, tensor2_v, result_v);
     end = Clock::now();
-    times_seq[6] = get_time(start, end);
+    times_seq[5] = get_time(start, end);
 
     start = Clock::now();
     Tensor::sub(tensor1, tensor2, result);
     end = Clock::now();
-    times_tensor[6] = get_time(start, end);
+    times_tensor[5] = get_time(start, end);
 
-    relative_erros[6] = relative_error(result, result_v);
+    relative_erros[5] = relative_error(result, result_v);
 
 
 
@@ -230,21 +215,21 @@ void benchmark_tensor_run()
     start = Clock::now();
     benchmark_scale(tensor1_v, result_v, 0.61);
     end = Clock::now();
-    times_seq[7] = get_time(start, end);
+    times_seq[6] = get_time(start, end);
 
     start = Clock::now();
     Tensor::scale(tensor1, 0.61, result);
     end = Clock::now();
-    times_tensor[7] = get_time(start, end);
+    times_tensor[6] = get_time(start, end);
 
-    relative_erros[7] = relative_error(result, result_v);
+    relative_erros[6] = relative_error(result, result_v);
 
     std::cout << " ================== RESULTS ================ " << std::endl;
 
     std::cout << "Operation     " << "       Speed up    " << "Relative Error    " << std::endl;
     for(int i = 0; i < relative_erros.size(); i++)
     {
-        std::cout << labels.at(i) << " " << times_tensor[i] / times_seq[i] << "      " << relative_erros[i] << std::endl; 
+        std::cout << labels.at(i) << " " << times_seq[i] / times_tensor[i] << "      " << relative_erros[i] << std::endl; 
     }
 
     

@@ -12,6 +12,7 @@ using fsimd = stdx::native_simd<float>;
 using fmask = fsimd::mask_type;
 
 constexpr std::size_t ALIGN = alignof(fsimd);
+constexpr size_t w = fsimd::size();
 
 template<>
 class tensor<CPU>
@@ -19,7 +20,8 @@ class tensor<CPU>
 private:
         
     std::vector<size_t> strides;
-    alignas(ALIGN) std::vector<float> data;
+    float* data;
+    size_t n;
     std::vector<size_t> shape;
 
 public:
@@ -54,11 +56,10 @@ public:
     void set(float val);
     void set_zero();
 
-    size_t get_size() const;
-   
+    size_t size() const;
 
     std::vector<size_t> get_shape() const;
-    std::vector<float>& values();   
+    std::vector<float> vector();   
 
     tensor<CPU> sum(size_t axis);
     tensor<CPU> slice(size_t axis);

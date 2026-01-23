@@ -21,7 +21,7 @@ endif()
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(deeplearninglibary PRIVATE
-        -O3
+        -O0 
         -march=native
     )
 endif()
