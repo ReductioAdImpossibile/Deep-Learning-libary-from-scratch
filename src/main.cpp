@@ -15,9 +15,5 @@ int main()
 
     mat1.print();
     std::cout <<  mat1.prod() << std::endl;
-    //mat2.print();
 
-    //Matrix::mat_mul(mat1, mat2, mat3);
-    //std::cout << std::endl;
-    //mat3.print();
 }
