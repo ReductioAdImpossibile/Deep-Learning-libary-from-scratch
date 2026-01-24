@@ -4,24 +4,49 @@
 
 
 
-matrix<CPU>::matrix(const std::vector<size_t> &shape) : tensor(shape), c(shape[1]), r(shape[0])
+matrix<CPU>::matrix(const std::vector<size_t> &shape) : tensor(shape)
 {
-    if(shape.size() > 2)
+    if(shape.size() > 2 )
         throw std::runtime_error("Matrix shape needs to be 2 dimensional.");
+    
+    if(shape.size() == 2)
+        this->c = shape[1];
+    else
+        this->c = 1;
+
+    this->r = shape[0];
 }
 
 matrix<CPU>::matrix(const std::vector<size_t> &shape, float val) : tensor(shape, val), c(shape[1]), r(shape[0])
 {
-    if(shape.size() > 2)
+    if(shape.size() > 2 )
         throw std::runtime_error("Matrix shape needs to be 2 dimensional.");
+    
+    if(shape.size() == 2)
+        this->c = shape[1];
+    else
+        this->c = 1;
+
+    this->r = shape[0];
 }
 
-matrix<CPU>::matrix(const std::vector<size_t> &shape, float start, float end) : tensor(shape, start, end), c(shape[1]), r(shape[0])
+matrix<CPU>::matrix(const std::vector<size_t> &shape, float start, float end) : tensor(shape, start, end)
 {
-    if(shape.size() > 2)
+    if(shape.size() > 2 )
         throw std::runtime_error("Matrix shape needs to be 2 dimensional.");
+    
+    if(shape.size() == 2)
+        this->c = shape[1];
+    else
+        this->c = 1;
+
+    this->r = shape[0];
 }
 
+matrix<CPU> matrix<CPU>::operator*(const matrix<CPU> &a) const
+{
+    return matrix<CPU>();
+}
 
 size_t matrix<CPU>::rows() const
 {

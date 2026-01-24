@@ -21,7 +21,7 @@ public:
     void transpose();
     static void transpose(const matrix &a, matrix &result);
 
-    tensor<CPU> operator*(const matrix<CPU> &a) const;
+    matrix<CPU> operator*(const matrix<CPU> &a) const;
     size_t rows() const;
     size_t columns() const;
 

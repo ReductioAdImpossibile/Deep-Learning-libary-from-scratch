@@ -6,7 +6,7 @@ template<typename Backend>
 class tensor;
 
 #ifdef ENABLE_CUDA
-    #include "tensor_cuda.cuh"
+    #include "tensorCUDA.cu"
     using Tensor = tensor<CUDA>;
 #else
     #include "tensorCPU.h"
