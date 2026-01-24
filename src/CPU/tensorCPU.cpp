@@ -241,7 +241,7 @@ float tensor<CPU>::max()
     int i{0};
     float max = min_float;
 
-    for(; i < this->n - w; i += w)
+    for(; i + w < this->n ; i += w)
     {
         v.copy_from(this->data + i, std::experimental::element_aligned);
         where(v > max_simd, max_simd) = v; 
@@ -271,7 +271,7 @@ float tensor<CPU>::min()
     int i{0};
     float min = max_float;
 
-    for(; i < this->n - w; i += w)
+    for(; i + w < this->n; i += w)
     {
         v.copy_from(this->data + i, std::experimental::element_aligned);
         where(v < min_simd, min_simd) = v; 
@@ -374,14 +374,15 @@ void tensor<CPU>::print()
 
 void tensor<CPU>::set(float val)
 {
+    const ssize_t limit = (n / w) * w;
     #pragma omp parallel for
-    for(int i = 0; i <= this->n - w; i += w)
+    for(int i = 0; i < limit; i += w)
     {
         fsimd v(val);
         v.copy_to(data + i, std::experimental::element_aligned);
     }
 
-    for(int i = (n/w) * w; i < this->n; i++)
+    for(int i = limit; i < this->n; i++)
         data[i] = val;
 }
 

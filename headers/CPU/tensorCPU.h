@@ -12,7 +12,7 @@ using fsimd = stdx::native_simd<float>;
 using fmask = fsimd::mask_type;
 
 constexpr std::size_t ALIGN = alignof(fsimd);
-constexpr size_t w = fsimd::size();
+constexpr ssize_t w = fsimd::size();
 
 template<>
 class tensor<CPU>

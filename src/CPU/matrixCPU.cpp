@@ -45,16 +45,18 @@ void matrix<CPU>::mat_mul(const matrix& a, const matrix &b, matrix& result)
     size_t cols = result.columns();
     size_t rows = result.rows();
 
-    for(int row = 0; row < rows; row++)
+
+    #pragma omp parallel for schedule(static)
+    for(size_t row = 0; row < rows; row++)
     {
-        for(int col = 0; col < cols; col++)
+        for(size_t col = 0; col < cols; col++)
         {
             float sum = 0;
             fsimd sum_simd(0);
             fsimd _a, _b;
-
+            
             float* a_pos = a.raw() + row * a.columns();
-            float* b_pos = b.raw() + col * a.columns();
+            float* b_pos = transposed_b.raw() + col * a.columns();
             size_t i = 0;
 
             for(; i + w <= a.columns() ; i += w)

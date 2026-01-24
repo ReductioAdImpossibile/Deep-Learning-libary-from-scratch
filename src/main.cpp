@@ -8,16 +8,16 @@
 
 int main()
 {
-    Matrix mat1({4,5}, 0, 1);
-    Matrix mat2({5,4}, 0,1);
+    Matrix mat1({4,1}, 0, 1);
+    Matrix mat2({1,4}, 0,1);
     Matrix mat3({4,4});
 
 
-    mat1.print();
-    std::cout << std::endl;
-    mat2.print();
+    //mat1.print();
+    std::cout <<  "start" <<std::endl;
+    //mat2.print();
 
     Matrix::mat_mul(mat1, mat2, mat3);
     std::cout << std::endl;
-    mat3.print();
+    //mat3.print();
 }
