@@ -1,5 +1,5 @@
-CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: \
- /home/lucbr/Documents/DeepLearningLibary/src/tensorCPU.cpp \
+CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.o: \
+ /home/lucbr/Documents/DeepLearningLibary/src/CPU/tensorCPU.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/13/iostream \
  /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \

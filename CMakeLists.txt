@@ -6,11 +6,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF) 
 
 # Include-Verzeichnis 
-include_directories(include) # Executable 
+include_directories(headers)
+include_directories(headers/CPU)
+include_directories(headers/CUDA)
+
 add_executable( deeplearninglibary 
     src/main.cpp 
-    src/tensorCPU.cpp 
     src/benchmark.cpp
+    src/CPU/tensorCPU.cpp 
+    src/CPU/matrixCPU.cpp 
     ) 
 
 # Compile Options (OpenMP + Warnungen) 

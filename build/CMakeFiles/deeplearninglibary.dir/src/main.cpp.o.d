@@ -150,9 +150,9 @@ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/basic_ios.tcc \
  /usr/include/c++/13/bits/ostream.tcc /usr/include/c++/13/istream \
  /usr/include/c++/13/bits/istream.tcc \
- /home/lucbr/Documents/DeepLearningLibary/src/../headers/tensor.h \
- /home/lucbr/Documents/DeepLearningLibary/src/../headers/backend.h \
- /home/lucbr/Documents/DeepLearningLibary/src/../headers/tensorCPU.h \
+ /home/lucbr/Documents/DeepLearningLibary/headers/tensor.h \
+ /home/lucbr/Documents/DeepLearningLibary/headers/backend.h \
+ /home/lucbr/Documents/DeepLearningLibary/headers/CPU/tensorCPU.h \
  /usr/include/c++/13/vector /usr/include/c++/13/bits/stl_uninitialized.h \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
@@ -324,7 +324,9 @@ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/locale_conv.h \
  /usr/include/c++/13/bits/quoted_string.h /usr/include/c++/13/sstream \
  /usr/include/c++/13/bits/sstream.tcc \
- /home/lucbr/Documents/DeepLearningLibary/src/../headers/benchmark.h \
+ /home/lucbr/Documents/DeepLearningLibary/headers/matrix.h \
+ /home/lucbr/Documents/DeepLearningLibary/headers/CPU/matrixCPU.h \
+ /home/lucbr/Documents/DeepLearningLibary/headers/benchmark.h \
  /usr/include/c++/13/random /usr/include/c++/13/bits/random.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h \
  /usr/include/c++/13/bits/random.tcc /usr/include/c++/13/chrono \

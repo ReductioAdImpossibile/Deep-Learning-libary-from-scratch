@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/lucbr/Documents/DeepLearningLibary/include
+CXX_INCLUDES = -I/home/lucbr/Documents/DeepLearningLibary/headers -I/home/lucbr/Documents/DeepLearningLibary/headers/CPU -I/home/lucbr/Documents/DeepLearningLibary/headers/CUDA
 
 CXX_FLAGS = -std=c++17 -O0 -march=native -fopenmp
 

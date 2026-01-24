@@ -1,5 +1,4 @@
-
-#include "../headers/benchmark.h"
+#include "benchmark.h"
 #include <chrono>
 
 volatile double sink;
@@ -231,7 +230,5 @@ void benchmark_tensor_run()
     {
         std::cout << labels.at(i) << " " << times_seq[i] / times_tensor[i] << "      " << relative_erros[i] << std::endl; 
     }
-
-    
+   
 }
-

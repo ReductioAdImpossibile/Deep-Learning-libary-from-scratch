@@ -17,7 +17,7 @@ constexpr size_t w = fsimd::size();
 template<>
 class tensor<CPU>
 {
-private:
+protected:
         
     std::vector<size_t> strides;
     float* data;
@@ -39,7 +39,7 @@ public:
     tensor<CPU> operator*(const float &a) const;
 
     float* raw();
-    const float* raw() const; 
+    float* raw() const; 
     
     float index(const std::vector<int> &indices); 
 
@@ -52,7 +52,7 @@ public:
     float L2();
 
     
-    void print();
+    virtual void print();
     void set(float val);
     void set_zero();
 
@@ -62,8 +62,8 @@ public:
     std::vector<float> vector();   
 
     tensor<CPU> sum(size_t axis);
-    tensor<CPU> slice(size_t axis);
-    tensor<CPU> reshape(const std::vector<size_t> &shape);
+    //tensor<CPU> slice(size_t axis);
+    //tensor<CPU> reshape(const std::vector<size_t> &shape);  
 
     //static tensor<CPU> batch_mat_mul(tensor<CPU> &a, tensor<CPU> &b);
     static bool equal_shape(const tensor<CPU> &a, const tensor<CPU> &b);

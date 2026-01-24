@@ -1,7 +1,8 @@
-CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: \
- /home/lucbr/Documents/DeepLearningLibary/src/tensorCPU.cpp \
- /usr/include/stdc-predef.h /usr/include/c++/13/iostream \
- /usr/include/c++/13/bits/requires_hosted.h \
+CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.o: \
+ /home/lucbr/Documents/DeepLearningLibary/src/CPU/matrixCPU.cpp \
+ /usr/include/stdc-predef.h \
+ /home/lucbr/Documents/DeepLearningLibary/headers/CPU/tensorCPU.h \
+ /usr/include/c++/13/iostream /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -157,7 +158,6 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: \
  /usr/include/c++/13/bits/stl_numeric.h \
  /usr/include/c++/13/pstl/glue_numeric_defs.h \
  /usr/include/c++/13/pstl/execution_defs.h \
- /home/lucbr/Documents/DeepLearningLibary/headers/CPU/tensorCPU.h \
  /usr/include/c++/13/experimental/simd \
  /usr/include/c++/13/experimental/bits/simd_detail.h \
  /usr/include/c++/13/cstdint \
@@ -324,7 +324,5 @@ CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o: \
  /usr/include/c++/13/bits/sstream.tcc \
  /home/lucbr/Documents/DeepLearningLibary/headers/backend.h \
  /home/lucbr/Documents/DeepLearningLibary/headers/tensor.h \
- /usr/include/c++/13/random /usr/include/c++/13/bits/random.h \
- /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h \
- /usr/include/c++/13/bits/random.tcc \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/omp.h
+ /home/lucbr/Documents/DeepLearningLibary/headers/CPU/matrixCPU.h \
+ /home/lucbr/Documents/DeepLearningLibary/headers/matrix.h

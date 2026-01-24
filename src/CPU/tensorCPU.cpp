@@ -2,11 +2,10 @@
 #include <iostream>
 #include <vector>
 #include <numeric>
-#include "../headers/tensorCPU.h"
+#include "tensorCPU.h"
 
 #include <random>
 #include <experimental/simd>
-#include <xmmintrin.h>
 #include <omp.h>
 #include <stdexcept>
 #include <string>
@@ -184,9 +183,17 @@ float* tensor<CPU>::raw()
     return this->data;
 }
 
-const float* tensor<CPU>::raw() const
+float* tensor<CPU>::raw() const
 {
     return this->data;
+}
+
+float tensor<CPU>::index(const std::vector<int> &indices)
+{
+    size_t p = 0;
+    for(int i = 0; i < strides.size(); i++)
+        p += indices[i] * strides[i]; 
+    return data[p];
 }
 
 float tensor<CPU>::prod()
@@ -231,7 +238,7 @@ float tensor<CPU>::max()
 
     fsimd max_simd(min_float);
     fsimd v;
-    size_t i{0};
+    int i{0};
     float max = min_float;
 
     for(; i < this->n - w; i += w)
@@ -261,7 +268,7 @@ float tensor<CPU>::min()
 
     fsimd min_simd(max_float);
     fsimd v;
-    size_t i{0};
+    int i{0};
     float min = max_float;
 
     for(; i < this->n - w; i += w)

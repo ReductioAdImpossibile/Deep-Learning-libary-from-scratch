@@ -129,6 +129,54 @@ deeplearninglibary/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/build
 .PHONY : deeplearninglibary/fast
 
+src/CPU/matrixCPU.o: src/CPU/matrixCPU.cpp.o
+.PHONY : src/CPU/matrixCPU.o
+
+# target to build an object file
+src/CPU/matrixCPU.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.o
+.PHONY : src/CPU/matrixCPU.cpp.o
+
+src/CPU/matrixCPU.i: src/CPU/matrixCPU.cpp.i
+.PHONY : src/CPU/matrixCPU.i
+
+# target to preprocess a source file
+src/CPU/matrixCPU.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.i
+.PHONY : src/CPU/matrixCPU.cpp.i
+
+src/CPU/matrixCPU.s: src/CPU/matrixCPU.cpp.s
+.PHONY : src/CPU/matrixCPU.s
+
+# target to generate assembly for a file
+src/CPU/matrixCPU.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.s
+.PHONY : src/CPU/matrixCPU.cpp.s
+
+src/CPU/tensorCPU.o: src/CPU/tensorCPU.cpp.o
+.PHONY : src/CPU/tensorCPU.o
+
+# target to build an object file
+src/CPU/tensorCPU.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.o
+.PHONY : src/CPU/tensorCPU.cpp.o
+
+src/CPU/tensorCPU.i: src/CPU/tensorCPU.cpp.i
+.PHONY : src/CPU/tensorCPU.i
+
+# target to preprocess a source file
+src/CPU/tensorCPU.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.i
+.PHONY : src/CPU/tensorCPU.cpp.i
+
+src/CPU/tensorCPU.s: src/CPU/tensorCPU.cpp.s
+.PHONY : src/CPU/tensorCPU.s
+
+# target to generate assembly for a file
+src/CPU/tensorCPU.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.s
+.PHONY : src/CPU/tensorCPU.cpp.s
+
 src/benchmark.o: src/benchmark.cpp.o
 .PHONY : src/benchmark.o
 
@@ -177,30 +225,6 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/tensorCPU.o: src/tensorCPU.cpp.o
-.PHONY : src/tensorCPU.o
-
-# target to build an object file
-src/tensorCPU.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.o
-.PHONY : src/tensorCPU.cpp.o
-
-src/tensorCPU.i: src/tensorCPU.cpp.i
-.PHONY : src/tensorCPU.i
-
-# target to preprocess a source file
-src/tensorCPU.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.i
-.PHONY : src/tensorCPU.cpp.i
-
-src/tensorCPU.s: src/tensorCPU.cpp.s
-.PHONY : src/tensorCPU.s
-
-# target to generate assembly for a file
-src/tensorCPU.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/tensorCPU.cpp.s
-.PHONY : src/tensorCPU.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -210,15 +234,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... deeplearninglibary"
+	@echo "... src/CPU/matrixCPU.o"
+	@echo "... src/CPU/matrixCPU.i"
+	@echo "... src/CPU/matrixCPU.s"
+	@echo "... src/CPU/tensorCPU.o"
+	@echo "... src/CPU/tensorCPU.i"
+	@echo "... src/CPU/tensorCPU.s"
 	@echo "... src/benchmark.o"
 	@echo "... src/benchmark.i"
 	@echo "... src/benchmark.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/tensorCPU.o"
-	@echo "... src/tensorCPU.i"
-	@echo "... src/tensorCPU.s"
 .PHONY : help
 
 

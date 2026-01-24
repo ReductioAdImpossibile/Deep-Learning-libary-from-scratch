@@ -1,10 +1,10 @@
 CMakeFiles/deeplearninglibary.dir/src/benchmark.cpp.o: \
  /home/lucbr/Documents/DeepLearningLibary/src/benchmark.cpp \
  /usr/include/stdc-predef.h \
- /home/lucbr/Documents/DeepLearningLibary/src/../headers/benchmark.h \
- /home/lucbr/Documents/DeepLearningLibary/src/../headers/tensor.h \
- /home/lucbr/Documents/DeepLearningLibary/src/../headers/backend.h \
- /home/lucbr/Documents/DeepLearningLibary/src/../headers/tensorCPU.h \
+ /home/lucbr/Documents/DeepLearningLibary/headers/benchmark.h \
+ /home/lucbr/Documents/DeepLearningLibary/headers/tensor.h \
+ /home/lucbr/Documents/DeepLearningLibary/headers/backend.h \
+ /home/lucbr/Documents/DeepLearningLibary/headers/CPU/tensorCPU.h \
  /usr/include/c++/13/iostream /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
