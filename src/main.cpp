@@ -6,7 +6,11 @@
 
 int main()
 {
-    classificator<CPU> c;
-    c.configure_input_layer(12);
-    
+    Matrix mat({2,3}, 0, 1);
+
+    Matrix mat2 = mat;
+    mat[0] = 1;
+
+    mat.print();
+    mat2.print();
 }

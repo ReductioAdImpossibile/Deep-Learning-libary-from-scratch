@@ -15,9 +15,11 @@ std::string shape_to_string(const std::vector<size_t> &shape);
 tensor<CPU>::tensor()
 {}
 
-tensor<CPU>::tensor(const tensor<CPU> &other)
+tensor<CPU>::tensor(const tensor<CPU> &other) 
+    : strides(other.strides), shape(other.shape), n(other.n)
 {
-    
+    this->data = (float*) _mm_malloc(n * sizeof(float), ALIGN);
+    std::copy(other.data, other.data + n, data);
 }
 
 tensor<CPU>::tensor(const std::vector<size_t> &_shape) : shape(_shape)

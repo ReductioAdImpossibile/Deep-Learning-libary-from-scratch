@@ -175,13 +175,14 @@ matrix<CPU> activation<CPU>::Tanh(const matrix<CPU> &a)
 
 matrix<CPU> activation<CPU>::Softmax(const matrix<CPU> &a)
 {
-    matrix<CPU> result;
+    
     const size_t limit = (a.size() / w) * w;
     size_t i = 0;
     fsimd exp_sum_simd(0), v;
-
-    float* a_data = a.raw();
+    matrix<CPU> result = a;
     float* result_data = result.raw();
+    float* a_data = a.raw();
+    
 
     for(; i < limit; i += w)
     {
@@ -193,9 +194,19 @@ matrix<CPU> activation<CPU>::Softmax(const matrix<CPU> &a)
     for(; i < a.size(); i++)
         exp_sum += std::exp(-a_data[i]);
     
+    i = 0;
+    for(; i < limit; i += w)
+    {
+        v.copy_from(a_data + i, stdx::element_aligned);
+        v = stdx::exp(-v) / exp_sum;
+        v.copy_to(result_data + i, stdx::element_aligned); 
+    }
 
-    
-    return matrix<CPU>();
+    for(; i < result.size(); i++)
+        result_data[i] = std::exp(-a_data[i]) / exp_sum;
+
+
+    return result;
 }
 
 
@@ -208,6 +219,9 @@ matrix<CPU> activation<CPU>::Softmax(const matrix<CPU> &a)
 
 matrix<CPU> activation<CPU>::dReLU(const matrix<CPU> &a)
 {
+
+    matrix<CPU> res(a.get_shape());
+    
     return matrix<CPU>();
 }
 
@@ -232,11 +246,6 @@ matrix<CPU> activation<CPU>::dHard_Sigmoid(const matrix<CPU> &a)
 }
 
 matrix<CPU> activation<CPU>::dTanh(const matrix<CPU> &a)
-{
-    return matrix<CPU>();
-}
-
-matrix<CPU> activation<CPU>::dHard_Tanh(const matrix<CPU> &a)
 {
     return matrix<CPU>();
 }
