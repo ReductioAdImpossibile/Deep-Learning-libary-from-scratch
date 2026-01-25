@@ -11,7 +11,8 @@ protected:
     size_t c, r;
 
 public:
-    matrix<CPU>();
+    
+    matrix() : tensor<CPU>() {}
     matrix<CPU>(const std::vector<size_t> &shape);
     matrix<CPU>(const std::vector<size_t> &shape, float val);
     matrix<CPU>(const std::vector<size_t> &shape, float start, float end);
@@ -28,14 +29,5 @@ public:
     size_t columns() const;
     void print() override;
 
-
-    static matrix<CPU> ReLU(matrix<CPU>& a);
-    static matrix<CPU> ELU(matrix<CPU>& a);
-    static matrix<CPU> Sigmoid(matrix<CPU>& a);
-    static matrix<CPU> Log_Sigmoid(matrix<CPU>& a);
-    static matrix<CPU> Hard_Sigmoid(matrix<CPU>& a);
-    static matrix<CPU> Tanh(matrix<CPU>& a);
-    static matrix<CPU> Hard_Tanh(matrix<CPU>& a);
-    static matrix<CPU> Softmax(matrix<CPU>& a);
     
 };

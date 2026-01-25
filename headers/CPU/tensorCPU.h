@@ -26,9 +26,12 @@ protected:
 
 public:
 
+    tensor();
+    tensor(const tensor<CPU>& other);
     tensor(const std::vector<size_t> &shape);
     tensor(const std::vector<size_t> &shape, float val);
     tensor(const std::vector<size_t> &shape, float begin, float end);
+    ~tensor();
 
     const float& operator[](size_t index) const;
     float& operator[](size_t index);

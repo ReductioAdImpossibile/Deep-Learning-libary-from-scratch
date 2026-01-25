@@ -8,7 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/lucbr/Documents/DeepLearningLibary/src/CPU/activationCPU.cpp" "CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o" "gcc" "CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o.d"
   "/home/lucbr/Documents/DeepLearningLibary/src/CPU/matrixCPU.cpp" "CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.o" "gcc" "CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.o.d"
+  "/home/lucbr/Documents/DeepLearningLibary/src/CPU/modelCPU.cpp" "CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o" "gcc" "CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o.d"
   "/home/lucbr/Documents/DeepLearningLibary/src/CPU/tensorCPU.cpp" "CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.o" "gcc" "CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.o.d"
   "/home/lucbr/Documents/DeepLearningLibary/src/benchmark.cpp" "CMakeFiles/deeplearninglibary.dir/src/benchmark.cpp.o" "gcc" "CMakeFiles/deeplearninglibary.dir/src/benchmark.cpp.o.d"
   "/home/lucbr/Documents/DeepLearningLibary/src/main.cpp" "CMakeFiles/deeplearninglibary.dir/src/main.cpp.o" "gcc" "CMakeFiles/deeplearninglibary.dir/src/main.cpp.o.d"

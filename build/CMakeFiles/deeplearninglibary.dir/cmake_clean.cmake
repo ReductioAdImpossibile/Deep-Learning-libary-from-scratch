@@ -1,6 +1,10 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o"
+  "CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o.d"
   "CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.o"
   "CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.o.d"
+  "CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o"
+  "CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o.d"
   "CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.o"
   "CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.o.d"
   "CMakeFiles/deeplearninglibary.dir/src/benchmark.cpp.o"

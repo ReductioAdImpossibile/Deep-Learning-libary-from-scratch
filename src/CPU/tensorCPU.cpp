@@ -12,6 +12,14 @@
 
 std::string shape_to_string(const std::vector<size_t> &shape);
 
+tensor<CPU>::tensor()
+{}
+
+tensor<CPU>::tensor(const tensor<CPU> &other)
+{
+    
+}
+
 tensor<CPU>::tensor(const std::vector<size_t> &_shape) : shape(_shape)
 {
 
@@ -64,6 +72,11 @@ tensor<CPU>::tensor(const std::vector<size_t> &_shape, float begin, float end) :
     }
 
 }
+
+tensor<CPU>::~tensor() {
+    if(data) _mm_free(data);
+}
+
 
 const float& tensor<CPU>::operator[](size_t index) const
 {

@@ -129,6 +129,30 @@ deeplearninglibary/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/build
 .PHONY : deeplearninglibary/fast
 
+src/CPU/activationCPU.o: src/CPU/activationCPU.cpp.o
+.PHONY : src/CPU/activationCPU.o
+
+# target to build an object file
+src/CPU/activationCPU.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o
+.PHONY : src/CPU/activationCPU.cpp.o
+
+src/CPU/activationCPU.i: src/CPU/activationCPU.cpp.i
+.PHONY : src/CPU/activationCPU.i
+
+# target to preprocess a source file
+src/CPU/activationCPU.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.i
+.PHONY : src/CPU/activationCPU.cpp.i
+
+src/CPU/activationCPU.s: src/CPU/activationCPU.cpp.s
+.PHONY : src/CPU/activationCPU.s
+
+# target to generate assembly for a file
+src/CPU/activationCPU.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.s
+.PHONY : src/CPU/activationCPU.cpp.s
+
 src/CPU/matrixCPU.o: src/CPU/matrixCPU.cpp.o
 .PHONY : src/CPU/matrixCPU.o
 
@@ -152,6 +176,30 @@ src/CPU/matrixCPU.s: src/CPU/matrixCPU.cpp.s
 src/CPU/matrixCPU.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.s
 .PHONY : src/CPU/matrixCPU.cpp.s
+
+src/CPU/modelCPU.o: src/CPU/modelCPU.cpp.o
+.PHONY : src/CPU/modelCPU.o
+
+# target to build an object file
+src/CPU/modelCPU.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o
+.PHONY : src/CPU/modelCPU.cpp.o
+
+src/CPU/modelCPU.i: src/CPU/modelCPU.cpp.i
+.PHONY : src/CPU/modelCPU.i
+
+# target to preprocess a source file
+src/CPU/modelCPU.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.i
+.PHONY : src/CPU/modelCPU.cpp.i
+
+src/CPU/modelCPU.s: src/CPU/modelCPU.cpp.s
+.PHONY : src/CPU/modelCPU.s
+
+# target to generate assembly for a file
+src/CPU/modelCPU.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.s
+.PHONY : src/CPU/modelCPU.cpp.s
 
 src/CPU/tensorCPU.o: src/CPU/tensorCPU.cpp.o
 .PHONY : src/CPU/tensorCPU.o
@@ -234,9 +282,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... deeplearninglibary"
+	@echo "... src/CPU/activationCPU.o"
+	@echo "... src/CPU/activationCPU.i"
+	@echo "... src/CPU/activationCPU.s"
 	@echo "... src/CPU/matrixCPU.o"
 	@echo "... src/CPU/matrixCPU.i"
 	@echo "... src/CPU/matrixCPU.s"
+	@echo "... src/CPU/modelCPU.o"
+	@echo "... src/CPU/modelCPU.i"
+	@echo "... src/CPU/modelCPU.s"
 	@echo "... src/CPU/tensorCPU.o"
 	@echo "... src/CPU/tensorCPU.i"
 	@echo "... src/CPU/tensorCPU.s"

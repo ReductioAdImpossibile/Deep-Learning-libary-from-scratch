@@ -125,12 +125,42 @@ CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lucbr/Documents/DeepLearningLibary/src/CPU/matrixCPU.cpp -o CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.s
 
+CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o: CMakeFiles/deeplearninglibary.dir/flags.make
+CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o: /home/lucbr/Documents/DeepLearningLibary/src/CPU/modelCPU.cpp
+CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o: CMakeFiles/deeplearninglibary.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o -MF CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o.d -o CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o -c /home/lucbr/Documents/DeepLearningLibary/src/CPU/modelCPU.cpp
+
+CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lucbr/Documents/DeepLearningLibary/src/CPU/modelCPU.cpp > CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.i
+
+CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lucbr/Documents/DeepLearningLibary/src/CPU/modelCPU.cpp -o CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.s
+
+CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o: CMakeFiles/deeplearninglibary.dir/flags.make
+CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o: /home/lucbr/Documents/DeepLearningLibary/src/CPU/activationCPU.cpp
+CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o: CMakeFiles/deeplearninglibary.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o -MF CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o.d -o CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o -c /home/lucbr/Documents/DeepLearningLibary/src/CPU/activationCPU.cpp
+
+CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lucbr/Documents/DeepLearningLibary/src/CPU/activationCPU.cpp > CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.i
+
+CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lucbr/Documents/DeepLearningLibary/src/CPU/activationCPU.cpp -o CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.s
+
 # Object files for target deeplearninglibary
 deeplearninglibary_OBJECTS = \
 "CMakeFiles/deeplearninglibary.dir/src/main.cpp.o" \
 "CMakeFiles/deeplearninglibary.dir/src/benchmark.cpp.o" \
 "CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.o" \
-"CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.o"
+"CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.o" \
+"CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o" \
+"CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o"
 
 # External object files for target deeplearninglibary
 deeplearninglibary_EXTERNAL_OBJECTS =
@@ -139,11 +169,13 @@ deeplearninglibary: CMakeFiles/deeplearninglibary.dir/src/main.cpp.o
 deeplearninglibary: CMakeFiles/deeplearninglibary.dir/src/benchmark.cpp.o
 deeplearninglibary: CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.o
 deeplearninglibary: CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.o
+deeplearninglibary: CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o
+deeplearninglibary: CMakeFiles/deeplearninglibary.dir/src/CPU/activationCPU.cpp.o
 deeplearninglibary: CMakeFiles/deeplearninglibary.dir/build.make
 deeplearninglibary: /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so
 deeplearninglibary: /usr/lib/x86_64-linux-gnu/libpthread.a
 deeplearninglibary: CMakeFiles/deeplearninglibary.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable deeplearninglibary"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/lucbr/Documents/DeepLearningLibary/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable deeplearninglibary"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/deeplearninglibary.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
