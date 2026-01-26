@@ -36,6 +36,7 @@ public:
     matrix<CPU> operator+(const matrix<CPU> &a) const;
     matrix<CPU> operator+(const float &a) const;
     matrix<CPU> operator-(const matrix<CPU> &a) const;
+    matrix<CPU> operator-(const float &a) const;
     matrix<CPU> operator*(const float &a) const;
     matrix<CPU> operator*(const matrix<CPU> &a) const;
 
@@ -65,3 +66,4 @@ public:
 
 matrix<CPU> operator*(float val, const matrix<CPU>& a);
 matrix<CPU> operator+(float val, const matrix<CPU>& a);
+matrix<CPU> operator-(float val, const matrix<CPU>& a);

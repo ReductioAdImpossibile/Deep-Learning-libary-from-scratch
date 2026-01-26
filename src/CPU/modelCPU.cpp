@@ -20,13 +20,16 @@ void model::add_hidden_layer(const size_t neurons, activation_func afunc)
     hidden_layer_afuncs.push_back(afunc);
 }
 
-void model::confiugre_output_layer(const size_t neurons, activation_func afunc)
+void model::configure_output_layer(const size_t neurons, activation_func afunc) 
 {
     this->output_layer_neurons = neurons;
     this->output_layer_afunc = afunc;
 }
 
-
+void model::configure_loss_function(loss_func lfunc)
+{
+    this->lfunc = lfunc;
+}
 
 classificator<CPU>::classificator() : model()
 {}

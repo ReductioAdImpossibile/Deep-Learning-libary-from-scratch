@@ -102,21 +102,21 @@ float &matrix<CPU>::operator[](size_t index)
 
 matrix<CPU> matrix<CPU>::operator%(const matrix<CPU> &a) const
 {
-    matrix result(this->shape);
-    matrix::hadamard(*this, a, result);
+    matrix<CPU> result(this->shape);
+    matrix<CPU>::hadamard(*this, a, result);
     return result;
 }
 
 matrix<CPU> matrix<CPU>::operator+(const matrix<CPU> &a) const
 {
-    matrix result(this->shape);
-    matrix::add(*this, a, result);
+    matrix<CPU> result(this->shape);
+    matrix<CPU>::add(*this, a, result);
     return result;
 }
 
 matrix<CPU> matrix<CPU>::operator+(const float &a) const
 {
-    matrix result(this->shape);
+    matrix<CPU> result(this->shape);
     
     const ssize_t limit = (n / w) * w;
     #pragma omp parallel for
@@ -129,28 +129,50 @@ matrix<CPU> matrix<CPU>::operator+(const float &a) const
     }
 
     for(int i = limit; i < this->n; i++)
-        result[i] += a;
+        result[i] = data[i] + a;
 
     return result;
 }
 
 matrix<CPU> matrix<CPU>::operator-(const matrix<CPU> &a) const
 {
-    matrix result(this->shape);
-    matrix::sub(*this, a, result);
+    matrix<CPU> result(this->shape);
+    matrix<CPU>::sub(*this, a, result);
+    return result;
+}
+
+matrix<CPU> matrix<CPU>::operator-(const float &a) const
+{
+    matrix<CPU> result(this->shape);
+    
+    const ssize_t limit = (n / w) * w;
+    #pragma omp parallel for
+    for(int i = 0; i < limit; i += w)
+    {
+        fsimd v;    
+        v.copy_from(data + i, std::experimental::element_aligned);
+        v = v - a;
+        v.copy_to(result.raw() + i, std::experimental::element_aligned);
+    }
+
+    for(int i = limit; i < this->n; i++)
+        result[i] = data[i] - a;
+
     return result;
 }
 
 matrix<CPU> matrix<CPU>::operator*(const float &a) const
 {
-    matrix result(this->shape);
-    matrix::scale(*this, a, result);
+    matrix<CPU> result(this->shape);
+    matrix<CPU>::scale(*this, a, result);
     return result;
 }
 
 matrix<CPU> matrix<CPU>::operator*(const matrix<CPU> &a) const
 {
-    return matrix<CPU>();
+    matrix<CPU> result(this->shape);
+    matrix<CPU>::mat_mul(*this, a, result) ;
+    return result;
 }
 
 
@@ -380,7 +402,7 @@ void matrix<CPU>::sub(const matrix<CPU> &a, const matrix<CPU> &b, matrix<CPU> &r
 
     }
     for(int j = limit ;j < n; j++)
-        result_raw[j] = a_raw[j] * b_raw[j];
+        result_raw[j] = a_raw[j] - b_raw[j];
 
 
 }
@@ -423,4 +445,9 @@ matrix<CPU> operator*(float val, const matrix<CPU> &a)
 matrix<CPU> operator+(float val, const matrix<CPU> &a)
 {
     return a + val;
+}
+
+matrix<CPU> operator-(float val, const matrix<CPU> &a)
+{
+    return a - val;
 }

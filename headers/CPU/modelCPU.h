@@ -4,12 +4,14 @@
 #include <string>
 
 using activation_func = std::function<matrix<CPU>(matrix<CPU>&)>;
+using loss_func = std::function<matrix<CPU>(matrix<CPU>&)>;
 class model
 {
 protected:
     size_t input_layer_neurons;
     size_t output_layer_neurons;
     activation_func output_layer_afunc;
+    loss_func lfunc;
 
     std::vector<size_t> hidden_layer_neurons;
     std::vector<activation_func> hidden_layer_afuncs;
@@ -19,7 +21,9 @@ protected:
 public:
     void configure_input_layer(const size_t neurons);
     void add_hidden_layer(const size_t neurons, activation_func  afunc);
-    void confiugre_output_layer(const size_t neurons,  activation_func afunc);
+    void configure_output_layer(const size_t neurons, activation_func afunc);
+    void configure_loss_function(loss_func lfunc);
+
 };
 
 template<>
