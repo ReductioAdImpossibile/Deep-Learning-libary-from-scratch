@@ -219,20 +219,69 @@ matrix<CPU> activation<CPU>::Softmax(const matrix<CPU> &a)
 
 matrix<CPU> activation<CPU>::dReLU(const matrix<CPU> &a)
 {
-
-    matrix<CPU> res(a.get_shape());
     
-    return matrix<CPU>();
+    matrix<CPU> result(a.get_shape());
+    const size_t limit = (a.size() / w) * w;
+    size_t i = 0;
+    fsimd v;
+
+    float* a_data = a.raw();
+    float* result_data = result.raw();
+
+    for(; i < limit; i += w)
+    {
+        v.copy_from(a_data + i, stdx::element_aligned);
+        where(v <= 0, v) = 0;
+        where(v > 0, v) = 1;
+        v.copy_to(result_data + i, stdx::element_aligned);
+    }
+    
+    for(; i < a.size(); i++)
+    {
+        float _d = a_data[i];
+        
+        if(_d <= 0)
+            result_data[i] = 0;
+        else
+            result_data[i] = 1;
+    }
+       
+    return result;
 }
 
 matrix<CPU> activation<CPU>::dELU(const matrix<CPU> &a)
 {
-    return matrix<CPU>();
+    matrix<CPU> result(a.get_shape());
+    const size_t limit = (a.size() / w) * w;
+    size_t i = 0;
+    fsimd v;
+
+    float* a_data = a.raw();
+    float* result_data = result.raw();
+
+    for(; i < limit; i += w)
+    {
+        v.copy_from(a_data + i, stdx::element_aligned);
+        where(v > 0, v) = 1;
+        where(v <= 0, v) = ELU_ALPHA_PARAM * stdx::exp(v);
+        v.copy_to(result_data + i, stdx::element_aligned);
+    }
+    
+    for(; i < a.size(); i++)
+    {
+        float _d = a_data[i];
+        if(_d <= 0)
+            result_data[i] = ELU_ALPHA_PARAM * std::exp(_d);
+        else
+            result_data[i] = 1;
+    }
+       
+    return result;
 }
 
 matrix<CPU> activation<CPU>::dSigmoid(const matrix<CPU> &a)
 {
-    return matrix<CPU>();
+    
 }
 
 matrix<CPU> activation<CPU>::dLog_Sigmoid(const matrix<CPU> &a)
