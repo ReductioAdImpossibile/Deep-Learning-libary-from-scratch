@@ -201,54 +201,6 @@ src/CPU/modelCPU.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.s
 .PHONY : src/CPU/modelCPU.cpp.s
 
-src/CPU/tensorCPU.o: src/CPU/tensorCPU.cpp.o
-.PHONY : src/CPU/tensorCPU.o
-
-# target to build an object file
-src/CPU/tensorCPU.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.o
-.PHONY : src/CPU/tensorCPU.cpp.o
-
-src/CPU/tensorCPU.i: src/CPU/tensorCPU.cpp.i
-.PHONY : src/CPU/tensorCPU.i
-
-# target to preprocess a source file
-src/CPU/tensorCPU.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.i
-.PHONY : src/CPU/tensorCPU.cpp.i
-
-src/CPU/tensorCPU.s: src/CPU/tensorCPU.cpp.s
-.PHONY : src/CPU/tensorCPU.s
-
-# target to generate assembly for a file
-src/CPU/tensorCPU.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/tensorCPU.cpp.s
-.PHONY : src/CPU/tensorCPU.cpp.s
-
-src/benchmark.o: src/benchmark.cpp.o
-.PHONY : src/benchmark.o
-
-# target to build an object file
-src/benchmark.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/benchmark.cpp.o
-.PHONY : src/benchmark.cpp.o
-
-src/benchmark.i: src/benchmark.cpp.i
-.PHONY : src/benchmark.i
-
-# target to preprocess a source file
-src/benchmark.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/benchmark.cpp.i
-.PHONY : src/benchmark.cpp.i
-
-src/benchmark.s: src/benchmark.cpp.s
-.PHONY : src/benchmark.s
-
-# target to generate assembly for a file
-src/benchmark.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/benchmark.cpp.s
-.PHONY : src/benchmark.cpp.s
-
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -291,12 +243,6 @@ help:
 	@echo "... src/CPU/modelCPU.o"
 	@echo "... src/CPU/modelCPU.i"
 	@echo "... src/CPU/modelCPU.s"
-	@echo "... src/CPU/tensorCPU.o"
-	@echo "... src/CPU/tensorCPU.i"
-	@echo "... src/CPU/tensorCPU.s"
-	@echo "... src/benchmark.o"
-	@echo "... src/benchmark.i"
-	@echo "... src/benchmark.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

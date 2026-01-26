@@ -155,7 +155,6 @@ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o: \
  /home/lucbr/Documents/DeepLearningLibary/headers/backend.h \
  /home/lucbr/Documents/DeepLearningLibary/headers/matrix.h \
  /home/lucbr/Documents/DeepLearningLibary/headers/CPU/matrixCPU.h \
- /home/lucbr/Documents/DeepLearningLibary/headers/CPU/tensorCPU.h \
  /usr/include/c++/13/vector /usr/include/c++/13/bits/stl_uninitialized.h \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
@@ -326,8 +325,7 @@ CMakeFiles/deeplearninglibary.dir/src/main.cpp.o: \
  /usr/include/c++/13/bits/locale_facets_nonio.tcc \
  /usr/include/c++/13/bits/locale_conv.h \
  /usr/include/c++/13/bits/quoted_string.h /usr/include/c++/13/sstream \
- /usr/include/c++/13/bits/sstream.tcc \
- /home/lucbr/Documents/DeepLearningLibary/headers/tensor.h \
- /usr/include/c++/13/chrono /usr/include/c++/13/bits/chrono.h \
- /usr/include/c++/13/ratio /usr/include/c++/13/bits/parse_numbers.h \
+ /usr/include/c++/13/bits/sstream.tcc /usr/include/c++/13/chrono \
+ /usr/include/c++/13/bits/chrono.h /usr/include/c++/13/ratio \
+ /usr/include/c++/13/bits/parse_numbers.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/omp.h

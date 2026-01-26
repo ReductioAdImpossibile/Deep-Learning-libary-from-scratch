@@ -1,51 +1,66 @@
-#include "tensorCPU.h"
 #include "matrixCPU.h"
+#include <random>
+#include <omp.h>
+#include <stdexcept>
+#include <string>
 
-
-
-
-matrix<CPU>::matrix(const std::vector<size_t> &shape) : tensor(shape)
+matrix<CPU>::matrix()
 {
-    if(shape.size() > 2 )
-        throw std::runtime_error("Matrix shape needs to be 2 dimensional.");
     
-    if(shape.size() == 2)
-        this->c = shape[1];
-    else
-        this->c = 1;
-
-    this->r = shape[0];
 }
 
-matrix<CPU>::matrix(const std::vector<size_t> &shape, float val) : tensor(shape, val), c(shape[1]), r(shape[0])
+matrix<CPU>::matrix(const matrix<CPU> &other) : c(other.c), r(other.r), shape(other.shape), n(other.n)
 {
-    if(shape.size() > 2 )
-        throw std::runtime_error("Matrix shape needs to be 2 dimensional.");
-    
-    if(shape.size() == 2)
-        this->c = shape[1];
-    else
-        this->c = 1;
-
-    this->r = shape[0];
+    this->data = (float*) _mm_malloc(n * sizeof(float), ALIGN);
+    std::copy(other.data, other.data + n, data);
 }
 
-matrix<CPU>::matrix(const std::vector<size_t> &shape, float start, float end) : tensor(shape, start, end)
+matrix<CPU>::matrix(const std::vector<size_t> &_shape) :shape(_shape), r(_shape[0]), c(_shape[1])
 {
-    if(shape.size() > 2 )
-        throw std::runtime_error("Matrix shape needs to be 2 dimensional.");
-    
-    if(shape.size() == 2)
-        this->c = shape[1];
-    else
-        this->c = 1;
-
-    this->r = shape[0];
+    this->n = r * c;
+    this->data = (float*) _mm_malloc(n * sizeof(float), ALIGN);
+    if (!data) throw std::bad_alloc();
 }
 
-matrix<CPU> matrix<CPU>::operator*(const matrix<CPU> &a) const
+matrix<CPU>::matrix(const std::vector<size_t> &shape, float val) : matrix<CPU>(shape)
 {
-    return matrix<CPU>();
+    const size_t limit = (n/w) * w;
+    #pragma omp parallel for
+    for(int i = 0; i < limit; i += w)
+    {
+        fsimd v(val);
+        v.copy_to(this->data + i, std::experimental::element_aligned);
+    }
+
+    for(int i = limit; i < n; i++)
+        this->data[i] = val;
+}
+
+matrix<CPU>::matrix(const std::vector<size_t> &shape, float start, float end) : matrix<CPU>(shape)
+{
+    #pragma omp parallel
+    {
+        std::mt19937 gen(
+            std::random_device{}() + omp_get_thread_num()
+        );
+        std::uniform_real_distribution<float> dist(start, end);
+
+        #pragma omp for
+        for (size_t i = 0; i < this->n; ++i)
+        {
+            this->data[i] = dist(gen);
+        }
+    }
+}
+
+matrix<CPU>::~matrix()
+{
+    if(data) _mm_free(data);
+}
+
+std::vector<size_t> matrix<CPU>::get_shape() const
+{
+    return this->shape;
 }
 
 size_t matrix<CPU>::rows() const
@@ -58,7 +73,91 @@ size_t matrix<CPU>::columns() const
     return this->c;
 }
 
-void matrix<CPU>::mat_mul(const matrix& a, const matrix &b, matrix& result)
+size_t matrix<CPU>::size() const
+{
+    return this->n;
+}
+
+float *matrix<CPU>::raw()
+{
+    return this->data;
+}
+
+float *matrix<CPU>::raw() const
+{
+    return this->data;
+}
+
+
+// --------------------------------- OPERATOR ------------------------------
+const float &matrix<CPU>::operator[](size_t index) const
+{
+    return this->data[index];
+}
+
+float &matrix<CPU>::operator[](size_t index)
+{
+    return this->data[index];
+}
+
+matrix<CPU> matrix<CPU>::operator%(const matrix<CPU> &a) const
+{
+    matrix result(this->shape);
+    matrix::hadamard(*this, a, result);
+    return result;
+}
+
+matrix<CPU> matrix<CPU>::operator+(const matrix<CPU> &a) const
+{
+    matrix result(this->shape);
+    matrix::add(*this, a, result);
+    return result;
+}
+
+matrix<CPU> matrix<CPU>::operator+(const float &a) const
+{
+    matrix result(this->shape);
+    
+    const ssize_t limit = (n / w) * w;
+    #pragma omp parallel for
+    for(int i = 0; i < limit; i += w)
+    {
+        fsimd v;    
+        v.copy_from(data + i, std::experimental::element_aligned);
+        v = v + a;
+        v.copy_to(result.raw() + i, std::experimental::element_aligned);
+    }
+
+    for(int i = limit; i < this->n; i++)
+        result[i] += a;
+
+    return result;
+}
+
+matrix<CPU> matrix<CPU>::operator-(const matrix<CPU> &a) const
+{
+    matrix result(this->shape);
+    matrix::sub(*this, a, result);
+    return result;
+}
+
+matrix<CPU> matrix<CPU>::operator*(const float &a) const
+{
+    matrix result(this->shape);
+    matrix::scale(*this, a, result);
+    return result;
+}
+
+matrix<CPU> matrix<CPU>::operator*(const matrix<CPU> &a) const
+{
+    return matrix<CPU>();
+}
+
+
+
+
+
+void matrix<CPU>::mat_mul(const matrix &a, const matrix &b, matrix &result)
 {
 
     if(a.columns() != b.rows() || result.columns() != b.columns() || result.rows() != a.rows())
@@ -131,7 +230,6 @@ void matrix<CPU>::mat_mul_transposed(const matrix& a, const matrix &b, matrix& r
     }
 }
 
-
 void matrix<CPU>::transpose(const matrix& a, matrix& result)
 {
 
@@ -170,4 +268,159 @@ void matrix<CPU>::print()
         }
         std::cout << std::endl;
     }
+}
+
+void matrix<CPU>::set(float val)
+{
+    const ssize_t limit = (n / w) * w;
+    #pragma omp parallel for
+    for(int i = 0; i < limit; i += w)
+    {
+        fsimd v(val);
+        v.copy_to(data + i, std::experimental::element_aligned);
+    }
+
+    for(int i = limit; i < this->n; i++)
+        data[i] = val;
+}
+
+
+
+
+
+bool matrix<CPU>::equal_shape(const matrix<CPU> &a, const matrix<CPU> &b)
+{
+    return a.get_shape() == b.get_shape();
+}
+
+void matrix<CPU>::hadamard(const matrix<CPU> &a, const matrix<CPU> &b, matrix<CPU> &result)
+{
+    if( !(a.get_shape() == b.get_shape() && b.get_shape() == result.get_shape()) )
+        throw std::runtime_error("Tensor shapes do not match for the hadamard product. They need to be the same");
+    
+    const float* a_raw = a.raw();
+    const float* b_raw = b.raw();   
+    float* result_raw = result.raw();
+    const size_t n = a.size();
+
+    const size_t limit = (n/w) * w;
+
+    #pragma omp parallel
+    {
+        fsimd a_, b_, result_;
+        #pragma omp for
+        for(size_t i = 0; i < limit; i += w)
+        {
+            a_.copy_from(a_raw + i, std::experimental::element_aligned);
+            b_.copy_from(b_raw + i, std::experimental::element_aligned);
+        
+            result_ = a_ * b_;
+            result_.copy_to(result_raw + i, std::experimental::element_aligned);
+        }
+
+    }
+    for(int j = limit ;j < n; j++)
+        result_raw[j] = a_raw[j] * b_raw[j];
+}
+
+void matrix<CPU>::add(const matrix<CPU> &a, const matrix<CPU> &b, matrix<CPU> &result)
+{
+    if( !(a.get_shape() == b.get_shape() && b.get_shape() == result.get_shape()) )
+        throw std::runtime_error("Tensor shapes do not match for the tensor addition. They need to be the same");
+    
+    const float* a_raw = a.raw();
+    const float* b_raw = b.raw();   
+    float* result_raw = result.raw();
+    const size_t n = a.size();
+    const size_t limit = (n/w) * w;
+
+    #pragma omp parallel
+    {
+        fsimd a_, b_, result_;
+        #pragma omp for
+        for(int i = 0; i < limit ; i += w)
+        {
+            a_.copy_from(a_raw + i, std::experimental::element_aligned);
+            b_.copy_from(b_raw + i, std::experimental::element_aligned);
+        
+            result_ = a_ + b_;
+            result_.copy_to(result_raw + i, std::experimental::element_aligned);
+        }
+
+    }
+    for(int j = (n/w) * w ;j < n; j++)
+        result_raw[j] = a_raw[j] + b_raw[j];
+
+}
+
+void matrix<CPU>::sub(const matrix<CPU> &a, const matrix<CPU> &b, matrix<CPU> &result)
+{
+    if( !(a.get_shape() == b.get_shape() && b.get_shape() == result.get_shape()) )
+        throw std::runtime_error("Tensor shapes do not match for the tensor addition. They need to be the same");
+    
+    const float* a_raw = a.raw();
+    const float* b_raw = b.raw();   
+    float* result_raw = result.raw();
+    const size_t n = a.size();
+    const size_t limit = (n/w) * w;
+    
+
+    #pragma omp parallel
+    {
+        fsimd a_, b_, result_;
+        #pragma omp for
+        for(int i = 0; i < limit; i += w)
+        {
+            a_.copy_from(a_raw + i, std::experimental::element_aligned);
+            b_.copy_from(b_raw + i, std::experimental::element_aligned);
+        
+            result_ = a_ - b_;
+            result_.copy_to(result_raw + i, std::experimental::element_aligned);
+        }
+
+    }
+    for(int j = limit ;j < n; j++)
+        result_raw[j] = a_raw[j] * b_raw[j];
+
+
+}
+
+void matrix<CPU>::scale(const matrix<CPU> &a, const float value, matrix<CPU> &result)
+{
+     if( !(a.get_shape() == result.get_shape()) )
+        throw std::runtime_error("Tensor shapes do not match for the hadamard product. They need to be the same");
+    
+    
+    const float* a_raw = a.raw();  
+    float* result_raw = result.raw();
+    const size_t n = a.size();
+    const size_t limit = (n/w) * w;
+
+    #pragma omp parallel
+    {
+        fsimd a_, b_, result_;
+        #pragma omp for
+        for(int i = 0; i < limit; i += w)
+        {
+            a_.copy_from(a_raw + i, std::experimental::element_aligned);    
+            result_ = a_ * value;
+            result_.copy_to(result_raw + i, std::experimental::element_aligned);
+        }
+
+    }
+    for(int j = (n/w) * w ;j < n; j++)
+        result_raw[j] = a_raw[j] * value;
+
+}
+
+
+
+matrix<CPU> operator*(float val, const matrix<CPU> &a)
+{
+    return a * val;
+}
+
+matrix<CPU> operator+(float val, const matrix<CPU> &a)
+{
+    return a + val;
 }
