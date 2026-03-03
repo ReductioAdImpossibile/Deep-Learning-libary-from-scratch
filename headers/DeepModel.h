@@ -10,7 +10,7 @@ template<typename Backend>
 class dataset;
 
 template<typename Backend>
-class classificator;
+class neuralnetwork;
 
 
 
@@ -20,6 +20,6 @@ class classificator;
 
 #else
     #include "modelCPU.h"
-    using Classificator = classificator<CPU>;
+    using NeuralNetwork = neuralnetwork<CPU>;
     using Dataset = dataset<CPU>;
 #endif

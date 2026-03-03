@@ -1,5 +1,5 @@
 #include <iostream>
-#include "model.h"
+#include "DeepModel.h"
 #include <chrono>
 #include <experimental/simd>
 #include <omp.h>
@@ -10,14 +10,14 @@ int main()
 
     // TODO : model und classificator vereinen
     // classificator umbennen 
+    // dataset fertig, error checking nach fit verschieben!
     // Adam optimizer fit
     // fit fertig machen -> Batch GD, mini Batch GD
-    // dataset fertig
     // save + load
     // conv layer
     // cuda
     
-    Classificator c;
+    NeuralNetwork c;
 
     c.configure_input_layer(784);
     c.add_layer(128, Activation::RELU);

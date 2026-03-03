@@ -1,13 +1,37 @@
 #include "modelCPU.h"
 
 
-classificator<CPU>::classificator() : model()
+
+
+
+neuralnetwork<CPU>::neuralnetwork() : input_layer_neurons(0)
 {}
+
+void neuralnetwork<CPU>::add_layer(const size_t neurons, activation_type atype) 
+{
+    neurons_per_layer.push_back(neurons);
+    afunc_type.push_back(atype);
+    this->output_layer_neurons = neurons;
+}
+
+void neuralnetwork<CPU>::configure_loss_function(loss_type _ltype) 
+{
+    this->lfunc_type = _ltype;
+}
+
+void neuralnetwork<CPU>::configure_input_layer(const size_t neurons)
+{
+    this->input_layer_neurons = neurons;
+    neurons_per_layer.insert(neurons_per_layer.begin(), neurons);
+}
+
+
+
 
 
 // ------------------------------- BACKPROPAGATION -------------------------------------------
 
-void Classificator::initalise()
+void neuralnetwork<CPU>::initalise()
 {
     std::cout << "[INITALISE]" << std::endl;
     if(neurons_per_layer.size() <= 1)
@@ -42,7 +66,7 @@ void Classificator::initalise()
 }
 
 
-matrix<CPU> classificator<CPU>::run(const matrix<CPU> &input)
+matrix<CPU> neuralnetwork<CPU>::run(const matrix<CPU> &input)
 {
     matrix<CPU> result = input;
     
@@ -58,7 +82,7 @@ matrix<CPU> classificator<CPU>::run(const matrix<CPU> &input)
     return result;
 }
 
-std::vector<matrix<CPU>> classificator<CPU>::layer_outputs(const matrix<CPU> &input)
+std::vector<matrix<CPU>> neuralnetwork<CPU>::layer_outputs(const matrix<CPU> &input)
 {
     std::vector<matrix<CPU>> outputs;
     outputs.resize(neurons_per_layer.size());
@@ -81,17 +105,17 @@ std::vector<matrix<CPU>> classificator<CPU>::layer_outputs(const matrix<CPU> &in
 }
 
 
-void classificator<CPU>::mini_batch_gradient_descent(const size_t epochs, dataset<CPU>& ds)
+void neuralnetwork<CPU>::mini_batch_gradient_descent(const size_t epochs, dataset<CPU>& ds)
 {
 
 }
 
-void classificator<CPU>::batch_gradient_descent(const size_t epochs, dataset<CPU>& ds)
+void neuralnetwork<CPU>::batch_gradient_descent(const size_t epochs, dataset<CPU>& ds)
 {
 
 }
 
-void classificator<CPU>::stochastic_gradient_descent(const size_t epochs, dataset<CPU>& ds, double& lr)
+void neuralnetwork<CPU>::stochastic_gradient_descent(const size_t epochs, dataset<CPU>& ds, double& lr)
 {
     std::random_device dev;
     std::mt19937 rng(dev());
@@ -137,7 +161,7 @@ void classificator<CPU>::stochastic_gradient_descent(const size_t epochs, datase
 
 // ------------------------- LOAD DATASETS--------------------------------------------
 
-dataset<CPU> classificator<CPU>::load_csv(const std::string &filename, size_t label_col) 
+dataset<CPU> neuralnetwork<CPU>::load_csv(const std::string &filename, size_t label_col) 
 { 
     if (output_layer_neurons == 0) 
         throw std::runtime_error( "Input layer not configured. Run configure_input_layer(neurons) first.");
@@ -215,7 +239,7 @@ dataset<CPU> classificator<CPU>::load_csv(const std::string &filename, size_t la
 
 // ------------------------------------------------------------------------------------
 
-void classificator<CPU>::fit(const size_t epochs, dataset<CPU>& ds, optimizer_type ofunc, double lr )
+void neuralnetwork<CPU>::fit(const size_t epochs, dataset<CPU>& ds, optimizer_type ofunc, double lr )
 {
     switch(ofunc)
     {
@@ -226,7 +250,7 @@ void classificator<CPU>::fit(const size_t epochs, dataset<CPU>& ds, optimizer_ty
 
 
 
-void classificator<CPU>::performance(dataset<CPU> &ds, std::string name)
+void neuralnetwork<CPU>::performance(dataset<CPU> &ds, std::string name)
 {
 
     double rmsqe = 0;
@@ -248,7 +272,7 @@ void classificator<CPU>::performance(dataset<CPU> &ds, std::string name)
 
 }
 
-void classificator<CPU>::performance(dataset<CPU> &ds)
+void neuralnetwork<CPU>::performance(dataset<CPU> &ds)
 {
     performance(ds, "");
 }

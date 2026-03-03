@@ -13,7 +13,6 @@ include_directories(headers/CUDA)
 add_executable( deeplearninglibary 
     src/main.cpp 
     src/CPU/matrixCPU.cpp 
-    src/CPU/modelCPU.cpp
     src/CPU/activationCPU.cpp
     src/CPU/classificatorCPU.cpp
     src/CPU/datasetCPU.cpp

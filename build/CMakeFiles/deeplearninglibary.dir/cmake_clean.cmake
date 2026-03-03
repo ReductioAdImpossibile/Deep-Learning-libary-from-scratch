@@ -7,8 +7,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/deeplearninglibary.dir/src/CPU/datasetCPU.cpp.o.d"
   "CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.o"
   "CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.o.d"
-  "CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o"
-  "CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o.d"
   "CMakeFiles/deeplearninglibary.dir/src/main.cpp.o"
   "CMakeFiles/deeplearninglibary.dir/src/main.cpp.o.d"
   "deeplearninglibary"
