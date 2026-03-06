@@ -35,6 +35,9 @@ class neuralnetwork<CPU>
 {   
 private:
 
+    bool imported = false;
+
+
     size_t lfunc_type;
     std::vector<size_t> afunc_type;
 
@@ -53,7 +56,7 @@ private:
     std::vector<matrix<CPU>> bias_matrices;
 
 
-    void gradient_descent(const size_t epochs, dataset<CPU> &ds, double lr, size_t batch_size);
+    void gradient_descent(const size_t steps, dataset<CPU> &ds, double lr, double lambda, size_t batch_size);
     
     std::vector<matrix<CPU>> layer_outputs(const matrix<CPU>& input);
     matrix<CPU> run(const matrix<CPU>& input);
@@ -68,13 +71,16 @@ public:
     void configure_loss_function(loss_type ltype);
     void configure_input_layer(const size_t neurons);
 
-    void initalise();
-    void initalise_random(float begin, float end);
-    void initalise_xavier();
-    void initalise_he();
 
-    void fit(const size_t epochs,dataset<CPU> &ds, optimizer_type ofunc, double lr = 0.1, size_t batch_size = 32);
-    void fit(const size_t epochs,dataset<CPU> &ds, optimizer_type ofunc, adam_optimizer<CPU> &adam, size_t batch_size = 32);
+    void initalise_random_weights(float begin = -0.1, float end = 0.1);
+    void initalise_xavier_weights();
+    void initalise_he_weights();
+
+    void fit(const size_t epochs,dataset<CPU> &ds, optimizer_type ofunc, double lr, size_t batch_size = 64);
+    void fit(const size_t epochs,dataset<CPU> &ds, optimizer_type ofunc, hyperparameter<CPU> &param);
+    void fit(const size_t epochs,dataset<CPU> &ds, adam_optimizer<CPU> &adam);
+
+
 
     void performance(dataset<CPU>& ds, std::string name);
     void performance(dataset<CPU>& ds);

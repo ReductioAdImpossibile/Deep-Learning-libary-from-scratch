@@ -14,7 +14,7 @@ add_executable( deeplearninglibary
     src/main.cpp 
     src/CPU/matrixCPU.cpp 
     src/CPU/activationCPU.cpp
-    src/CPU/modelCPU.cpp
+    src/CPU/neuralnetworkCPU.cpp
     src/CPU/datasetCPU.cpp
     ) 
 

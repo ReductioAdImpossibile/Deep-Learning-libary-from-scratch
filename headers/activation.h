@@ -13,6 +13,10 @@ class optimizer;
 template<typename Backend>
 class adam_optimizer;
 
+template<typename Backend>
+class hyperparameter;
+
+
 #ifdef ENABLE_CUDA
     #include "activiationCUDA.cu"
     using Activation = activation<CUDA>;
@@ -23,5 +27,5 @@ class adam_optimizer;
     using Loss = loss<CPU>;
     using Optimizer = optimizer<CPU>;
     using ADAM_Optimizer = adam_optimizer<CPU>;
-
+    using Hyperparameter = hyperparameter<CPU>;
 #endif

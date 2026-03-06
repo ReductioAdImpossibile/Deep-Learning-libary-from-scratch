@@ -100,7 +100,24 @@ public:
     double beta1;
     double beta2;
     double epsilon;
+    double lambda;
+    size_t batch_size;
 };
 
-inline adam_optimizer<CPU>::adam_optimizer() : lr(0.001), beta1(0.9), beta2(0.999), epsilon(1e-8)
+inline adam_optimizer<CPU>::adam_optimizer() : lr(0.001), beta1(0.9), beta2(0.999), epsilon(1e-8), lambda(10e-4), batch_size(64)
+{}
+
+
+
+template<>
+class hyperparameter<CPU> : private optimizer<CPU>
+{
+public:
+    hyperparameter(); 
+    double lr;
+    double lambda;
+    size_t batch_size;
+};
+
+inline hyperparameter<CPU>::hyperparameter() : lr(0.001), lambda(10e-4), batch_size(64)
 {}

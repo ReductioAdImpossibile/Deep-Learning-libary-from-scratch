@@ -37,11 +37,12 @@ public:
     matrix<CPU> operator+=(const matrix<CPU> &a);
     matrix<CPU> operator-=(const matrix<CPU> &a);
 
-    static void mat_mul(const matrix& a, const matrix &b, matrix& result);
-    static void mat_mul_transposed(const matrix& a, const matrix &b, matrix& result);
+
+    static void mat_mul(const matrix& a, const matrix &b, matrix& result);                 
+    static void mat_mul_transposed(const matrix& a, const matrix &b, matrix& result);       
 
 
-    matrix<CPU> transpose();
+    matrix<CPU> transpose();                                                                
     static void transpose(const matrix &a, matrix &result);
 
     size_t rows() const;

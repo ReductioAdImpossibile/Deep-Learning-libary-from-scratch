@@ -201,29 +201,29 @@ src/CPU/matrixCPU.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/matrixCPU.cpp.s
 .PHONY : src/CPU/matrixCPU.cpp.s
 
-src/CPU/modelCPU.o: src/CPU/modelCPU.cpp.o
-.PHONY : src/CPU/modelCPU.o
+src/CPU/neuralnetworkCPU.o: src/CPU/neuralnetworkCPU.cpp.o
+.PHONY : src/CPU/neuralnetworkCPU.o
 
 # target to build an object file
-src/CPU/modelCPU.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.o
-.PHONY : src/CPU/modelCPU.cpp.o
+src/CPU/neuralnetworkCPU.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/neuralnetworkCPU.cpp.o
+.PHONY : src/CPU/neuralnetworkCPU.cpp.o
 
-src/CPU/modelCPU.i: src/CPU/modelCPU.cpp.i
-.PHONY : src/CPU/modelCPU.i
+src/CPU/neuralnetworkCPU.i: src/CPU/neuralnetworkCPU.cpp.i
+.PHONY : src/CPU/neuralnetworkCPU.i
 
 # target to preprocess a source file
-src/CPU/modelCPU.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.i
-.PHONY : src/CPU/modelCPU.cpp.i
+src/CPU/neuralnetworkCPU.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/neuralnetworkCPU.cpp.i
+.PHONY : src/CPU/neuralnetworkCPU.cpp.i
 
-src/CPU/modelCPU.s: src/CPU/modelCPU.cpp.s
-.PHONY : src/CPU/modelCPU.s
+src/CPU/neuralnetworkCPU.s: src/CPU/neuralnetworkCPU.cpp.s
+.PHONY : src/CPU/neuralnetworkCPU.s
 
 # target to generate assembly for a file
-src/CPU/modelCPU.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/modelCPU.cpp.s
-.PHONY : src/CPU/modelCPU.cpp.s
+src/CPU/neuralnetworkCPU.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/deeplearninglibary.dir/build.make CMakeFiles/deeplearninglibary.dir/src/CPU/neuralnetworkCPU.cpp.s
+.PHONY : src/CPU/neuralnetworkCPU.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -267,9 +267,9 @@ help:
 	@echo "... src/CPU/matrixCPU.o"
 	@echo "... src/CPU/matrixCPU.i"
 	@echo "... src/CPU/matrixCPU.s"
-	@echo "... src/CPU/modelCPU.o"
-	@echo "... src/CPU/modelCPU.i"
-	@echo "... src/CPU/modelCPU.s"
+	@echo "... src/CPU/neuralnetworkCPU.o"
+	@echo "... src/CPU/neuralnetworkCPU.i"
+	@echo "... src/CPU/neuralnetworkCPU.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

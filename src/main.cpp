@@ -8,11 +8,6 @@ int main()
 {
 
     // TODO :
-    // step funktion für alle mit pos, batch_size, dataset, lr
-    // Adam optimizer fit
-    // fit fertig machen -> Batch GD, mini Batch GD
-    // L2 weight opt
-    // save + load
     // conv layer
     // cuda
     
@@ -24,7 +19,7 @@ int main()
     c.add_layer(10, Activation::SOFTMAX);
     c.configure_loss_function(Loss::CROSS_ENTROPY);
     
-    c.initalise();
+    c.initalise_random_weights();
 
     
     Dataset train = Dataset("../datasets/mnist_train.csv");
@@ -36,16 +31,22 @@ int main()
     train.one_hot_encode();
     test.one_hot_encode();
     
-    //c.fit(30000, train, Optimizer::MIN_BATCH_GRADIENT_DESCENT, 0.001 , 2);
 
+
+    c.fit(1, train, Optimizer::MIN_BATCH_GRADIENT_DESCENT, 0.001 , 2);
+
+
+    
     ADAM_Optimizer adam;
-    adam.lr = 0.0001;
-    c.fit(60000 * 15, train, Optimizer::MIN_BATCH_GRADIENT_DESCENT, adam, 4);
+    adam.batch_size = 1;
+    adam.lambda = 0;
+    //c.fit(1 , train, adam); // epoch >= batch_size
 
+    //Hyperparameter p;
+    //c.fit(1, train, Optimizer::STOCHASTIC_GRADIENT_DESCENT, p);
 
     c.performance(train);
     c.performance(test);
 
-
-    
+    c.save_weights("test1.txt");
 }
