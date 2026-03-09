@@ -69,8 +69,6 @@ public:
     void print();
     void print_size();
     void set(float val);
-    void insert_row(size_t row_pos, float val );
-    void remove_row(size_t row_pos);
 
     auto begin() { return data.begin(); }
     auto end() { return data.end(); }
@@ -86,6 +84,7 @@ public:
     static matrix<CPU> sqrt(const matrix<CPU> &a);
     static matrix<CPU> square(const matrix<CPU> &a);
     static matrix<CPU> reciprocal(const matrix<CPU> &a);
+
 };
 
 matrix<CPU> operator*(float val, const matrix<CPU>& a);

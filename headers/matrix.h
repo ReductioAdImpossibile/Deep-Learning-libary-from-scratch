@@ -6,7 +6,7 @@ template<typename Backend>
 class matrix;
 
 #ifdef ENABLE_CUDA
-    #include "matrixCUDA.cu"
+    #include "matrixCUDA.cuh"
     using Matrix = matrix<CUDA>;
 #else
     #include "matrixCPU.h"

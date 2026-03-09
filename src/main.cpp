@@ -11,6 +11,5 @@
 int main()
 {
     // cmake .. -DENABLE_CUDA=ON 
-    
-
+ 
 }

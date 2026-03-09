@@ -16,24 +16,24 @@ if(ENABLE_CUDA)
     enable_language(CUDA)
     set(CMAKE_CUDA_STANDARD 17)
     set(CMAKE_CUDA_STANDARD_REQUIRED ON)
-    include_directories(headers/GPU)
+    include_directories(headers/CUDA)
     add_compile_definitions(ENABLE_CUDA)
 
     set(SOURCES 
         src/main.cpp
-        src/GPU/matrixGPU.cu
-        src/GPU/activationGPU.cu
-        src/GPU/neuralnetworkGPU.cu
-        src/GPU/datasetGPU.cu
+        src/dataset.cpp
+        src/CUDA/matrixCUDA.cu
+        src/CUDA/activationCUDA.cu
+        src/CUDA/neuralnetworkCUDA.cu
     )
 else()
     include_directories(headers/CPU)
     set(SOURCES 
         src/main.cpp 
+        src/dataset.cpp
         src/CPU/matrixCPU.cpp 
         src/CPU/activationCPU.cpp
         src/CPU/neuralnetworkCPU.cpp
-        src/CPU/datasetCPU.cpp
     )
 endif()
 

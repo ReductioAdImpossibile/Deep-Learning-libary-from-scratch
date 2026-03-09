@@ -217,7 +217,7 @@ DEEPLEARNINGLIBARY_IS_TOP_LEVEL:STATIC=ON
 DEEPLEARNINGLIBARY_SOURCE_DIR:STATIC=/home/lucbr/Documents/DeepLearningLibary
 
 //CUDA Support
-ENABLE_CUDA:BOOL=OFF
+ENABLE_CUDA:BOOL=ON
 
 //CXX compiler flags for OpenMP parallelization
 OpenMP_CXX_FLAGS:STRING=-fopenmp

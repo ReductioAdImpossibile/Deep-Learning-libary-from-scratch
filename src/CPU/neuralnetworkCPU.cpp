@@ -206,7 +206,7 @@ std::vector<matrix<CPU>> neuralnetwork<CPU>::layer_outputs(const matrix<CPU> &in
 }
 
 
-void neuralnetwork<CPU>::gradient_descent(const size_t steps, dataset<CPU>& ds, double lr , double lambda, size_t batch_size)
+void neuralnetwork<CPU>::gradient_descent(const size_t steps, dataset& ds, double lr , double lambda, size_t batch_size)
 {
 
     
@@ -297,7 +297,7 @@ void neuralnetwork<CPU>::gradient_descent(const size_t steps, dataset<CPU>& ds, 
 
 // ------------------------------------------------------------------------------------
 
-void neuralnetwork<CPU>::fit(const size_t epochs, dataset<CPU>& ds, optimizer_type ofunc, double lr, size_t batch_size )
+void neuralnetwork<CPU>::fit(const size_t epochs, dataset& ds, optimizer_type ofunc, double lr, size_t batch_size )
 {
 
     size_t steps;
@@ -322,7 +322,7 @@ void neuralnetwork<CPU>::fit(const size_t epochs, dataset<CPU>& ds, optimizer_ty
 }
 
 
-void neuralnetwork<CPU>::fit(const size_t epochs, dataset<CPU> &ds, optimizer_type ofunc, hyperparameter<CPU>& param)
+void neuralnetwork<CPU>::fit(const size_t epochs, dataset &ds, optimizer_type ofunc, hyperparameter<CPU>& param)
 {
 
     size_t steps;
@@ -346,7 +346,7 @@ void neuralnetwork<CPU>::fit(const size_t epochs, dataset<CPU> &ds, optimizer_ty
 }
 
 
-void neuralnetwork<CPU>::fit(const size_t epochs, dataset<CPU> &ds, adam_optimizer<CPU> &adam)
+void neuralnetwork<CPU>::fit(const size_t epochs, dataset &ds, adam_optimizer<CPU> &adam)
 {
 
     const size_t steps = epochs * (ds.input.size() / adam.batch_size);
@@ -474,7 +474,7 @@ void neuralnetwork<CPU>::fit(const size_t epochs, dataset<CPU> &ds, adam_optimiz
     }
 }
 
-void neuralnetwork<CPU>::performance(dataset<CPU> &ds, std::string name)
+void neuralnetwork<CPU>::performance(dataset &ds, std::string name)
 {
 
     double rmsqe = 0;
@@ -502,12 +502,12 @@ void neuralnetwork<CPU>::performance(dataset<CPU> &ds, std::string name)
 
 }
 
-void neuralnetwork<CPU>::performance(dataset<CPU> &ds)
+void neuralnetwork<CPU>::performance(dataset &ds)
 {
     performance(ds, "");
 }
 
-void neuralnetwork<CPU>::binary_confusion_matrix(dataset<CPU> &ds, const float threshold)
+void neuralnetwork<CPU>::binary_confusion_matrix(dataset &ds, const float threshold)
 {
 
     if(output_layer_neurons != 2)

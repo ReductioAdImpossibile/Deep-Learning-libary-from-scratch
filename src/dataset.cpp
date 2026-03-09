@@ -1,14 +1,13 @@
 #include "DeepModel.h"
-#include "modelCPU.h"
 #include <algorithm>
 
 
-dataset<CPU>::dataset()
+dataset::dataset()
 {
     
 }
 
-dataset<CPU>::dataset(const std::string filename, size_t output_col)
+dataset::dataset(const std::string filename, size_t output_col)
 {
     std::ifstream file(filename); 
     if (!file.is_open()) 
@@ -51,15 +50,15 @@ dataset<CPU>::dataset(const std::string filename, size_t output_col)
 
         if(!input_row.empty() && !skip_row)
         {
-            this->input.push_back(matrix<CPU>(input_row.size(), 1, input_row));
-            this->expected.push_back(matrix<CPU>(1,1, current_output)); 
+            this->input.push_back(Matrix(input_row.size(), 1, input_row));
+            this->expected.push_back(Matrix(1,1, current_output)); 
         }
     }
 
     std::cout << "[LOADED " << filename << " SUCCESSFULLY ]" << std::endl; 
 }
 
-dataset<CPU>::dataset(const std::string filename, const std::vector<size_t>& ignore, size_t output_col)
+dataset::dataset(const std::string filename, const std::vector<size_t>& ignore, size_t output_col)
 {
     std::ifstream file(filename); 
     if (!file.is_open()) 
@@ -108,8 +107,8 @@ dataset<CPU>::dataset(const std::string filename, const std::vector<size_t>& ign
 
         if(!input_row.empty() && !skip_row)
         {
-            this->input.push_back(matrix<CPU>(input_row.size(), 1, input_row));
-            this->expected.push_back(matrix<CPU>(1,1, current_output)); 
+            this->input.push_back(Matrix(input_row.size(), 1, input_row));
+            this->expected.push_back(Matrix(1,1, current_output)); 
         }
     }
 
@@ -117,7 +116,7 @@ dataset<CPU>::dataset(const std::string filename, const std::vector<size_t>& ign
     
 }
 
-dataset<CPU> dataset<CPU>::split(float ratio)
+dataset dataset::split(float ratio)
 {
 
     if(0 > ratio || ratio > 1)
@@ -125,11 +124,11 @@ dataset<CPU> dataset<CPU>::split(float ratio)
         
     size_t split_point = this->input.size() * ratio;
 
-    std::vector<matrix<CPU>> input_first_part(this->input.begin(), this->input.begin() + split_point);
-    std::vector<matrix<CPU>> input_second_part(this->input.begin() + split_point, this->input.end());
+    std::vector<Matrix> input_first_part(this->input.begin(), this->input.begin() + split_point);
+    std::vector<Matrix> input_second_part(this->input.begin() + split_point, this->input.end());
 
-    std::vector<matrix<CPU>> expected_first_part(this->expected.begin(), this->expected.begin() + split_point);
-    std::vector<matrix<CPU>> expected_second_part(this->expected.begin() + split_point, this->expected.end());
+    std::vector<Matrix> expected_first_part(this->expected.begin(), this->expected.begin() + split_point);
+    std::vector<Matrix> expected_second_part(this->expected.begin() + split_point, this->expected.end());
 
     this->input = input_first_part;
     this->expected = expected_first_part;
@@ -141,32 +140,32 @@ dataset<CPU> dataset<CPU>::split(float ratio)
 
 }
 
-void dataset<CPU>::one_hot_encode()
+void dataset::one_hot_encode()
 {
     if(this->expected[0].columns() != 1 || this->expected[0].rows() != 1)
         throw std::runtime_error("one_hot_encode : Wrong matrix output shape for one hot encoding. It needs to be 1x1xh."); 
     
 
     
-    std::vector<matrix<CPU>> res;
+    std::vector<Matrix> res;
     res.reserve(this->expected.size());
 
     std::vector<float> values;
     values.reserve(this->expected.size());
     
 
-    for(matrix<CPU> &mat : this->expected)
+    for(Matrix &mat : this->expected)
         values.push_back(mat[0]);
     
     std::sort(values.begin(), values.end());
     values.erase(std::unique(values.begin(), values.end()), values.end());
 
-    for(matrix<CPU> &mat : this->expected)
+    for(Matrix &mat : this->expected)
     {
         auto it = std::find(values.begin(), values.end(), mat[0]);
         int index = std::distance(values.begin(), it);
 
-        matrix<CPU> _x = matrix<CPU>(values.size(), 1, 0);
+        Matrix _x = Matrix(values.size(), 1, 0);
         _x[index] = 1.0;
         res.push_back(_x);
     }
@@ -177,12 +176,12 @@ void dataset<CPU>::one_hot_encode()
 
 
 
-void dataset<CPU>::normalize()
+void dataset::normalize()
 {
     float max = std::numeric_limits<float>::min();
     float min = std::numeric_limits<float>::max();
 
-    for(matrix<CPU> vec : this->input )
+    for(Matrix vec : this->input )
     {
         float current_min = *std::min_element(vec.begin(), vec.end());
         float current_max = *std::max_element(vec.begin(), vec.end());
@@ -194,7 +193,7 @@ void dataset<CPU>::normalize()
     if(max == min)
         throw std::runtime_error("normalize : All values of the dataset are the same, which results in a divison by zero.");
 
-    for(matrix<CPU>& vec : this->input)
+    for(Matrix& vec : this->input)
     {
         
         vec = vec - min;
@@ -205,7 +204,7 @@ void dataset<CPU>::normalize()
 }
 
 
-void dataset<CPU>::standardize()
+void dataset::standardize()
 {
     size_t rows = this->input[0].rows();
     std::vector<float> means(0);
@@ -215,7 +214,7 @@ void dataset<CPU>::standardize()
     sigma.reserve(rows);
 
 
-    for(matrix<CPU> &vec : this->input)
+    for(Matrix &vec : this->input)
         for(size_t r = 0; r < rows; r++ )
             means[r] += vec[r]; 
          
@@ -224,7 +223,7 @@ void dataset<CPU>::standardize()
 
 
 
-    for(matrix<CPU> &vec : this->input)
+    for(Matrix &vec : this->input)
         for(size_t r = 0; r < rows; r++ )
             sigma[r] += (vec[r] - means[r]) *(vec[r] - means[r]); 
     
@@ -233,7 +232,7 @@ void dataset<CPU>::standardize()
 
 
 
-    for(matrix<CPU> &vec : this->input)
+    for(Matrix &vec : this->input)
     {
         for(size_t r = 0; r < rows; r++ )
             vec[r] = (vec[r] - means[r]) / sigma[r];   
@@ -241,7 +240,7 @@ void dataset<CPU>::standardize()
 
 }
 
-void dataset<CPU>::print_information()
+void dataset::print_information()
 {
 
     if(this->input.empty())
