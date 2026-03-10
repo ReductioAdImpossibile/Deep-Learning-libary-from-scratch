@@ -12,6 +12,9 @@ private:
     size_t r,c, h;
     size_t n;
 
+    static constexpr int THREADS_1D = 256;
+    static constexpr int THREADS_2D = 16;
+
 public:
 
     matrix();
@@ -30,7 +33,7 @@ public:
     static matrix<CUDA> create_stacked_matrix(const size_t rows, const size_t columns, const size_t height, float start, float end);
     static matrix<CUDA> create_stacked_matrix(matrix<CUDA>* begin, matrix<CUDA>* end);
 
-    static matrix<CUDA> add_mat_to_stacked_matrix();
+    static matrix<CUDA> add_mat_to_stacked_matrix(const matrix<CUDA>& a, const matrix<CUDA>& b);
 
 
     matrix<CUDA> operator%(const matrix<CUDA> &a) const;
@@ -46,17 +49,21 @@ public:
     matrix<CUDA> transpose(const matrix<CUDA> &a);
 
 
+     
     size_t rows() const;
     size_t columns() const;
     size_t height() const;
     size_t size() const;
-    bool empty() const;
+    size_t mat_size() const;
 
-    double sum();
-    double L1();
-    double L2();
-    size_t argmax();
-    size_t argmin();
+    bool empty() const;
+    float* raw();
+
+
+    std::vector<float> sum(); 
+    std::vector<float> L2();
+    std::vector<size_t> argmax();
+    std::vector<size_t> argmin();
 
     void print();
     void print_size();
@@ -66,5 +73,11 @@ public:
     static matrix<CUDA> square(const matrix<CUDA> &a);
     static matrix<CUDA> reciprocal(const matrix<CUDA> &a);
 
+
+
 };
+
+matrix<CUDA> operator*(float val, const matrix<CUDA>& a);
+matrix<CUDA> operator+(float val, const matrix<CUDA>& a);
+matrix<CUDA> operator-(float val, const matrix<CUDA>& a);
 

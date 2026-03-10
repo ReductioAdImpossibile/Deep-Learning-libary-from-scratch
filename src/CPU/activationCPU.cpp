@@ -280,12 +280,6 @@ float loss<CPU>::cross_entropy(const matrix<CPU> &probability, const matrix<CPU>
 float loss<CPU>::quadratic(const matrix<CPU> &probability, const matrix<CPU> &expected)
 {
     float sum = 0;
-    /*
-    for(int i = 0; i < expected.size(); i++)
-        sum += (probability[i] - expected[i]) * (probability[i] - expected[i]);
-
-    */
-
     matrix<CPU> err_sq = matrix<CPU>::square(probability - expected);
 
     return  (err_sq % this->weights).sum() / expected.size();

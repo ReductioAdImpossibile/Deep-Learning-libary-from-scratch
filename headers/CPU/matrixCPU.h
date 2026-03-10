@@ -65,6 +65,10 @@ public:
     double L2();
     size_t argmax();
     size_t argmin();
+    double max();
+    double min();
+ 
+
 
     void print();
     void print_size();

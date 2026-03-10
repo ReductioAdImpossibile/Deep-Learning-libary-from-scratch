@@ -9,6 +9,30 @@
 
 
 
+template<>
+class dataset<CPU>
+{
+
+public:
+    std::vector<Matrix> input;
+    std::vector<Matrix> expected;
+    
+    dataset();
+    dataset(const std::string filename, size_t label_col = 0);
+    dataset(const std::string filename, const std::vector<size_t>& ignore, size_t label_col = 0);
+
+    dataset split(float ratio);
+
+
+    void one_hot_encode();   
+    void normalize ();
+    void standardize();
+
+
+    void print_information();
+
+};
+
 
 
 template<>
@@ -37,7 +61,7 @@ private:
     std::vector<matrix<CPU>> bias_matrices;
 
 
-    void gradient_descent(const size_t steps, dataset &ds, double lr, double lambda, size_t batch_size);
+    void gradient_descent(const size_t steps, dataset<CPU> &ds, double lr, double lambda, size_t batch_size);
     
     std::vector<matrix<CPU>> layer_outputs(const matrix<CPU>& input);
     matrix<CPU> run(const matrix<CPU>& input);
@@ -58,16 +82,16 @@ public:
     void initalise_xavier_weights();
     void initalise_he_weights();
 
-    void fit(const size_t epochs,dataset &ds, optimizer_type ofunc, double lr, size_t batch_size = 64);
-    void fit(const size_t epochs,dataset &ds, optimizer_type ofunc, hyperparameter<CPU> &param);
-    void fit(const size_t epochs,dataset &ds, adam_optimizer<CPU> &adam);
+    void fit(const size_t epochs,dataset<CPU> &ds, optimizer_type ofunc, double lr, size_t batch_size = 64);
+    void fit(const size_t epochs,dataset<CPU> &ds, optimizer_type ofunc, hyperparameter<CPU> &param);
+    void fit(const size_t epochs,dataset<CPU> &ds, adam_optimizer<CPU> &adam);
 
 
 
-    void performance(dataset& ds, std::string name);
-    void performance(dataset& ds);
+    void performance(dataset<CPU>& ds, std::string name);
+    void performance(dataset<CPU>& ds);
     
-    void binary_confusion_matrix(dataset& ds, const float threshold = 0.5);
+    void binary_confusion_matrix(dataset<CPU>& ds, const float threshold = 0.5);
 
     void load_weights(const std::string &filename);
     void save_weights(const std::string &filename);

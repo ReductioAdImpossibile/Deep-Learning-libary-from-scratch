@@ -21,7 +21,8 @@ if(ENABLE_CUDA)
 
     set(SOURCES 
         src/main.cpp
-        src/dataset.cpp
+        src/CUDA/kernel.cu
+        src/CUDA/datasetCUDA.cu
         src/CUDA/matrixCUDA.cu
         src/CUDA/activationCUDA.cu
         src/CUDA/neuralnetworkCUDA.cu
@@ -30,7 +31,7 @@ else()
     include_directories(headers/CPU)
     set(SOURCES 
         src/main.cpp 
-        src/dataset.cpp
+        src/CPU/dataset.cpp
         src/CPU/matrixCPU.cpp 
         src/CPU/activationCPU.cpp
         src/CPU/neuralnetworkCPU.cpp

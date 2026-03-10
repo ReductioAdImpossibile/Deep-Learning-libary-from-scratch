@@ -188,11 +188,15 @@ size_t matrix<CPU>::argmin()
     return distance(data.begin(), max); 
 }
 
+double matrix<CPU>::max()
+{
+    return *std::max_element(data.begin(), data.end());
+}
 
-
-
-
-
+double matrix<CPU>::min()
+{
+    return *std::min_element(data.begin(), data.end());
+}
 
 matrix<CPU> &matrix<CPU>::operator=(const matrix<CPU> &other)
 {

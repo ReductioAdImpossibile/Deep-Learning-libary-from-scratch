@@ -153,6 +153,54 @@ src/CUDA/activationCUDA.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/DEEPLEARNINGLIBARY.dir/build.make CMakeFiles/DEEPLEARNINGLIBARY.dir/src/CUDA/activationCUDA.cu.s
 .PHONY : src/CUDA/activationCUDA.cu.s
 
+src/CUDA/datasetCUDA.o: src/CUDA/datasetCUDA.cu.o
+.PHONY : src/CUDA/datasetCUDA.o
+
+# target to build an object file
+src/CUDA/datasetCUDA.cu.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DEEPLEARNINGLIBARY.dir/build.make CMakeFiles/DEEPLEARNINGLIBARY.dir/src/CUDA/datasetCUDA.cu.o
+.PHONY : src/CUDA/datasetCUDA.cu.o
+
+src/CUDA/datasetCUDA.i: src/CUDA/datasetCUDA.cu.i
+.PHONY : src/CUDA/datasetCUDA.i
+
+# target to preprocess a source file
+src/CUDA/datasetCUDA.cu.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DEEPLEARNINGLIBARY.dir/build.make CMakeFiles/DEEPLEARNINGLIBARY.dir/src/CUDA/datasetCUDA.cu.i
+.PHONY : src/CUDA/datasetCUDA.cu.i
+
+src/CUDA/datasetCUDA.s: src/CUDA/datasetCUDA.cu.s
+.PHONY : src/CUDA/datasetCUDA.s
+
+# target to generate assembly for a file
+src/CUDA/datasetCUDA.cu.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DEEPLEARNINGLIBARY.dir/build.make CMakeFiles/DEEPLEARNINGLIBARY.dir/src/CUDA/datasetCUDA.cu.s
+.PHONY : src/CUDA/datasetCUDA.cu.s
+
+src/CUDA/kernel.o: src/CUDA/kernel.cu.o
+.PHONY : src/CUDA/kernel.o
+
+# target to build an object file
+src/CUDA/kernel.cu.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DEEPLEARNINGLIBARY.dir/build.make CMakeFiles/DEEPLEARNINGLIBARY.dir/src/CUDA/kernel.cu.o
+.PHONY : src/CUDA/kernel.cu.o
+
+src/CUDA/kernel.i: src/CUDA/kernel.cu.i
+.PHONY : src/CUDA/kernel.i
+
+# target to preprocess a source file
+src/CUDA/kernel.cu.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DEEPLEARNINGLIBARY.dir/build.make CMakeFiles/DEEPLEARNINGLIBARY.dir/src/CUDA/kernel.cu.i
+.PHONY : src/CUDA/kernel.cu.i
+
+src/CUDA/kernel.s: src/CUDA/kernel.cu.s
+.PHONY : src/CUDA/kernel.s
+
+# target to generate assembly for a file
+src/CUDA/kernel.cu.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/DEEPLEARNINGLIBARY.dir/build.make CMakeFiles/DEEPLEARNINGLIBARY.dir/src/CUDA/kernel.cu.s
+.PHONY : src/CUDA/kernel.cu.s
+
 src/CUDA/matrixCUDA.o: src/CUDA/matrixCUDA.cu.o
 .PHONY : src/CUDA/matrixCUDA.o
 
@@ -201,30 +249,6 @@ src/CUDA/neuralnetworkCUDA.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/DEEPLEARNINGLIBARY.dir/build.make CMakeFiles/DEEPLEARNINGLIBARY.dir/src/CUDA/neuralnetworkCUDA.cu.s
 .PHONY : src/CUDA/neuralnetworkCUDA.cu.s
 
-src/dataset.o: src/dataset.cpp.o
-.PHONY : src/dataset.o
-
-# target to build an object file
-src/dataset.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DEEPLEARNINGLIBARY.dir/build.make CMakeFiles/DEEPLEARNINGLIBARY.dir/src/dataset.cpp.o
-.PHONY : src/dataset.cpp.o
-
-src/dataset.i: src/dataset.cpp.i
-.PHONY : src/dataset.i
-
-# target to preprocess a source file
-src/dataset.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DEEPLEARNINGLIBARY.dir/build.make CMakeFiles/DEEPLEARNINGLIBARY.dir/src/dataset.cpp.i
-.PHONY : src/dataset.cpp.i
-
-src/dataset.s: src/dataset.cpp.s
-.PHONY : src/dataset.s
-
-# target to generate assembly for a file
-src/dataset.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DEEPLEARNINGLIBARY.dir/build.make CMakeFiles/DEEPLEARNINGLIBARY.dir/src/dataset.cpp.s
-.PHONY : src/dataset.cpp.s
-
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -261,15 +285,18 @@ help:
 	@echo "... src/CUDA/activationCUDA.o"
 	@echo "... src/CUDA/activationCUDA.i"
 	@echo "... src/CUDA/activationCUDA.s"
+	@echo "... src/CUDA/datasetCUDA.o"
+	@echo "... src/CUDA/datasetCUDA.i"
+	@echo "... src/CUDA/datasetCUDA.s"
+	@echo "... src/CUDA/kernel.o"
+	@echo "... src/CUDA/kernel.i"
+	@echo "... src/CUDA/kernel.s"
 	@echo "... src/CUDA/matrixCUDA.o"
 	@echo "... src/CUDA/matrixCUDA.i"
 	@echo "... src/CUDA/matrixCUDA.s"
 	@echo "... src/CUDA/neuralnetworkCUDA.o"
 	@echo "... src/CUDA/neuralnetworkCUDA.i"
 	@echo "... src/CUDA/neuralnetworkCUDA.s"
-	@echo "... src/dataset.o"
-	@echo "... src/dataset.i"
-	@echo "... src/dataset.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
