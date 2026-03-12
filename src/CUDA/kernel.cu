@@ -135,7 +135,7 @@ __global__ void matrix_kernel_min(const float *data, float *result, const size_t
     size_t index = threadIdx.x + blockIdx.x * blockDim.x;
     size_t offset = layer * mat_size;
 
-    shared_data[threadid] = (index < mat_size) ? data[offset + index] : -FLT_MAX;
+    shared_data[threadid] = (index < mat_size) ? data[offset + index] : FLT_MAX;
     __syncthreads();
 
 

@@ -29,12 +29,13 @@ int main()
     Dataset train = Dataset("../datasets/mnist_train.csv");
     Dataset test = Dataset("../datasets/mnist_test.csv");
  
-    train.normalize();
+    train.normalize();          // 
     test.normalize();
 
-    train.one_hot_encode();
+    train.one_hot_encode();     //
     test.one_hot_encode();
     
+
     c.fit(1, train, Optimizer::MIN_BATCH_GRADIENT_DESCENT, 0.001 , 1);
 
     c.performance(train);
@@ -42,30 +43,5 @@ int main()
 
     c.save_weights("test1.txt");
     
-
-    // softmax, dsoft_inkl_cross, relu , drelu, transpose, reciprocal, +, -, %, scale
-
     
-    /*
-    Matrix a(2,1, 1);
-    Matrix b(2,1, 0);
-
-    NeuralNetwork c;
-    c.configure_input_layer(2);
-    c.add_layer(2, Activation::RELU);
-    c.configure_loss_function(Loss::QUADRATIC);
-
-    c.initalise_random_weights(0,1);
-
-    Dataset d;
-    d.input = {a,b};
-    d.expected = {a,b};
-
-
-
-    c.fit(1000, d, Optimizer::STOCHASTIC_GRADIENT_DESCENT, 0.01);
-
-    c.run(a).print();
-    */
-
 }
