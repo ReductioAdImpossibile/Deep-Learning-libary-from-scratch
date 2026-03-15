@@ -15,4 +15,5 @@ class memory_pool;
 #else
     #include "matrixCPU.h"
     using Matrix = matrix<CPU>;
+    using Memory_Pool = memory_pool<CPU>;
 #endif

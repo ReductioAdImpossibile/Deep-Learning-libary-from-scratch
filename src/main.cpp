@@ -1,8 +1,7 @@
 
-#define ENABLE_CUDA  1
+//#define ENABLE_CUDA  1
 #include <iostream>
 #include "DeepModel.h"
-#include "activationCUDA.cuh"
 #include <chrono>
 #include <experimental/simd>
 #include <omp.h>
@@ -14,6 +13,8 @@ int main()
 {
     // cmake .. -DENABLE_CUDA=ON 
     
+    
+
     NeuralNetwork c;
 
     c.configure_input_layer(784);
@@ -22,7 +23,7 @@ int main()
     c.add_layer(10,  Activation::SOFTMAX);
     c.configure_loss_function(Loss::CROSS_ENTROPY);
     
-    c.initalise_random_weights(0,0.1);
+    c.initalise_random_weights(-0.1, 0.1);
 
 
     Dataset train = Dataset("../datasets/mnist_train.csv");
@@ -33,39 +34,15 @@ int main()
     test.normalize();
     test.one_hot_encode();     
 
-    //c.fit(200, train, Optimizer::MIN_BATCH_GRADIENT_DESCENT, 0.001 , 256);
-
-    ADAM_Optimizer adam;
-    adam.lr = 0.001;
-    adam.batch_size = 256;
-    c.fit(100, train, adam);
+    c.fit(1, train, Optimizer::MIN_BATCH_GRADIENT_DESCENT, 0.01 , 256);
 
 
     c.performance(train, "train");
     c.performance(test, "test");
 
     c.save_weights("test1.txt");
-    
-    
-    
-   
-    /*
-    Dataset ds;
-    ds.input = Matrix::create_stacked_matrix(1,1,1024, 1);
-    ds.expected = Matrix::create_stacked_matrix(1,1,1024, 1);
 
-    NeuralNetwork c;
-
-    c.configure_input_layer(1);
-    c.add_layer(1, Activation::IDENTITY);
-    c.configure_loss_function(Loss::QUADRATIC);
-    c.initalise_random_weights();
     
-    c.fit(1000, ds, Optimizer::MIN_BATCH_GRADIENT_DESCENT, 0.01, 1024);
-
-    c.run(ds.input).print();
-    */
-
 
 
 }

@@ -4,17 +4,6 @@
 #include <functional>
 
 
-using activation_fn = std::function<matrix<CPU>(const matrix<CPU>&)>;
-using loss_fn = std::function<float(const matrix<CPU>&, const matrix<CPU>& )>;
-using loss_derivative_fn = std::function<matrix<CPU>(const matrix<CPU>&, const matrix<CPU>&)>;
-
-
-using activation_type = const size_t;
-using loss_type = const size_t;
-using loss_derivative_type = const size_t;
-
-using optimizer_type = const size_t;
-
 
 template<>
 class activation<CPU>

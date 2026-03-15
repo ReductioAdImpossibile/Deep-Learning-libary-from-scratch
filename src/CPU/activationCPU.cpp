@@ -21,9 +21,9 @@ matrix<CPU> activation<CPU>::identity(const matrix<CPU> &a)
 
 matrix<CPU> activation<CPU>::relu(const matrix<CPU> &a)
 {
-    matrix<CPU> result(a.rows(), a.columns());
+    matrix<CPU> result = matrix<CPU>::create_stacked_matrix(a.rows(), a.columns(), a.height());
     
-    for(int i = 0;i < a.size(); i++)
+    for(int i = 0;i < a.elements(); i++)
         result[i] = a[i] > 0 ? a[i] : 0; 
        
     return result;
@@ -31,9 +31,8 @@ matrix<CPU> activation<CPU>::relu(const matrix<CPU> &a)
 
 matrix<CPU> activation<CPU>::elu(const matrix<CPU> &a)
 {
-    matrix<CPU> result(a.rows(), a.columns());
-    
-    for(int i = 0; i < a.size(); i++)
+    matrix<CPU> result = matrix<CPU>::create_stacked_matrix(a.rows(), a.columns(), a.height());
+    for(int i = 0; i < a.elements(); i++)
         result[i] = a[i] > 0 ? a[i] : ELU_ALPHA_PARAM * (std::exp(a[i]) - 1);
 
     return result;
@@ -41,10 +40,10 @@ matrix<CPU> activation<CPU>::elu(const matrix<CPU> &a)
 
 matrix<CPU> activation<CPU>::sigmoid(const matrix<CPU> &a)
 {
-    matrix<CPU> result(a.rows(), a.columns());
+    matrix<CPU> result = matrix<CPU>::create_stacked_matrix(a.rows(), a.columns(), a.height());
     
-    
-    for(int i = 0; i < a.size(); i++)
+
+    for(int i = 0; i < a.elements(); i++)
         result[i] = 1 / (1 + std::exp(-a[i]));
     
     return result;
@@ -52,9 +51,9 @@ matrix<CPU> activation<CPU>::sigmoid(const matrix<CPU> &a)
 
 matrix<CPU> activation<CPU>::log_sigmoid(const matrix<CPU> &a)
 {
-    matrix<CPU> result(a.rows(), a.columns());
+    matrix<CPU> result = matrix<CPU>::create_stacked_matrix(a.rows(), a.columns(), a.height());
     
-    for(int i = 0; i < a.size(); i++)
+    for(int i = 0; i < a.elements(); i++)
         result[i] = std::log(1 / (1 + std::exp(-a[i])));
     
     return result;
@@ -62,9 +61,9 @@ matrix<CPU> activation<CPU>::log_sigmoid(const matrix<CPU> &a)
 
 matrix<CPU> activation<CPU>::hard_sigmoid(const matrix<CPU> &a)
 {
-    matrix<CPU> result(a.rows(), a.columns());
+    matrix<CPU> result = matrix<CPU>::create_stacked_matrix(a.rows(), a.columns(), a.height());
     
-    for(int i = 0; i < a.size(); i++)
+    for(int i = 0; i < a.elements(); i++)
     {
         float _d = a[i];
         
@@ -82,8 +81,8 @@ matrix<CPU> activation<CPU>::hard_sigmoid(const matrix<CPU> &a)
 
 matrix<CPU> activation<CPU>::tanh(const matrix<CPU> &a)
 {
-    matrix<CPU> result(a.rows(), a.columns());
-    for(int i = 0; i < a.size(); i++)
+    matrix<CPU> result = matrix<CPU>::create_stacked_matrix(a.rows(), a.columns(), a.height());
+    for(int i = 0; i < a.elements(); i++)
     {
         result[i] = std::tanh(a[i]); 
     }
@@ -94,38 +93,31 @@ matrix<CPU> activation<CPU>::tanh(const matrix<CPU> &a)
 
 matrix<CPU> activation<CPU>::softmax(const matrix<CPU> &a)
 {
+    matrix<CPU> ones_bcast = matrix<CPU>::create_stacked_matrix(a.rows(), a.columns(), a.height(), 1);
 
-    // wrong!
-    matrix<CPU> result = a;
+    matrix<CPU> max_rows = a.max(); 
 
-    float max_val = a[0];
-    for(int i = 1; i < a.size(); i++) {
-        if(a[i] > max_val) max_val = a[i];
-    }
+    matrix<CPU> max_expanded = matrix<CPU>::bcast_scale_to_stacked_matrix(ones_bcast, max_rows);
 
-    float exp_sum = 0;
-    for(int i = 0; i < a.size(); i++) {
-        exp_sum += std::exp(a[i] - max_val);
-    }
+    matrix<CPU> exp = matrix<CPU>::exp(a - max_expanded);
 
-    for(int i = 0; i < result.size(); i++) {
-        result[i] = std::exp(a[i] - max_val) / exp_sum;
-    }
+    matrix<CPU> exp_sum = exp.sum();
 
-    return result;
+    matrix<CPU> exp_sum_expanded = matrix<CPU>::bcast_scale_to_stacked_matrix(ones_bcast, exp_sum);
+
+    return exp % matrix<CPU>::reciprocal(exp_sum_expanded);
 }
 
 matrix<CPU> activation<CPU>::didentity(const matrix<CPU> &a)
 {
-    matrix<CPU> result(a.rows(), a.columns(), 1);
-    return (matrix<CPU>) result;
+    matrix<CPU> result = matrix<CPU>::create_stacked_matrix(a.rows(), a.columns(), a.height(), 1);
+    return result;
 }
 
 matrix<CPU> activation<CPU>::drelu(const matrix<CPU> &a)
 {
-    matrix<CPU> result(a.rows(), a.columns());
-
-    for(int i = 0; i < a.size(); i++)
+    matrix<CPU> result = matrix<CPU>::create_stacked_matrix(a.rows(), a.columns(), a.height());
+    for(int i = 0; i < a.elements(); i++)
     {
         float _d = a[i];
         
@@ -140,9 +132,9 @@ matrix<CPU> activation<CPU>::drelu(const matrix<CPU> &a)
 
 matrix<CPU> activation<CPU>::delu(const matrix<CPU> &a)
 {
-    matrix<CPU> result(a.rows(), a.columns());
+    matrix<CPU> result = matrix<CPU>::create_stacked_matrix(a.rows(), a.columns(), a.height());
     
-    for(int i = 0; i < a.size(); i++)
+    for(int i = 0; i < a.elements(); i++)
     {
         float _d = a[i];
         if(_d <= 0)
@@ -169,8 +161,8 @@ matrix<CPU> activation<CPU>::dlog_sigmoid(const matrix<CPU> &a)
 matrix<CPU> activation<CPU>::dhard_sigmoid(const matrix<CPU> &a)
 {
 
-    matrix<CPU> result(a.rows(), a.columns());
-    for(int i = 0; i < a.size(); i++)
+    matrix<CPU> result = matrix<CPU>::create_stacked_matrix(a.rows(), a.columns(), a.height());
+    for(int i = 0; i < a.elements(); i++)
     {   
         result[i] = a[i] > 3 || a[i] < -3 ? 0 : 1/6;
     }
@@ -180,8 +172,8 @@ matrix<CPU> activation<CPU>::dhard_sigmoid(const matrix<CPU> &a)
 
 matrix<CPU> activation<CPU>::dtanh(const matrix<CPU> &a)
 {
-    matrix<CPU> result(a.rows(), a.columns());
-    for(int i = 0; i < a.size(); i++)
+    matrix<CPU> result = matrix<CPU>::create_stacked_matrix(a.rows(), a.columns(), a.height());
+    for(int i = 0; i < a.elements(); i++)
     {
         result[i] = 1 / (std::cosh(a[i]) * std::cosh(a[i]));
     }
@@ -190,7 +182,7 @@ matrix<CPU> activation<CPU>::dtanh(const matrix<CPU> &a)
     return result;
 }
 
-activation_fn activation<CPU>::get_fn(activation_type atype)
+std::function<matrix<CPU>(const matrix<CPU>&)> activation<CPU>::get_fn(activation_type atype)
 {
     switch (atype)
     {
@@ -223,7 +215,7 @@ activation_fn activation<CPU>::get_fn(activation_type atype)
     }
 }
 
-activation_fn activation<CPU>::get_derivative_fn(activation_type atype)
+std::function<matrix<CPU>(const matrix<CPU>&)> activation<CPU>::get_derivative_fn(activation_type atype)
 {
     switch (atype)
     {
@@ -262,68 +254,52 @@ activation_fn activation<CPU>::get_derivative_fn(activation_type atype)
 
 float loss<CPU>::cross_entropy(const matrix<CPU> &probability, const matrix<CPU> &expected)
 {
-    float sum = 0;
-    float epsilon = 1e-15f; 
+    matrix<CPU> prod = matrix<CPU>::log2(probability) % expected;
 
-    for(int i = 0; i < expected.size(); i++)
-    {
-        if(expected[i] > 0)
-        {
-            float p = std::max(probability[i], epsilon);
-            sum -= this->weights[i] * expected[i] * std::log(p);
-        }
-    }
-    return sum;
+    matrix<CPU> weighted_prod = matrix<CPU>::bcast_hadamard_to_stacked_matrix(prod, this->weights);
+
+    return matrix<CPU>::reduce_sum(-1 * weighted_prod.sum())[0];
 }
 
 float loss<CPU>::quadratic(const matrix<CPU> &probability, const matrix<CPU> &expected)
 {
-    float sum = 0;
-    matrix<CPU> err_sq = matrix<CPU>::square(probability - expected);
+    matrix<CPU> sq_err = matrix<CPU>::square(probability - expected);
 
-    return  (err_sq % this->weights).sum() / expected.size();
+    matrix<CPU> weighted_sq_err = matrix<CPU>::bcast_hadamard_to_stacked_matrix(sq_err, this->weights) * (1 / (float)expected.mat_elements());
+    
+    return  matrix<CPU>::reduce_sum(weighted_sq_err)[0];
 }
-
 
 matrix<CPU> loss<CPU>::dcross_entropy(const matrix<CPU> &probability, const matrix<CPU> &expected)
 {
     matrix<CPU> grad(probability.rows(), probability.columns(), 0);
 
-    #pragma omp parallel for
-    for (size_t i = 0; i < probability.size(); ++i)
-    {
-        if (expected[i] != 0.0f)
-            grad[i] = -this->weights[i] / probability[i];
-    }
+    matrix<CPU> prod = expected % matrix<CPU>::reciprocal(probability) * (-1);
+    matrix<CPU> weighted_prod = matrix<CPU>::bcast_hadamard_to_stacked_matrix(prod, this->weights);
 
-    return grad;
+    return weighted_prod;
 }
 
 matrix<CPU> loss<CPU>::dcross_entropy_inkl_softmax(const matrix<CPU> &probability, const matrix<CPU> &expected)
 {
-    /*
-    matrix<CPU> grad(probability.rows(), probability.columns(), 0);
-    for (int i = 0; i < expected.size(); i++)
-        grad[i] = probability[i] - expected[i];
-    */
+    matrix<CPU> err = probability - expected;
     
+
+    matrix<CPU> weighted_err = matrix<CPU>::bcast_hadamard_to_stacked_matrix(err, this->weights);
     
-    matrix<CPU> grad = (probability - expected) % this->weights;
-    return grad;
+
+    return weighted_err;
 }
 
 matrix<CPU> loss<CPU>::dquadratic(const matrix<CPU> &probability, const matrix<CPU> &expected)
 {
-    /*
-    matrix<CPU> grad(probability.rows(), probability.columns(), 0);
+    matrix<CPU> err = probability - expected;
 
-    for (int i = 0; i < expected.size(); i++)
-        grad[i] = 2 * (probability[i] - expected[i]);
-    */
-    matrix<CPU> grad = 2 * ((probability - expected) % this->weights); 
-    return grad;
+    matrix<CPU> weighted_err = matrix<CPU>::bcast_hadamard_to_stacked_matrix(err, this->weights);
+
+
+    return  weighted_err * 2;
 }
-
 
 
 
@@ -331,7 +307,7 @@ loss<CPU>::loss()
 {
 }
 
-loss_fn loss<CPU>::get_fn(loss_type ltype)
+std::function<float(const matrix<CPU>&, const matrix<CPU>& )> loss<CPU>::get_fn(loss_type ltype)
 {
     switch (ltype)
     {
@@ -350,7 +326,7 @@ loss_fn loss<CPU>::get_fn(loss_type ltype)
     }
 }
 
-loss_derivative_fn loss<CPU>::get_derivative_fn(loss_type ltype, activation_type atype)
+std::function<matrix<CPU>(const matrix<CPU>&, const matrix<CPU>&)> loss<CPU>::get_derivative_fn(loss_type ltype, activation_type atype)
 {
     switch (ltype)
     {

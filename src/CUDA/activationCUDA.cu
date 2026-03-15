@@ -1,3 +1,5 @@
+
+#include "matrixCUDA.cuh"
 #include "activationCUDA.cuh"
 #include "kernel.cuh"
 #include <cmath>
@@ -156,7 +158,7 @@ matrix<CUDA> activation<CUDA>::dtanh(const matrix<CUDA> &a)
     return result;
 }
 
-activation_fn activation<CUDA>::get_fn(activation_type atype)
+std::function<matrix<CUDA>(const matrix<CUDA>&)>  activation<CUDA>::get_fn(activation_type atype)
 {
     switch (atype)
     {
@@ -189,7 +191,7 @@ activation_fn activation<CUDA>::get_fn(activation_type atype)
     }
 }
 
-activation_fn activation<CUDA>::get_derivative_fn(activation_type atype)
+std::function<matrix<CUDA>(const matrix<CUDA>&)>  activation<CUDA>::get_derivative_fn(activation_type atype)
 {
     switch (atype)
     {
@@ -225,23 +227,22 @@ activation_fn activation<CUDA>::get_derivative_fn(activation_type atype)
 
 
 
-matrix<CUDA> loss<CUDA>::cross_entropy(const matrix<CUDA> &probability, const matrix<CUDA> &expected)
+float loss<CUDA>::cross_entropy(const matrix<CUDA> &probability, const matrix<CUDA> &expected)
 {
     matrix<CUDA> prod = matrix<CUDA>::log2(probability) % expected;
 
     matrix<CUDA> weighted_prod = matrix<CUDA>::bcast_hadamard_to_stacked_matrix(prod, this->weights);
 
-    return weighted_prod.sum() * (-1);
+    return matrix<CUDA>::reduce_sum(-1 * weighted_prod.sum())[0];
 }
 
-matrix<CUDA> loss<CUDA>::quadratic(const matrix<CUDA> &probability, const matrix<CUDA> &expected)
+float loss<CUDA>::quadratic(const matrix<CUDA> &probability, const matrix<CUDA> &expected)
 {
     matrix<CUDA> sq_err = matrix<CUDA>::square(probability - expected);
 
-    matrix<CUDA> weighted_sq_err = matrix<CUDA>::bcast_hadamard_to_stacked_matrix(sq_err, this->weights);
+    matrix<CUDA> weighted_sq_err = matrix<CUDA>::bcast_hadamard_to_stacked_matrix(sq_err, this->weights) * (1 / (float)expected.mat_elements());
     
-
-    return  weighted_sq_err * (1 / (float)expected.mat_elements());
+    return  matrix<CUDA>::reduce_sum(weighted_sq_err)[0];
 }
 
 
@@ -283,7 +284,7 @@ loss<CUDA>::loss()
 {
 }
 
-loss_fn loss<CUDA>::get_fn(loss_type ltype)
+std::function<float(const matrix<CUDA>&, const matrix<CUDA>& )> loss<CUDA>::get_fn(loss_type ltype)
 {
     switch (ltype)
     {
@@ -302,7 +303,7 @@ loss_fn loss<CUDA>::get_fn(loss_type ltype)
     }
 }
 
-loss_derivative_fn loss<CUDA>::get_derivative_fn(loss_type ltype, activation_type atype)
+std::function<matrix<CUDA>(const matrix<CUDA>&, const matrix<CUDA>&)> loss<CUDA>::get_derivative_fn(loss_type ltype, activation_type atype)
 {
     switch (ltype)
     {

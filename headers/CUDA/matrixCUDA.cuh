@@ -112,7 +112,7 @@ private:
 
 public:
     static memory_pool<CUDA>& instance();
-    float* malloc(size_t n);
-    void demalloc(float* ptr, size_t n);
+    float* allocate(size_t n);
+    void deallocate(float* ptr, size_t n);
     ~memory_pool<CUDA>();
 };

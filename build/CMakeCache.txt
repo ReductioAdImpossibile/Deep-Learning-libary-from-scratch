@@ -435,8 +435,11 @@ DEEPLEARNINGLIBARY_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 DEEPLEARNINGLIBARY_SOURCE_DIR:STATIC=/home/lucbr/Documents/DeepLearningLibary
 
+//Enable Address Sanitizer
+ENABLE_ASAN:BOOL=OFF
+
 //CUDA Support
-ENABLE_CUDA:BOOL=ON
+ENABLE_CUDA:BOOL=OFF
 
 //CXX compiler flags for OpenMP parallelization
 OpenMP_CXX_FLAGS:STRING=-fopenmp

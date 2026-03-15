@@ -1,4 +1,4 @@
-#include "modelCUDA.cuh"
+#include "DeepModel.h"
 #include <algorithm>
 #include <fstream>    
 #include <sstream>    
@@ -7,16 +7,16 @@
 #include <stdexcept>  
 #include <cmath>
 
-dataset<CUDA>::dataset()
+Dataset::Dataset()
 {
     
 }
 
-dataset<CUDA>::dataset(const std::string filename, size_t output_col)
+Dataset::Dataset(const std::string filename, size_t output_col)
 {
     std::ifstream file(filename); 
     if (!file.is_open()) 
-        throw std::runtime_error("dataset : Cannot open CSV file: " + filename); 
+        throw std::runtime_error("Dataset : Cannot open CSV file: " + filename); 
 
 
     std::vector<float> all_input_values;
@@ -68,17 +68,17 @@ dataset<CUDA>::dataset(const std::string filename, size_t output_col)
         }
     }
 
-    this->input = matrix<CUDA>::create_stacked_matrix(rows, 1, height, all_input_values);
-    this->expected = matrix<CUDA>::create_stacked_matrix(1, 1, height, all_expected_values);
+    this->input = Matrix::create_stacked_matrix(rows, 1, height, all_input_values);
+    this->expected = Matrix::create_stacked_matrix(1, 1, height, all_expected_values);
 
     std::cout << "[LOADED " << filename << " SUCCESSFULLY ]" << std::endl; 
 }
 
-dataset<CUDA>::dataset(const std::string filename, const std::vector<size_t>& ignore, size_t output_col)
+Dataset::Dataset(const std::string filename, const std::vector<size_t>& ignore, size_t output_col)
 {
     std::ifstream file(filename); 
     if (!file.is_open()) 
-        throw std::runtime_error("dataset : Cannot open CSV file: " + filename); 
+        throw std::runtime_error("Dataset : Cannot open CSV file: " + filename); 
 
 
     std::vector<float> all_input_values;
@@ -136,21 +136,21 @@ dataset<CUDA>::dataset(const std::string filename, const std::vector<size_t>& ig
         }
     }
 
-    this->input = matrix<CUDA>::create_stacked_matrix(rows, 1, height, all_input_values);
-    this->expected = matrix<CUDA>::create_stacked_matrix(1, 1, height, all_expected_values);
+    this->input = Matrix::create_stacked_matrix(rows, 1, height, all_input_values);
+    this->expected = Matrix::create_stacked_matrix(1, 1, height, all_expected_values);
     std::cout << "[LOADED " << filename << " SUCCESSFULLY ]" << std::endl; 
     
 }
 
-dataset<CUDA> dataset<CUDA>::split(float ratio)
+Dataset Dataset::split(float ratio)
 {
     size_t pivot = ratio * this->input.height();
     
-    dataset<CUDA> first;
+    Dataset first;
     first.input = this->input.slice_stacked_matrix(0, pivot);
     first.expected = this->expected.slice_stacked_matrix(0, pivot);
 
-    dataset<CUDA> second;
+    Dataset second;
     second.input = this->input.slice_stacked_matrix(pivot, this->input.height());
     second.expected = this->expected.slice_stacked_matrix(pivot, this->input.height());
 
@@ -158,7 +158,7 @@ dataset<CUDA> dataset<CUDA>::split(float ratio)
     return second;
 }
 
-void dataset<CUDA>::one_hot_encode()
+void Dataset::one_hot_encode()
 {
     if(this->expected.columns() != 1 || this->expected.rows() != 1)
         throw std::runtime_error("one_hot_encode : Wrong matrix output shape for one hot encoding. It needs to be 1x1xh."); 
@@ -186,13 +186,13 @@ void dataset<CUDA>::one_hot_encode()
         all_new_expected_values.insert(all_new_expected_values.end(), _x.begin(), _x.end());
     }
 
-   this->expected = matrix<CUDA>::create_stacked_matrix(unique_values.size(), 1 , this->expected.height(), all_new_expected_values);
+   this->expected = Matrix::create_stacked_matrix(unique_values.size(), 1 , this->expected.height(), all_new_expected_values);
     
 }
 
 
 
-void dataset<CUDA>::normalize()
+void Dataset::normalize()
 {
 
     float max = std::numeric_limits<float>::min();
@@ -208,25 +208,25 @@ void dataset<CUDA>::normalize()
     }
 
     if(max == min)
-        throw std::runtime_error("normalize : All values of the dataset are the same, which results in a divison by zero.");
+        throw std::runtime_error("normalize : All values of the Dataset are the same, which results in a divison by zero.");
 
     this->input = (this->input - min) * (1 / (max - min));
 
 }
 
 
-void dataset<CUDA>::standardize()
+void Dataset::standardize()
 {
 
     const float n = (float) input.height();
-    matrix<CUDA> mean = matrix<CUDA>::reduce_sum(input) * (1 / n);
-    matrix<CUDA> variance = matrix<CUDA>::reduce_sum(matrix<CUDA>::square(input)) * (1 / n);
-    matrix<CUDA> sigma = matrix<CUDA>::sqrt(variance);
+    Matrix mean = Matrix::reduce_sum(input) * (1 / n);
+    Matrix variance = Matrix::reduce_sum(Matrix::square(input)) * (1 / n);
+    Matrix sigma = Matrix::sqrt(variance);
 
-    this->input = (this->input - mean) % matrix<CUDA>::reciprocal(sigma);
+    this->input = (this->input - mean) % Matrix::reciprocal(sigma);
 }
 
-void dataset<CUDA>::print_information()
+void Dataset::print_information()
 {
 
     if(this->input.empty())

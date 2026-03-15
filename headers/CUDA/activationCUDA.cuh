@@ -1,24 +1,13 @@
 #pragma once
-#include "activation.h"
 #include "matrixCUDA.cuh"
 #include <functional>
-
-
-using activation_fn = std::function<matrix<CUDA>(const matrix<CUDA>&)>;
-using loss_fn = std::function<matrix<CUDA>(const matrix<CUDA>&, const matrix<CUDA>& )>;
-using loss_derivative_fn = std::function<matrix<CUDA>(const matrix<CUDA>&, const matrix<CUDA>&)>;
-
-using activation_type = const size_t;
-using loss_type = const size_t;
-using loss_derivative_type = const size_t;
-using optimizer_type = const size_t;
-
+#include "activation.h"
 
 
 template<>
 class activation<CUDA>
 {   
-public:
+private:
     static matrix<CUDA> ones(const matrix<CUDA>& a);
     static matrix<CUDA> identity(const matrix<CUDA>& a);
     static matrix<CUDA> relu(const matrix<CUDA>& a);
@@ -60,11 +49,11 @@ public:
 template<>
 class loss<CUDA>
 {  
-public:
+private:
 
 
-    matrix<CUDA> cross_entropy(const matrix<CUDA> &expected, const matrix<CUDA> &result);
-    matrix<CUDA> quadratic(const matrix<CUDA> &expected, const matrix<CUDA> &result);
+    float cross_entropy(const matrix<CUDA> &expected, const matrix<CUDA> &result);
+    float quadratic(const matrix<CUDA> &expected, const matrix<CUDA> &result);
 
     matrix<CUDA> dcross_entropy(const matrix<CUDA> &probability, const matrix<CUDA> &expected);
     matrix<CUDA> dcross_entropy_inkl_softmax(const matrix<CUDA> &probability, const matrix<CUDA> &expected);
@@ -77,7 +66,8 @@ public:
     static loss_type CROSS_ENTROPY = 0;
     static loss_type QUADRATIC = 1;
 
-    loss_fn get_fn(loss_type ltype);
+
+    loss_fn  get_fn(loss_type ltype);
     loss_derivative_fn get_derivative_fn(loss_type ltype, activation_type atype);
 };
 

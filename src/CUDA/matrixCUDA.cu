@@ -6,14 +6,14 @@
 #include "kernel.cuh"
 
 
-matrix<CUDA>::matrix() : n(0), h(0), c(0), r(0), data(nullptr)
+matrix<CUDA>::matrix() : n(0), h(0), c(0), r(0), data(nullptr), owns_memory(false)
 {
 }
 
 matrix<CUDA>::matrix(const matrix<CUDA>& other) : r(other.r), c(other.c), n(other.n), h(other.h)
 {
     //cudaMalloc(&this->data, sizeof(float) * n);
-    this->data = memory_pool<CUDA>::instance().malloc(n);
+    this->data = memory_pool<CUDA>::instance().allocate(n);
     cudaMemcpy(this->data, other.data, sizeof(float) * other.n, cudaMemcpyDeviceToDevice);
 }
 
@@ -30,7 +30,7 @@ matrix<CUDA>::matrix(const size_t rows, const size_t columns) : r(rows), c(colum
 {
     this->n = r * c;
     //cudaMalloc(&this->data, sizeof(float) * n);
-    this->data = memory_pool<CUDA>::instance().malloc(n);
+    this->data = memory_pool<CUDA>::instance().allocate(n);
 }
 
 matrix<CUDA>::matrix(const size_t rows, const size_t columns, const std::vector<float>& values) : matrix(rows, columns)
@@ -72,7 +72,7 @@ matrix<CUDA>::matrix(float *ptr, const size_t rows, const size_t columns, const 
 matrix<CUDA>::~matrix()
 {
     if(owns_memory)
-        memory_pool<CUDA>::instance().demalloc(data, n);
+        memory_pool<CUDA>::instance().deallocate(data, n);
 }
 
 
@@ -84,8 +84,9 @@ matrix<CUDA> matrix<CUDA>::create_stacked_matrix(const size_t rows, const size_t
     result.c = columns;
     result.h = height;
     result.n = rows * columns * height;
+    result.owns_memory = true;
 
-    result.data = memory_pool<CUDA>::instance().malloc(result.n);
+    result.data = memory_pool<CUDA>::instance().allocate(result.n);
     return result;
 }
 
@@ -158,7 +159,7 @@ matrix<CUDA> matrix<CUDA>::bcast_add_to_stacked_matrix(const matrix<CUDA> &a, co
 
     size_t mat_size = a.mat_elements();
 
-    if(mat_size != b.mat_elements() || b.height() != 1)
+    if(b.height() != 1 || a.rows() != b.rows() || a.columns() != b.columns() )
         throw std::runtime_error("bcast_add_to_stacked_matrix : matrix dimensions must be equal and the height of the second matrix needs to be 1.");    
     
     dim3 threads(256);
@@ -175,7 +176,7 @@ matrix<CUDA> matrix<CUDA>::bcast_add_to_stacked_matrix(const matrix<CUDA> &a, co
 matrix<CUDA> matrix<CUDA>::bcast_hadamard_to_stacked_matrix(const matrix<CUDA> &a, const matrix<CUDA> &b)
 {
     size_t mat_size = a.mat_elements();
-    if(b.height() != 1 )
+    if(b.height() != 1 || a.rows() != b.rows() || a.columns() != b.columns() )
         throw std::runtime_error("bcast_hadamard_to_stacked_matrix : height needs to be equal to 1");    
     
     dim3 threads(256);
@@ -566,15 +567,15 @@ void matrix<CUDA>::set(size_t index, float val)
 matrix<CUDA>& matrix<CUDA>::operator=(const matrix<CUDA>& other)
 {
     if (this != &other) {
-        if (data) 
-            cudaFree(data); 
+        if (data && owns_memory) 
+            memory_pool<CUDA>::instance().deallocate(data,n); 
         r = other.r;
         c = other.c;
         n = other.n;
         h = other.h;
-        cudaMalloc(&data, n * sizeof(float));
+        owns_memory = true;
+        data = memory_pool<CUDA>::instance().allocate(n);
         cudaMemcpy(data, other.data, n * sizeof(float), cudaMemcpyDeviceToDevice);
-
     }
     return *this;
 }
@@ -583,13 +584,16 @@ matrix<CUDA>& matrix<CUDA>::operator=(matrix<CUDA>&& other) noexcept
 {
     if (this != &other) 
     {
-        if (data) 
-            cudaFree(data);  
+        if (data && owns_memory) 
+            memory_pool<CUDA>::instance().deallocate(data,n); 
         r = other.r;
         c = other.c;
         h = other.h;
         n = other.n;
+        owns_memory = other.owns_memory;
         data = other.data;      
+
+        
         other.data = nullptr;      
         other.r = other.c = other.n = other.h = 0;
     }

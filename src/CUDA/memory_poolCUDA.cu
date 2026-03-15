@@ -11,7 +11,7 @@ memory_pool<CUDA>& memory_pool<CUDA>::instance()
     return pool;
 }
 
-float* memory_pool<CUDA>::malloc(size_t n)
+float* memory_pool<CUDA>::allocate(size_t n)
 {
     auto& blocks = free_blocks[n];
     if(!blocks.empty())
@@ -25,7 +25,7 @@ float* memory_pool<CUDA>::malloc(size_t n)
     return ptr;
 }
 
-void memory_pool<CUDA>::demalloc(float* ptr, size_t n) 
+void memory_pool<CUDA>::deallocate(float* ptr, size_t n) 
 {
     if(ptr == nullptr) return;
         free_blocks[n].push_back(ptr);
@@ -36,6 +36,7 @@ memory_pool<CUDA>::~memory_pool<CUDA>()
     for (auto& [size, blocks] : free_blocks)
         for (float* ptr : blocks)
             cudaFree(ptr);
+    free_blocks.clear();
 }
 
 
