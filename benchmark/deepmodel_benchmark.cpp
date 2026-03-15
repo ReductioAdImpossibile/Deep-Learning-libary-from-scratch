@@ -4,6 +4,10 @@
 #include <experimental/simd>
 #include <omp.h>
 
+const std::string testset_path = "../datasets/mnist_test.csv";
+const std::string trainset_path = "../datasets/mnist_train.csv";
+
+
 void benchmark(const size_t batch_size, const size_t epochs, NeuralNetwork nn, Dataset &train, Dataset& test)
 {
     auto start = std::chrono::high_resolution_clock::now();
@@ -37,13 +41,11 @@ void benchmark_adam(const size_t batch_size, const size_t epochs, NeuralNetwork 
     
 }
 
-
-
 int main()
 {
 
-    Dataset train = Dataset("../datasets/mnist_train.csv");
-    Dataset test = Dataset("../datasets/mnist_test.csv");
+    Dataset train = Dataset(trainset_path);
+    Dataset test = Dataset(testset_path);
     
     train.normalize();
     test.normalize();
