@@ -80,9 +80,11 @@ cmake --build build
 
 ## Quick start
 
->There are mutiple examples to view inside /examples.
+There are mutiple examples to view inside /examples.
 Here is the training of a network on the mnist numbers dataset:
 
+**You need to install the mnist dataset as .csv and place it into the dataset folder to run this program.**
+link : https://github.com/phoebetronic/mnist
 
 ```cpp
 #include <iostream>
@@ -144,8 +146,14 @@ int main()
 
 ## Benchmark
 
+All configurations were run a mnist Dataset with 60k samples.
+Architecture:
 
+Neurons                 : 784 x 128 x 128 x 10
+Activation functions    : RELU RELU SOFTMAX
+Loss function           : Cross entropy
 
+**Screenshots of the results below are inside benchmarks/result_screenshots*
 ### Mini-Batch SGD 
  
 | Batch Size | Epochs | DeepModel (CPU) | DeepModel (CUDA) | PyTorch (CPU) |
