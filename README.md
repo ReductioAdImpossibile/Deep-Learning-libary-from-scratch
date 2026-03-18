@@ -204,10 +204,6 @@ Due to the missing overhead and small batch sizes, DeepModel outperformes PyTorc
 
 Source : https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html
 
-```python3
-
-```
-
 
 ### Run the benchmark for yourself
 
@@ -238,8 +234,35 @@ python3 benchmark/pytorch_benchmark.py
 **Requirements** pandas & pytorch
 
 ---
+## The algorithm
 
 
+### Regularized Loss
+ 
+$$
+\mathcal{J} = \mathcal{L}(\hat{y}, y) + \frac{\lambda}{2N} \sum_{\ell=1}^{L} \|W^{(\ell)}\|_F^2
+$$
+ 
+### Backpropagation
+ 
+**Output layer** — $\delta^{(L)} = \frac{\partial \mathcal{L}}{\partial a^{(L)}} \odot f'^{(L)}(z^{(L)})$
+ 
+**Hidden layers** — for $\ell = L-1, \dots, 1$:
+ 
+$$
+\delta^{(\ell)} = \left(W^{(\ell+1)}\right)^\top \delta^{(\ell+1)} \odot f'^{(\ell)}(z^{(\ell)})
+$$
+ 
+### Weight Update with L2
+ 
+$$
+W^{(\ell)} \leftarrow W^{(\ell)}\!\left(1 - \frac{\eta\lambda}{N}\right) - \frac{\eta}{N}\,\delta^{(\ell)}\!\left(a^{(\ell-1)}\right)^\top
+$$
+ 
+The factor $\left(1 - \frac{\eta\lambda}{N}\right)$ is the **weight decay** term. Biases are excluded from regularization.
+
+
+---
 ## Examples
 
 There are 3 examples.
