@@ -1,5 +1,6 @@
 # DeepModel - A C++ Deep Learning Libary
 > A high performance neural network libary written from scratch in C++, with optional CUDA support.
+It implements a static Backpropagation algorithm to train feed forward neuralnetworks with simple topology.
 
 ---
 ## Overview
@@ -202,6 +203,7 @@ DeepModel is written in compiled C++, which removes this kind of overhead comple
 Due to the missing overhead and small batch sizes, DeepModel outperformes PyTorch in this case.
 
 Source : https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html
+
 ```python3
 
 ```
@@ -209,6 +211,7 @@ Source : https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.htm
 
 ### Run the benchmark for yourself
 
+If u wish to run the benchmark.
 
 #### DeepModel : CPU-only
 
@@ -239,6 +242,12 @@ python3 benchmark/pytorch_benchmark.py
 
 ## Examples
 
+There are 3 examples.
+
+1. Training on the mnist dataset.
+2. Training on the fashion-mnist dataset.
+3. Matrix operations with the linear algebra engine.
+
 ### Build
 
 #### CPU-only
@@ -248,20 +257,31 @@ cmake -B build -DENABLE_CUDA=OFF -DBUILD_EXAMPLES=ON
 cmake --build build
 ```
 
-#### CPU-only
+#### CUDA Support
 
 ```bash
 cmake -B build -DENABLE_CUDA=ON -DBUILD_EXAMPLES=ON
 cmake --build build
 ```
 
-
-
 ### run:
 
+#### 1 mnist:
 ```bash
 ./build/mnist
-./build/fashion_mnist
+```
+**Requires the mnist dataset as .csv**
+Place it into /datasets with name 'mnist_train.csv'.
+
+#### 2 fasion-mnist:
+```bash
+./build/fashion_nist
+```
+**Requires the fashion mnist dataset as .csv**
+Place it into /datasets with name 'fasion_mnist.csv'.
+
+##### 3 linear algebra:
+```bash
 ./build/linear_algebra
 ```
 
