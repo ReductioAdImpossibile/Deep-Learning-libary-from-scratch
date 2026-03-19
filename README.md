@@ -233,15 +233,20 @@ python3 benchmark/pytorch_benchmark.py
 
 ---
 
-## 1 · Basic Backpropagation
+
+## The Algorithm
+
+
+
+### 1 · Basic Backpropagation
  
-### Forward pass
+#### Forward pass
  
 $$
 z^{(\ell)} = W^{(\ell)} a^{(\ell-1)} + b^{(\ell)}, \qquad a^{(\ell)} = f^{(\ell)}\!\left(z^{(\ell)}\right)
 $$
  
-### Backward pass
+#### Backward pass
  
 **Output layer:**
  
@@ -252,29 +257,27 @@ $$
 **Hidden layers** $(\ell = L-1, \dots, 1)$:
  
 $$
-\delta^{(\ell)} = \left(W^{(\ell+1)}\right)^\top \delta^{(\ell+1)} \odot f'^{(\ell)}\!\left(z^{(\ell)}\right)
+\delta^{(\ell)} = \left(W^{(\ell+1)}\right)^\top \delta^{(\ell+1)} \odot f'^{(\ell)} \left(z^{(\ell)}\right)
 $$
  
 ### Weight & bias update
  
 $$
-W^{(\ell)} \leftarrow W^{(\ell)} - \eta \; \delta^{(\ell)} \left(a^{(\ell-1)}\right)^\top
+W^{(\ell)} \leftarrow W^{(\ell)} - \eta  \delta^{(\ell)} \left(a^{(\ell-1)}\right)^\top
 $$
  
 $$
-b^{(\ell)} \leftarrow b^{(\ell)} - \eta \; \delta^{(\ell)}
+b^{(\ell)} \leftarrow b^{(\ell)} - \eta  \delta^{(\ell)}
 $$
 
 ---
-
----
  
-## 2 · Backpropagation with L2 Regularisation
+### 2 · Backpropagation with L2 Regularisation
  
-### Regularised objective
+#### Regularised objective
  
 $$
-\mathcal{J} = \mathcal{L}(\hat{y},\, y) + \frac{\lambda}{2N} \sum_{\ell=1}^{L} \left\|W^{(\ell)}\right\|_F^2
+\mathcal{J} = \mathcal{L}(\hat{y},\, y) + \frac{\lambda}{2N} \sum_{\ell=1}^{L} \left\|W^{(\ell)}\right
 $$
  
 The $\delta$ computation is identical to Section 1. Only the weight update gains a decay term:
@@ -282,46 +285,46 @@ The $\delta$ computation is identical to Section 1. Only the weight update gains
 ### Weight update (weight decay + gradient step)
  
 $$
-W^{(\ell)} \leftarrow W^{(\ell)}\!\left(1 - \frac{\eta\lambda}{N}\right) - \eta \; \delta^{(\ell)} \left(a^{(\ell-1)}\right)^\top
+W^{(\ell)} \leftarrow W^{(\ell)} \left(1 - \frac{\eta\lambda}{N}\right) - \eta  \delta^{(\ell)} \left(a^{(\ell-1)}\right)^\top
 $$
  
 $$
-b^{(\ell)} \leftarrow b^{(\ell)} - \eta \; \delta^{(\ell)}
+b^{(\ell)} \leftarrow b^{(\ell)} - \eta \delta^{(\ell)}
 $$
  
  
 ---
  
-## 3 · Backpropagation with Adam
+### 3 · Backpropagation with Adam
  
 The $\delta$ computation is identical to Section 1. Adam replaces the vanilla gradient step with an adaptive moment-based update.
  
-**Hyperparameters:** $\beta_1 = 0.9$, $\beta_2 = 0.999$, $\varepsilon = 10^{-8}$
+**Hyperparameters:** $\beta_1$, $\beta_2$, $\varepsilon$
  
 Let $g_t = \delta^{(\ell)} \left(a^{(\ell-1)}\right)^\top$ be the gradient at step $t$.
  
-### 1st moment (mean)
+#### 1st moment (mean)
  
 $$
-m_t = \beta_1\, m_{t-1} + (1 - \beta_1)\, g_t
+m_t = \beta_1\ m_{t-1} + (1 - \beta_1)\ g_t
 $$
  
-### 2nd moment (uncentred variance)
+#### 2nd moment (uncentred variance)
  
 $$
-v_t = \beta_2\, v_{t-1} + (1 - \beta_2)\, g_t^2
+v_t = \beta_2\ v_{t-1} + (1 - \beta_2)\ g_t^2
 $$
  
-### Bias-corrected estimates
+#### Bias-corrected estimates
  
 $$
 \hat{m}_t = \frac{m_t}{1 - \beta_1^t}, \qquad \hat{v}_t = \frac{v_t}{1 - \beta_2^t}
 $$
  
-### Weight update
+#### Weight update
  
 $$
-W^{(\ell)} \leftarrow W^{(\ell)} - \eta \; \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \varepsilon}
+W^{(\ell)} \leftarrow W^{(\ell)} - \eta \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \varepsilon}
 $$
 
 
