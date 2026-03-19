@@ -39,11 +39,11 @@ The Github repo contains training examples with mnist and fashion-mnist, while b
 ### Requirements
 `C++17 GNU / Clang` 
 
-`OpenMP`
+`Cmake`
+
+`OpenMP` (Optional for CPU-Only version)
 
 `CUDA Toolkit` (Optional for CUDA version)
-
-`Cmake`
 
 
 ### CPU-only
@@ -206,8 +206,6 @@ Source : https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.htm
 
 
 ### Run the benchmark for yourself
-
-If u wish to run the benchmark.
 
 #### DeepModel : CPU-only
 
