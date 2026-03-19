@@ -344,7 +344,8 @@ In this example we train a network on pictures of digit's to classify them corre
 ```
 **Requires the MNIST dataset as .csv**  
 Place it into /datasets with the name 'mnist_train.csv'.
- 
+Dataset source: MNIST (LeCun et al., 1998) – available at https://github.com/phoebetronic/mnist
+
 #### 2 · Fashion-MNIST:
 
 
@@ -354,12 +355,14 @@ Place it into /datasets with the name 'mnist_train.csv'.
 
 In this example we train a network on pictures of various clothings to classify them correctly.
 
+**Run with:**
 ```bash
 ./build/fashion_mnist
 ```
 **Requires the Fashion-MNIST dataset as .csv**  
 Place it into /datasets with the name 'fashion_mnist.csv'.
- 
+Dataset source: Fashion-MNIST (Xiao et al., 2017) – available at https://github.com/zalandoresearch/fashion-mnist
+
 #### 3 · Linear Algebra:
 ```bash
 ./build/linear_algebra
