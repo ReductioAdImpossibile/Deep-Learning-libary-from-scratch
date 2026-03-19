@@ -44,7 +44,7 @@ The GitHub repository contains training examples with MNIST and Fashion-MNIST, a
 `OpenMP` (Optional for CPU-only version)
 `CUDA Toolkit` (Optional for CUDA version)
 
-### CPU-only
+### CPU-Only
 
 ```bash
 mkdir build
@@ -83,7 +83,7 @@ There are multiple examples to view inside /examples.
 Here is the training of a network on the MNIST numbers dataset:
 
 **You need to install the MNIST dataset as .csv and place it into the dataset folder to run this program.**
-Link: https://github.com/phoebetronic/mnist
+Dataset source: MNIST (LeCun et al., 1998) – available at https://github.com/phoebetronic/mnist
 
 
 ```cpp
@@ -168,22 +168,19 @@ Loss function           : Cross entropy
 | 32 | 20 | 57.35s · 97.0% |  5.59s · 93.0% | 42.02s · 97.7% |
 | 64 | 20 | 64.51s · 96.4% |  4.13s · 93.0% | 19.40s · 97.7% |
 
-### Interpretation of results
+### Interpretation of Results
 
-DeepModel outperforms PyTorch (CPU) in training speed on both CPU and CUDA with speedups of 2 - 10, but achieves lower accuracy on most configurations.
-The primary reason for the longer runtimes of PyTorch and the accuracy gap, is the autograd system of PyTorch.
-During the forward pass, PyTorch constructs a dynamic direct graph, which contains every mathmatical operations and its dependencies.
-When the backpropagation begins, the gradients are computed by traversing this graph backwards with the chain rule.
-This system is way more flexible and is generalised for any other network architecture (e. g: CNN's etc.).
+DeepModel outperforms PyTorch (CPU) in training speed on both CPU and CUDA with speedups of 2–10, but achieves lower accuracy on most configurations.
+The primary reason for PyTorch's longer runtimes and the accuracy gap is PyTorch's autograd system.
+During the forward pass, PyTorch constructs a dynamic directed graph, which contains every mathematical operation and its dependencies.
+When backpropagation begins, the gradients are computed by traversing this graph backwards using the chain rule.
+This system is far more flexible and is generalized for any network architecture (e.g. CNNs, etc.).
+An additional factor is that the PyTorch training loop runs in Python, which is an interpreted language.
+DeepModel is written in compiled C++, which eliminates this kind of overhead entirely.
+**DeepModel is a static backpropagation algorithm, which can only run a simple feed-forward topology and is not as flexible as PyTorch.**
+Due to the reduced overhead and small batch sizes, DeepModel outperforms PyTorch in this case.
 
-An additional factor is that the Pytorch training loops runs in Python, which is a interpreted language.
-DeepModel is written in compiled C++, which removes this kind of overhead completely.
-
-**DeepModel is a static backpropagation algorithm, which can only run a simple feed forward topology and is not as flexible as PyTorch.**
-Due to the missing overhead and small batch sizes, DeepModel outperformes PyTorch in this case.
-
-Source : https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html
-
+Source: https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html
 
 ### Run the benchmark for yourself
 
@@ -336,6 +333,12 @@ cmake --build build
 ### Run:
  
 #### 1. MNIST:
+
+
+![MNIST sample digits](https://upload.wikimedia.org/wikipedia/commons/f/f7/MNIST_dataset_example.png)
+*Figure 1: Sample digits from the MNIST dataset (LeCun et al., 1998). Image by Josef Steppan, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via Wikimedia Commons.*
+
+
 ```bash
 ./build/mnist
 ```
