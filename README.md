@@ -335,7 +335,7 @@ cmake --build build
 
 *Figure 1: Sample digits from the MNIST dataset (LeCun et al., 1998). Image by Josef Steppan, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), via Wikimedia Commons.*
 
-In this example we train a model on pictures of digit's to classify them correctly.
+In this example we train a network on pictures of digit's to classify them correctly.
 
 **Run with:**
 
@@ -348,6 +348,11 @@ Place it into /datasets with the name 'mnist_train.csv'.
 #### 2 · Fashion-MNIST:
 
 
+![Fashion-MNIST samples](assets/fashion_MNIST_dataset_example.png)
+*Figure 2: Sample images from the Fashion-MNIST dataset (Xiao et al., 2017). Source: [TensorFlow Datasets](https://www.tensorflow.org/datasets/catalog/fashion_mnist), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).*
+
+
+In this example we train a network on pictures of various clothings to classify them correctly.
 
 ```bash
 ./build/fashion_mnist
